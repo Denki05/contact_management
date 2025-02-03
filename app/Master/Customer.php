@@ -3,6 +3,7 @@
 namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Master\Cntact;
 
 class Customer extends Model
 {
@@ -50,6 +51,11 @@ class Customer extends Model
         0 => 'NON FREE',
         1 => 'FREE',
     ];
+    
+    public function contacts()
+    {
+        return $this->hasMany(Contact::class, 'manage_id');
+    }
 
     public function store()
     {

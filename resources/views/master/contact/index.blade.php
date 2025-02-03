@@ -1,50 +1,73 @@
 @extends('layouts.app')
 
 @section('content')
-
 <div class="container">
+    <!-- Notif -->
     @if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {!! session('success') !!}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>  
+    @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {!! session('error') !!}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
     @endif
 
     <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Master</a></li>
-        <li class="breadcrumb-item"><a href="#">Contact</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Index</li>
-    </ol>
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Master</a></li>
+            <li class="breadcrumb-item"><a href="#">Contact</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Index</li>
+        </ol>
     </nav>
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <!-- Tombol Create -->
             <a href="{{ route('master.contact.create') }}" class="btn btn-success mb-3"><i class="fa fa-plus" aria-hidden="true"></i> Create</a>
+            <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#importExportModal">
+                <i class="fa fa-file-excel"></i> Import/Export Excel
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="importExportModal" tabindex="-1" role="dialog" aria-labelledby="importExportModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="importExportModalLabel">Manage Import & Export Contact</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('contact.import') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="file">Import Excel File</label>
+                                    <input type="file" name="file" class="form-control" required>
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-success">Import</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                            <a href="{{ route('contact.exportTemplate') }}" class="btn btn-info">Download Template</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <!-- Tabel -->
             <table class="table" id="contact_table">
                 <thead>
                     <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nama</th>
-                        <th scope="col">Posisi</th>
-                        <th scope="col">Alamat</th>
-                        <th scope="col">Telepon</th>
-                        <th scope="col">DOB</th>
-                        <th scope="col">Action</th>
+                        <th>#</th>
+                        <th>Nama</th>
+                        <th>Posisi</th>
+                        <th>Store</th>
+                        <th>Telepon</th>
+                        <th>DOB</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,11 +77,13 @@
                         <th scope="row">{{ $loop->iteration }}</th>
                         <td>{{ $contact->name }}</td>
                         <td>{{ $contact->position }}</td>
-                        <td>{{ $contact->address?? '-' }}</td>
+                        <td>{{ $contact->customer->name }} - {{ $contact->customer->text_kota }}</td>
                         <td>{{ $contact->phone }}</td>
                         <td>{{ \Carbon\Carbon::parse($contact->dob)->format('d-m-Y')}}</td>
                         <td>
-                            <a class="btn btn-warning" href="{{ route('master.contact.edit', $contact->id) }}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                            <a class="btn btn-info" href="{{ route('master.contact.show', $contact->id) }}" role="button">
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </a>
                             <form action="{{ route('master.contact.destroy', $contact->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
@@ -78,24 +103,18 @@
 @endsection
 
 @section('scripts')
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGaHf0j2zF6i5z0p5aVOF9p5a" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy1FWRpQp6iPb4SxXof6EG3niJk6od7+8a7T1w" crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function() {
+    document.addEventListener("DOMContentLoaded", function () {
         $('#contact_table').DataTable({
-            pageLength: 10 // Atur jumlah data per halaman
+            pageLength: 10
         });
-    });
-</script>
-@endsection
 
-@section('scripts')
-<script>
-    $(document).ready(function() {
-        $('#contact_table').DataTable({
-            pageLength: 10 // Atur jumlah data per halaman
-        });
+        let modal = document.getElementById("importExportModal");
+        if (modal) {
+            console.log("Modal ditemukan dalam DOM!");
+        } else {
+            console.error("Modal TIDAK ditemukan dalam DOM!");
+        }
     });
 </script>
 @endsection

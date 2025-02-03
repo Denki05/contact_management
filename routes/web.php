@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactExportImportController;
 
 Route::get('/', function () {
     return redirect('/login');
@@ -17,7 +18,12 @@ Route::get('/contact/create', [App\Http\Controllers\Master\ContactController::cl
 Route::post('/contact/store', [App\Http\Controllers\Master\ContactController::class, 'store'])->name('master.contact.store');
 Route::delete('/contact/{id}', [App\Http\Controllers\Master\ContactController::class, 'destroy'])->name('master.contact.destroy');
 Route::get('/contact/edit/{id}', [App\Http\Controllers\Master\ContactController::class, 'edit'])->name('master.contact.edit');
+Route::get('/contact/show/{id}', [App\Http\Controllers\Master\ContactController::class, 'show'])->name('master.contact.show');
 Route::put('/contact/update/{id}', [App\Http\Controllers\Master\ContactController::class, 'update'])->name('master.contact.update');
 
 // Customer
 Route::get('/customer', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('master.customer.index');
+
+// Export & Import
+Route::get('/contact/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
+Route::post('/contact/import', [ContactExportImportController::class, 'import'])->name('contact.import');

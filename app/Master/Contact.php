@@ -3,6 +3,7 @@
 namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Master\Customer;
 
 class Contact extends Model
 {
@@ -20,7 +21,12 @@ class Contact extends Model
     const IS_FOR = [
       'MEMBER' => 0,
       'VENDOR' => 1
-  ];
+    ];
+  
+   public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'manage_id');
+    }
 
     public function getImgKtpAttribute()
     {

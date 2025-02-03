@@ -161,6 +161,13 @@ class ContactController extends Controller
         return redirect()->route('master.contact.index')->with('success', 'Data berhasil diperbarui.');
     }
 
+    public function show(Request $request, $id)
+    {
+        $data['contact'] = Contact::findOrFail($id);
+
+        return view('master.contact.show', $data); // Mengarahkan ke view
+    }
+
     public function destroy(Request $request, $id)
     {
         $contact = Contact::findOrFail($id);
