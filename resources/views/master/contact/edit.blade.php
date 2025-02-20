@@ -17,121 +17,61 @@
                 @method('PUT')
 
                 <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Nama <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $contact->name) }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">DOB <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="date" class="form-control" id="dob" name="dob" value="{{ old('dob', $contact->dob) }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Customer <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <select class="form-control js-select2" id="manage_id" name="manage_id">
-                                    <option value="">Pilih Customer</option>
-                                    @foreach ($customers as $customer)
-                                        <option value="{{ $customer->id }}" {{ old('manage_id', $contact->manage_id) == $customer->id ? 'selected' : '' }}>
-                                            {{ $customer->name }} {{ $customer->text_kota }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Posisi <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="position" name="position" value="{{ old('position', $contact->position) }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Telepon <span class="text-danger">*</span></label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $contact->phone) }}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group row">
-                            <label class="col-sm-2 col-form-label">Email</label>
-                            <div class="col-sm-10">
-                                <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $contact->email) }}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group row">
-                            <label for="ktp" class="col-sm-2 col-form-label">KTP</label>
-                            <div class="col-sm-10">
-                                <div class="form-row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" id="ktp" name="ktp" value="{{ old('ktp', $contact->ktp) }}">
-                                    </div>
-                                    <div class="col">
-                                        <input class="form-control" type="file" id="image_ktp" name="image_ktp">
-                                        @if($contact->image_ktp)
-                                            <img src="{{ asset('superuser_assets/media/master/contact/' . $contact->image_ktp) }}" alt="KTP" class="img-thumbnail mt-2" width="150">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group row">
-                        <label for="ktp" class="col-sm-2 col-form-label">NPWP</label>
-                            <div class="col-sm-10">
-                                <div class="form-row">
-                                    <div class="col">
-                                        <input type="text" class="form-control" id="npwp" name="npwp" value="{{ old('npwp', $contact->npwp) }}">
-                                    </div>
-                                    <div class="col">
-                                        <input class="form-control" type="file" id="image_npwp" name="image_npwp">
-                                        @if($contact->image_npwp)
-                                            <img src="{{ asset('superuser_assets/media/master/contact/' . $contact->image_npwp) }}" alt="NPWP" class="img-thumbnail mt-2" width="150">
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group row pt-30">
                     <div class="col-md-6">
-                        <a href="{{ route('master.contact.index') }}" class="btn btn-danger text-white">
-                            <i class="fa fa-arrow-left mr-10"></i> Back
-                        </a>
+                        <label>Nama <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="name" value="{{ old('name', $contact->name) }}" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>DOB <span class="text-danger">*</span></label>
+                        <input type="date" class="form-control" name="dob" value="{{ old('dob', $contact->dob) }}" required>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label>Customer <span class="text-danger">*</span></label>
+                        <select class="form-control js-select2" name="manage_id" required>
+                            <option value="">Pilih Customer</option>
+                            @foreach ($customers as $customer)
+                                <option value="{{ $customer->id }}" {{ old('manage_id', $contact->manage_id) == $customer->id ? 'selected' : '' }}>
+                                    {{ $customer->name }} - {{ $customer->text_kota }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Posisi <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="position" value="{{ old('position', $contact->position) }}" required>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <label>KTP</label>
+                        <input type="text" class="form-control" name="ktp" value="{{ old('ktp', $contact->ktp) }}" required>
+                        <input class="form-control mt-2" type="file" name="image_ktp" id="image_ktp">
+                        @if($contact->image_ktp)
+                            <img id="ktpPreview" src="{{ asset('storage/superuser_assets/media/master/contact/' . $contact->image_ktp) }}" class="img-thumbnail mt-2" width="150">
+                        @endif
+                    </div>
+                    <div class="col-md-6">
+                        <label>NPWP</label>
+                        <input type="text" class="form-control" name="npwp" value="{{ old('npwp', $contact->npwp) }}" required>
+                        <input class="form-control mt-2" type="file" name="image_npwp" id="image_npwp">
+                        @if($contact->image_npwp)
+                            <img id="npwpPreview" src="{{ asset('storage/superuser_assets/media/master/contact/' . $contact->image_npwp) }}" class="img-thumbnail mt-2" width="150">
+                        @endif
+                    </div>
+                </div>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <a href="{{ route('master.contact.index') }}" class="btn btn-danger text-white">Back</a>
                     </div>
                     <div class="col-md-6 text-right">
-                        <button type="submit" class="btn btn-success text-white">
-                            Update <i class="fa fa-arrow-right ml-10"></i>
-                        </button>
+                        <button type="submit" class="btn btn-success text-white">Update</button>
                     </div>
                 </div>
-
             </form>
         </div>
     </div>

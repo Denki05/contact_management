@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Master\Contact;
 use App\Master\Customer;
-use DB;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -84,19 +84,19 @@ class ContactController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $data['contact'] = Contact::findOrFail($id);
+        $data['contact'] = Contact::where('id', $id)->firstOrFail();
         $data['customers'] = DB::table('master_customers')
             ->leftJoin('master_customer_other_addresses', 'master_customer_other_addresses.customer_id', '=', 'master_customers.id')
             ->select(
                 'master_customer_other_addresses.id',
                 'master_customer_other_addresses.name',
                 'master_customer_other_addresses.text_kota',
-                'master_customer_other_addresses.text_provinsi',
+                'master_customer_other_addresses.text_provinsi'
             )
             ->where('master_customers.status', 1)
             ->get();
 
-        return view('master.contact.edit', $data); // Mengarahkan ke view
+        return view('master.contact.edit', $data);
     }
 
     public function update(Request $request, $id)
@@ -115,50 +115,40 @@ class ContactController extends Controller
             'image_npwp' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        $contact = Contact::findOrFail($id);
-        $contact->manage_id = $request->manage_id; // Menyimpan manage_id
-        $contact->name = $request->name;
-        $contact->dob = $request->dob;
-        $contact->position = $request->position;
-        $contact->phone = $request->phone;
-        $contact->email = $request->email;
-        $contact->ktp = $request->ktp;
-        $contact->npwp = $request->npwp;
-        $contact->status = 1; // Pastikan ini sesuai dengan sistem status kamu
-        $contact->is_for = 0;
+        try {
+            $contact = Contact::findOrFail($id);
+            $contact->fill($request->except(['image_ktp', 'image_npwp']));
 
-        // Handle Upload Image KTP
-        if ($request->hasFile('image_ktp')) {
-            // Hapus file lama jika ada
-            if ($contact->image_ktp) {
-                Storage::disk('public')->delete('superuser_assets/media/master/contact/' . $contact->image_ktp);
+            // Direktori penyimpanan
+            $path = 'superuser_assets/media/master/contact/';
+
+            // Handle Upload Image KTP
+            if ($request->hasFile('image_ktp')) {
+                if ($contact->image_ktp) {
+                    Storage::disk('public')->delete($path . $contact->image_ktp);
+                }
+                $imageKtpName = uniqid().'_ktp.'.$request->file('image_ktp')->getClientOriginalExtension();
+                $request->file('image_ktp')->storeAs('public/' . $path, $imageKtpName);
+                $contact->image_ktp = $imageKtpName;
             }
 
-            $imageKtpName = uniqid().'_ktp.'.$request->file('image_ktp')->getClientOriginalExtension();
-            $request->file('image_ktp')->move(public_path('superuser_assets/media/master/contact/'), $imageKtpName);
-            $contact->image_ktp = $imageKtpName;
-        }
-
-        // Handle Upload Image NPWP
-        if ($request->hasFile('image_npwp')) {
-            // Hapus file lama jika ada
-            if ($contact->image_npwp) {
-                Storage::disk('public')->delete('superuser_assets/media/master/contact/' . $contact->image_npwp);
+            // Handle Upload Image NPWP
+            if ($request->hasFile('image_npwp')) {
+                if ($contact->image_npwp) {
+                    Storage::disk('public')->delete($path . $contact->image_npwp);
+                }
+                $imageNpwpName = uniqid().'_npwp.'.$request->file('image_npwp')->getClientOriginalExtension();
+                $request->file('image_npwp')->storeAs('public/' . $path, $imageNpwpName);
+                $contact->image_npwp = $imageNpwpName;
             }
 
-            $imageNpwpName = uniqid().'_npwp.'.$request->file('image_npwp')->getClientOriginalExtension();
-            $request->file('image_npwp')->move(public_path('superuser_assets/media/master/contact/'), $imageNpwpName);
-            $contact->image_npwp = $imageNpwpName;
-        }
+            $contact->save();
 
-        if ($contact->save()) {
             return redirect()->route('master.contact.index')->with('success', 'Data berhasil diperbarui.');
-        } else {
-            return back()->with('error', 'Data gagal diperbarui.');
+        } catch (\Exception $e) {
+            dd($e);
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-        
-
-        return redirect()->route('master.contact.index')->with('success', 'Data berhasil diperbarui.');
     }
 
     public function show(Request $request, $id)

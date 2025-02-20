@@ -51,4 +51,10 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
+
+    public function authenticated(Request $request, $user)
+    {
+        session()->flash('welcome_message', true);
+        return redirect()->intended('/home');
+    }
 }

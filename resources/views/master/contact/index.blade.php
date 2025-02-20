@@ -84,6 +84,9 @@
                             <a class="btn btn-info" href="{{ route('master.contact.show', $contact->id) }}" role="button">
                                 <i class="fa fa-eye" aria-hidden="true"></i>
                             </a>
+                            <a class="btn btn-warning" href="{{ route('master.contact.edit', $contact->id) }}" role="button">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
                             <form action="{{ route('master.contact.destroy', $contact->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
