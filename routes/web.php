@@ -27,3 +27,7 @@ Route::get('/customer', [App\Http\Controllers\Master\CustomerController::class, 
 // Export & Import
 Route::get('/contact/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
 Route::post('/contact/import', [ContactExportImportController::class, 'import'])->name('contact.import');
+
+// product
+Route::get('/product', [App\Http\Controllers\Master\ProductController::class, 'index'])->name('master.product.index');
+Route::post('/product/upload_property/{encodedId}', [App\Http\Controllers\Master\ProductController::class, 'upload_property'])->name('master.product.upload_property');
