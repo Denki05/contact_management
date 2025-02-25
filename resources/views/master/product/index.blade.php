@@ -66,11 +66,11 @@
                             @endphp
 
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $product->id }}">
-                                <i class="fa fa-eye"></i> Show
+                                <i class="fa fa-eye"></i>
                             </button>
                     
                             <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal-{{ $encodedId }}">
-                                <i class="fa fa-upload"></i> Upload
+                                <i class="fa fa-upload"></i>
                             </button>
 
                             <!-- Modal Upload -->
@@ -130,7 +130,7 @@
                             <div class="modal fade" id="detailModal-{{ $product->id }}" 
                                 tabindex="-1" 
                                 aria-labelledby="detailModalLabel-{{ $product->id }}">
-                                <div class="modal-dialog modal-lg">
+                                <div class="modal-dialog modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="detailModalLabel-{{ $product->id }}">Detail Produk</h5>
@@ -139,11 +139,11 @@
                                         <div class="modal-body">
                                             <div class="row">
                                                 <!-- Gambar Thumbnail -->
-                                                <div class="col-md-6 text-center">
-                                                    <h6>Thumbnail</h6>
+                                                <div class="col-lg-6 text-center">
+                                                    <h6>Image Thumbnail</h6>
                                                     @if ($product->image)
-                                                        <a href="{{ asset('storage/'.$product->image) }}" data-lightbox="product-{{ $product->id }}" data-title="Thumbnail">
-                                                            <img src="{{ asset('storage/'.$product->image) }}" class="img-fluid rounded shadow-sm" alt="Thumbnail">
+                                                        <a href="{{ $product->image_url }}" data-lightbox="product-{{ $product->id }}" data-title="Thumbnail">
+                                                            <img src="{{ $product->image_url }}" class="img-fluid rounded shadow-sm" alt="Thumbnail" style="width: 50%;">
                                                         </a>
                                                     @else
                                                         <p class="text-muted">Tidak ada gambar</p>
@@ -151,11 +151,11 @@
                                                 </div>
 
                                                 <!-- Gambar HD -->
-                                                <div class="col-md-6 text-center">
-                                                    <h6>Image HD</h6>
+                                                <div class="col-lg-6 text-center">
+                                                    <h6>Image Notes</h6>
                                                     @if ($product->image_hd)
-                                                        <a href="{{ asset('storage/'.$product->image_hd) }}" data-lightbox="product-{{ $product->id }}" data-title="Image HD">
-                                                            <img src="{{ asset('storage/'.$product->image_hd) }}" class="img-fluid rounded shadow-sm" alt="Image HD">
+                                                        <a href="{{ $product->image_hd_url }}" data-lightbox="product-{{ $product->id }}" data-title="Image HD">
+                                                            <img src="{{ $product->image_hd_url }}" class="img-fluid rounded shadow-sm" alt="Image HD" style="width: 50%;">
                                                         </a>
                                                     @else
                                                         <p class="text-muted">Tidak ada gambar</p>
@@ -167,60 +167,26 @@
 
                                             <div class="row">
                                                 <!-- Video Produk -->
-                                                <div class="col-md-6 text-center">
-                                                    <h6>Video Produk</h6>
-                                                    @if ($product->videos_product_1)
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal-{{ $product->id }}">
-                                                            <img src="https://img.icons8.com/ios/100/000000/play.png" class="img-fluid" alt="Video Produk">
-                                                        </a>
-
-                                                        <!-- Modal Video -->
-                                                        <div class="modal fade" id="videoModal-{{ $product->id }}" tabindex="-1">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Video Produk</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                                    </div>
-                                                                    <div class="modal-body text-center">
-                                                                        <video width="100%" controls>
-                                                                            <source src="{{ asset('storage/'.$product->videos_product_1) }}" type="video/mp4">
-                                                                            Browser Anda tidak mendukung video.
-                                                                        </video>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="col-lg-6 text-center">
+                                                    <h6>Product Videos</h6>
+                                                    @if ($product->video_product_url)
+                                                        <video width="40%" controls>
+                                                            <source src="{{ $product->video_product_url }}" type="video/mp4">
+                                                            Browser Anda tidak mendukung video.
+                                                        </video>
                                                     @else
                                                         <p class="text-muted">Tidak ada video</p>
                                                     @endif
                                                 </div>
 
                                                 <!-- Video Sosmed -->
-                                                <div class="col-md-6 text-center">
-                                                    <h6>Video Produk</h6>
-                                                    @if ($product->videos_product_2)
-                                                        <a href="#" data-bs-toggle="modal" data-bs-target="#videoModal-{{ $product->id }}">
-                                                            <img src="https://img.icons8.com/ios/100/000000/play.png" class="img-fluid" alt="Video Produk">
-                                                        </a>
-
-                                                        <!-- Modal Video -->
-                                                        <div class="modal fade" id="videoModal-{{ $product->id }}" tabindex="-1">
-                                                            <div class="modal-dialog modal-lg">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title">Video Produk</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                                    </div>
-                                                                    <div class="modal-body text-center">
-                                                                        <video width="100%" controls>
-                                                                            <source src="{{ asset('storage/'.$product->videos_product_2) }}" type="video/mp4">
-                                                                            Browser Anda tidak mendukung video.
-                                                                        </video>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                <div class="col-lg-6 text-center">
+                                                    <h6>Social Media Videos</h6>
+                                                    @if ($product->video_sosmed_url)
+                                                        <video width="40%" controls class="video-popup">
+                                                            <source src="{{ $product->video_sosmed_url }}" type="video/mp4">
+                                                            Browser Anda tidak mendukung video.
+                                                        </video>
                                                     @else
                                                         <p class="text-muted">Tidak ada video</p>
                                                     @endif
@@ -254,37 +220,6 @@
 
         // Inisialisasi Select2
         $('.select2').select2();
-
-        // Debugging: Pastikan elemen gambar ditemukan
-        console.log("Elemen .magnify ditemukan:", $(".magnify").length);
-
-        // Inisialisasi Magnify.js pada gambar yang sudah ada di halaman
-        $(".magnify").each(function () {
-            if (!$(this).hasClass("magnify-init")) {
-                $(this).magnify();
-                $(this).addClass("magnify-init");
-            }
-        });
-
-        // Event saat modal terbuka, inisialisasi ulang Magnify.js
-        $('div[id^="detailModal-"]').on('shown.bs.modal', function () {
-            console.log("Modal terbuka:", $(this).attr("id"));
-
-            $(this).find(".magnify").each(function () {
-                if (!$(this).hasClass("magnify-init")) {
-                    console.log("Inisialisasi Magnify pada:", $(this).attr("src"));
-                    $(this).magnify({
-                        responsive: true
-                    });
-                    $(this).addClass("magnify-init");
-                }
-            });
-        });
-
-        // Debugging: Pastikan gambar bisa diklik untuk zoom
-        $(".magnify").on("click", function() {
-            console.log("Gambar diklik untuk zoom:", $(this).attr("src"));
-        });
     });
 
     // Preview Gambar
@@ -312,5 +247,26 @@
         $(this).find('.progress').addClass("d-none");
         $(this).find('.progress-bar').css("width", "0%");
     });
+
+    const section = document.querySelector("section"),
+    mainVideo = document.querySelector(".main-video video"),
+     videos = document.querySelectorAll(".videos"),
+     close = document.querySelector(".close");
+
+     for (var i = 0; i < videos.length; i++) {
+       videos[i].addEventListener("click", (e)=>{
+         const target = e.target;
+         section.classList.add("active");
+         target.classList.add("active");
+         let src = document.querySelector(".videos.active video").src;
+         mainVideo.src = src;
+
+         close.addEventListener("click", ()=>{
+           section.classList.remove("active");
+           target.classList.remove("active");
+           mainVideo.src = "";
+         });
+       });
+     };
 </script>
 @endsection

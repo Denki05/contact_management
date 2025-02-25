@@ -41,21 +41,21 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        return $this->image ? asset('storage/' . ltrim(str_replace('//', '/', $this->image), '/')) : asset('default-image.png');
+        return $this->image ? url('file/product/' . basename($this->image)) : asset('default-image.png');
     }
-
+    
     public function getImageHdUrlAttribute()
     {
-        return $this->image_hd ? asset('storage/' . ltrim(str_replace('//', '/', $this->image_hd), '/')) : asset('default-image.png');
+        return $this->image_hd ? url('file/product/' . basename($this->image_hd)) : asset('default-image.png');
     }
-
-    public function getVideosProduct1UrlAttribute()
+    
+    public function getVideoProductUrlAttribute()
     {
-        return $this->videos_product_1 ? asset('storage/' . $this->videos_product_1) : null;
+        return $this->videos_product_1 ? url('file/product/' . basename($this->videos_product_1)) : null;
     }
-
-    public function getVideosProduct2UrlAttribute()
+    
+    public function getVideoSosmedUrlAttribute()
     {
-        return $this->videos_product_2 ? asset('storage/' . $this->videos_product_2) : null;
+        return $this->videos_product_2 ? url('file/product/' . basename($this->videos_product_2)) : null;
     }
 }

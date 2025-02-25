@@ -103,7 +103,7 @@
                             <td>{{ $contact->position }}</td>
                             <td>{{ $contact->customer->name }} - {{ $contact->customer->text_kota }}</td>
                             <td>{{ $contact->phone }}</td>
-                            <td>{{ $contact->dob ? \Carbon\Carbon::parse($contact->dob)->format('d-m-Y') : '-' }}</td>
+                            <td>{{ $contact->dob ? \Carbon\Carbon::parse($contact->dob)->format('d-m') : '-' }}</td>
                             <td>
                                 <a class="btn btn-info btn-sm" href="{{ route('master.contact.show', $contact->id) }}">
                                     <i class="fa fa-eye"></i>

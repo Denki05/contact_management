@@ -44,15 +44,17 @@ class ContactImport implements ToModel, WithHeadingRow
             $dob = null;
             if (!empty($row['dob'])) {
                 if (is_numeric($row['dob'])) {
-                    $dob = Date::excelToDateTimeObject($row['dob'])->format('Y-m-d');
+                    // Konversi dari format Excel ke DateTime
+                    $dob = Date::excelToDateTimeObject($row['dob'])->format('m-d'); // Ambil hanya bulan dan hari
                 } else {
                     try {
-                        $dob = Carbon::parse($row['dob'])->format('Y-m-d');
+                        $dob = Carbon::parse($row['dob'])->format('m-d'); // Ambil hanya bulan dan hari
                     } catch (\Exception $e) {
                         $this->errorMessages[] = "Format tanggal salah pada baris dengan nama '{$row['nama']}'.";
                         return null;
                     }
                 }
+                $dob = '1900-' . $dob; // Tambahkan tahun default (1900)
             }
 
             return new Contact([

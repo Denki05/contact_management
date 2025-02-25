@@ -66,11 +66,14 @@ class ContactController extends Controller
             'image_npwp' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
+        $dob = request('dob'); // Misal: "15-07"
+        $dob = \Carbon\Carbon::createFromFormat('d-m', $dob)->format('1900-m-d'); // Set default tahun ke 1900
+
         $contact = new Contact();
         $contact->manage_id     = $request->manage_id;
         $contact->is_for        = 0;
         $contact->name          = $request->name;
-        $contact->dob           = $request->dob;
+        $contact->dob           = $dob;
         $contact->position      = $request->posisi;
         $contact->phone         = $request->phone;
         $contact->email         = $request->email;
@@ -158,13 +161,16 @@ class ContactController extends Controller
                 $contact->image_npwp = $imageNpwpName;
             }
 
+            $dob = request('dob'); // Misal: "15-07"
+            $dob = \Carbon\Carbon::createFromFormat('d-m', $dob)->format('1900-m-d'); // Set default tahun ke 1900
+
             $contact->manage_id  = $request->manage_id;
             $contact->is_for = 0;
             $contact->name = $request->name;
             $contact->phone = $request->phone;
             $contact->email = $request->email;
             $contact->position = $request->position;
-            $contact->dob = $request->dob ?? null;
+            $contact->dob = $dob;
             $contact->ktp = $request->ktp;
             $contact->npwp = $request->npwp;
 
