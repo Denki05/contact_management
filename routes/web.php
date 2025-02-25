@@ -2,32 +2,48 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactExportImportController;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Response;
 
+// Redirect root ke login
 Route::get('/', function () {
     return redirect('/login');
 });
 
-// Rute bawaan Laravel
+// Rute autentikasi bawaan Laravel
 Auth::routes();
 
+// Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-// Contact
-Route::get('/contact', [App\Http\Controllers\Master\ContactController::class, 'index'])->name('master.contact.index');
-Route::get('/contact/create', [App\Http\Controllers\Master\ContactController::class, 'create'])->name('master.contact.create');
-Route::post('/contact/store', [App\Http\Controllers\Master\ContactController::class, 'store'])->name('master.contact.store');
-Route::delete('/contact/{id}', [App\Http\Controllers\Master\ContactController::class, 'destroy'])->name('master.contact.destroy');
-Route::get('/contact/edit/{id}', [App\Http\Controllers\Master\ContactController::class, 'edit'])->name('master.contact.edit');
-Route::get('/contact/show/{id}', [App\Http\Controllers\Master\ContactController::class, 'show'])->name('master.contact.show');
-Route::put('/contact/update/{id}', [App\Http\Controllers\Master\ContactController::class, 'update'])->name('master.contact.update');
+// Group route yang memerlukan autentikasi
+Route::middleware(['auth'])->group(function () {
 
-// Customer
-Route::get('/customer', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('master.customer.index');
+    // Contact
+    Route::prefix('contact')->name('master.contact.')->group(function () {
+        Route::get('/index', [App\Http\Controllers\Master\ContactController::class, 'index'])->name('index');
+        Route::get('/create', [App\Http\Controllers\Master\ContactController::class, 'create'])->name('create');
+        Route::post('/store', [App\Http\Controllers\Master\ContactController::class, 'store'])->name('store');
+        Route::delete('/{id}', [App\Http\Controllers\Master\ContactController::class, 'destroy'])->name('destroy');
+        Route::get('/edit/{id}', [App\Http\Controllers\Master\ContactController::class, 'edit'])->name('edit');
+        Route::get('/show/{id}', [App\Http\Controllers\Master\ContactController::class, 'show'])->name('show');
+        Route::put('/update/{id}', [App\Http\Controllers\Master\ContactController::class, 'update'])->name('update');
+    });
 
-// Export & Import
-Route::get('/contact/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
-Route::post('/contact/import', [ContactExportImportController::class, 'import'])->name('contact.import');
+    // Customer
+    Route::get('/customer', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('master.customer.index');
 
-// product
-Route::get('/product', [App\Http\Controllers\Master\ProductController::class, 'index'])->name('master.product.index');
-Route::post('/product/upload_property/{encodedId}', [App\Http\Controllers\Master\ProductController::class, 'upload_property'])->name('master.product.upload_property');
+    // Product
+    Route::prefix('product')->name('master.product.')->group(function () {
+        Route::get('/index', [App\Http\Controllers\Master\ProductController::class, 'index'])->name('index');
+        Route::post('/upload_property/{encodedId}', [App\Http\Controllers\Master\ProductController::class, 'upload_property'])->name('upload_property');
+    });
+
+    // Export & Import Contact
+    Route::prefix('contact')->group(function () {
+        Route::get('/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
+        Route::post('/import', [ContactExportImportController::class, 'import'])->name('contact.import');
+    });
+});
+
+Route::get('/file/product/{filename}', [App\Http\Controllers\FileController::class, 'showProductFile']);

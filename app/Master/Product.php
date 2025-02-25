@@ -41,12 +41,12 @@ class Product extends Model
 
     public function getImageUrlAttribute()
     {
-        return $this->image ? storage_path('app/public/uploads/' . $this->image) : asset('default-image.png');
+        return $this->image ? asset('storage/' . ltrim(str_replace('//', '/', $this->image), '/')) : asset('default-image.png');
     }
 
     public function getImageHdUrlAttribute()
     {
-        return $this->image_hd ? storage_path('storage/' . $this->image_hd) : asset('default-image.png');
+        return $this->image_hd ? asset('storage/' . ltrim(str_replace('//', '/', $this->image_hd), '/')) : asset('default-image.png');
     }
 
     public function getVideosProduct1UrlAttribute()

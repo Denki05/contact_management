@@ -17,16 +17,26 @@ class ContactImport implements ToModel, WithHeadingRow
     public function model(array $row)
     {
         try {
-            // Pastikan semua field tersedia
+            // Pastikan field 'store' tersedia
             if (!isset($row['store']) || empty(trim($row['store']))) {
                 $this->errorMessages[] = "Kolom 'store' kosong atau tidak ditemukan.";
                 return null;
             }
 
-            // Cari store berdasarkan nama customer
-            $customer = Customer::where('name', trim($row['store']))->first();
+            // Pisahkan nama store dan kota
+            $storeParts = explode(' ', trim($row['store']));
+            $text_store = array_pop($storeParts); // Ambil bagian terakhir sebagai kota
+            $name = implode(' ', $storeParts); // Gabungkan sisanya sebagai nama store
+
+            // dd($text_store);
+
+            // Cari customer berdasarkan nama dan text_store
+            $customer = Customer::where('name', $name)
+                                ->where('text_kota', $text_store)
+                                ->first();
+
             if (!$customer) {
-                $this->errorMessages[] = "Customer dengan nama '{$row['store']}' tidak ditemukan.";
+                $this->errorMessages[] = "Customer dengan nama '{$name}' dan text_store '{$text_store}' tidak ditemukan.";
                 return null;
             }
 
@@ -50,7 +60,7 @@ class ContactImport implements ToModel, WithHeadingRow
                 'position' => $row['posisi'] ?? '',
                 'manage_id' => $customer->id, // Simpan ID Customer sebagai manage_id
                 'phone' => $row['telepon'] ?? '',
-                'dob' => $dob,
+                'dob' => $dob ?? null,
                 'email' => $row['email'] ?? '',
                 'ktp' => $row['ktp'] ?? '',
                 'npwp' => $row['npwp'] ?? '',
