@@ -24,6 +24,7 @@
             <li class="breadcrumb-item active" aria-current="page">Index</li>
         </ol>
     </nav>
+    
     <div class="row justify-content-center">
         <div class="col-md-12">
             <a href="{{ route('master.contact.create') }}" class="btn btn-success mb-3">

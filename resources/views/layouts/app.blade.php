@@ -46,6 +46,16 @@
                                 <li><a class="dropdown-item" href="{{ route('master.product.index') }}">Product</a></li>
                             </ul>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="masterMenu" role="button" data-bs-toggle="dropdown">
+                                Orders
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('orders.existing.index') }}">Exsisting</a></li>
+                                <li><a class="dropdown-item" href="">Prospek</a></li>
+                            </ul>
+                        </li>
                         @endauth
                     </ul>
 

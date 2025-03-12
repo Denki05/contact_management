@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Master\Contact;
 use App\Master\Customer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ContactController extends Controller
 {
