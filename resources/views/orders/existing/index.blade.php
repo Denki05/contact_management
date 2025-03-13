@@ -84,8 +84,14 @@
                           <td>{{ $row->status_so }}</td>
                           <td>
                             @if($row->status_so == "AWAL")
-                            <a class="btn btn-warning btn-sm" href="{{ route('orders.existing.edit', $row->id) }}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
-                            <a class="btn btn-success btn-sm" href="#" role="button"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+                              <a class="btn btn-warning btn-sm" href="{{ route('orders.existing.edit', $row->id) }}" role="button"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                              <a class="btn btn-success btn-sm btn-lanjutkan" data-id="{{ $row->id }}" role="button">
+                                  <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                              </a>
+                            @elseif($row->status_so == "LANJUTAN")
+                              <a class="btn btn-info btn-sm" href="{{ route('orders.existing.print_so', $row->id) }}" role="button" target="_blank">
+                                <i class="fa fa-print" aria-hidden="true"></i>
+                              </a>
                             @endif
                           </td>
                       </tr>
@@ -210,6 +216,26 @@
                 }
             });
         });
+
+        $('.btn-lanjutkan').on('click', function (event) {
+          event.preventDefault();
+          let id = $(this).data('id');
+
+          Swal.fire({
+              title: "Apakah Anda yakin?",
+              text: "Data akan diproses lebih lanjut!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#28a745",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya, Lanjutkan!",
+              cancelButtonText: "Batal"
+          }).then((result) => {
+              if (result.isConfirmed) {
+                window.location.href = "{{ route('orders.existing.lanjutkan', ':id') }}".replace(':id', id);
+              }
+          });
+      });
     });
 </script>
 @endsection

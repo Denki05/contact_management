@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Auth;
+use PDF;
 use DB;
 
 class ExistingController extends Controller
@@ -505,7 +506,7 @@ class ExistingController extends Controller
             // Loop untuk memperbarui atau menambahkan order item
             foreach ($request->sku as $index => $sku) {
                 $freeProduct = in_array($sku, array_keys($request->free ?? [])) ? 1 : 0;
-                
+
                 $existingItem = DB::table('penjualan_so_item')
                     ->where('so_id', $id)
                     ->where('product_packaging_id', $sku)
@@ -551,5 +552,74 @@ class ExistingController extends Controller
             \Log::error('Update Error: ' . $e->getMessage());
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
+    }
+
+    public function lanjutkan(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction(); // Mulai transaksi
+
+            $get_so = DB::table('penjualan_so')->where('id', $id)->first();
+
+            if (!$get_so) {
+                return back()->with('error', 'Data tidak ditemukan');
+            }
+
+            $update_so = DB::table('penjualan_so')->where('id', $id)->update([
+                'status' => 2,
+                'updated_by' => Auth::id(),
+            ]);
+
+            if (!$update_so) {
+                throw new \Exception("Gagal memperbarui data");
+            }
+
+            DB::commit(); // Simpan transaksi jika semua proses berhasil
+            \Log::info('Data berhasil diperbarui untuk ID: ' . $id);
+
+            return redirect()->route('orders.existing.index')->with('success', 'Data berhasil diperbarui');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            \Log::error('Update Error: ' . $e->getMessage());
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+
+    public function print_so($id)
+    {
+        // Ambil data dari database
+        $result = DB::table('penjualan_so')->where('id', $id)->first();
+        $customers = DB::table('master_customer_other_addresses')->where('id', $result->customer_other_address_id)->first();
+        $result_detail = DB::table('penjualan_so_item')
+            ->leftJoin('master_products_packaging', 'penjualan_so_item.product_packaging_id', '=', 'master_products_packaging.id')
+            ->leftJoin('master_packaging', 'master_products_packaging.packaging_id', '=', 'master_packaging.id')
+            ->select(
+                'penjualan_so_item.id as id',
+                'penjualan_so_item.price as price',
+                'penjualan_so_item.qty as qty',
+                'penjualan_so_item.disc_usd as disc_usd',
+                'master_products_packaging.code as product_code',
+                'master_products_packaging.name as product_name',
+                'master_packaging.pack_name as packaging'
+            )
+            ->where('penjualan_so_item.so_id', $result->id)
+            ->get();
+
+        $data = [
+            'result' => $result,
+            'result_detail' => $result_detail,
+            'customers' => $customers,
+        ];
+
+        // Konfigurasi DomPDF
+        $pdf = PDF::loadView('orders.existing.print_so', $data)
+                ->setPaper('A5', 'landscape')
+                ->setOptions([
+                    'isHtml5ParserEnabled' => true, 
+                    'isRemoteEnabled' => true, // Pastikan ini aktif jika Anda menggunakan font atau gambar eksternal
+                ]);
+
+        // Menghasilkan file PDF
+        return $pdf->stream("{$result->code}.pdf");
     }
 }

@@ -55,6 +55,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/get_product_kontrak', [App\Http\Controllers\Order\ExistingController::class, 'get_product_kontrak'])->name('get_product_kontrak');
         Route::get('/edit/{id}', [App\Http\Controllers\Order\ExistingController::class, 'edit'])->name('edit');
         Route::put('/update/{id}', [App\Http\Controllers\Order\ExistingController::class, 'update'])->name('update');
+        Route::get('/lanjutkan/{id}', [App\Http\Controllers\Order\ExistingController::class, 'lanjutkan'])->name('lanjutkan');
+        Route::get('/print_so/{id}', [App\Http\Controllers\Order\ExistingController::class, 'print_so'])->name('print_so');
     });
 });
 
