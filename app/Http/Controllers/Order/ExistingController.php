@@ -504,7 +504,8 @@ class ExistingController extends Controller
 
             // Loop untuk memperbarui atau menambahkan order item
             foreach ($request->sku as $index => $sku) {
-                $freeProduct = isset($request->free[$index]) ? 1 : 0;
+                $freeProduct = in_array($sku, array_keys($request->free ?? [])) ? 1 : 0;
+                
                 $existingItem = DB::table('penjualan_so_item')
                     ->where('so_id', $id)
                     ->where('product_packaging_id', $sku)

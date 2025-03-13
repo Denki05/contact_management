@@ -121,8 +121,8 @@
                                                 <input type="number" style="text-align: center;" class="form-control" name="disc[]" value="{{ $product->disc_usd }}">
                                             </td>
                                             <td class="text-center">
-                                                <input type="checkbox" class="form-check-input free-checkbox" name="free[{{ $loop->index }}]" value="1" {{ old('free.'.$loop->index, $product->free_product) ? 'checked' : '' }}>
-                                                <input type="hidden" class="free-hidden" name="free_hidden[{{ $loop->index }}]" value="0">
+                                                <input type="checkbox" class="form-check-input free-checkbox" name="free[{{ $product->product_id }}]" value="1" {{ old('free.'.$product->product_id, $product->free_product) ? 'checked' : '' }}>
+                                                <input type="hidden" class="free-hidden" name="free_hidden[{{ $product->product_id }}]" value="0">
                                             </td>
                                             <td class="text-center">
                                                 <button type="button" class="btn btn-danger btn-sm row-delete">
@@ -446,14 +446,11 @@ $(document).ready(function () {
         document.getElementById('editor').value += exp;
     }
 
-    $('.free-checkbox').on('change', function () {
-        let hiddenInput = $(this).siblings('.free-hidden');
-        if ($(this).is(':checked')) {
-            hiddenInput.val(1);
-        } else {
-            hiddenInput.val(0);
-        }
+    $(document).on('change', '.free-checkbox', function () {
+        let hiddenInput = $(this).closest('td').find('.free-hidden');
+        hiddenInput.val($(this).is(':checked') ? 1 : 0);
     });
+
 
 });
 
