@@ -88,7 +88,7 @@
                               <a class="btn btn-success btn-sm btn-lanjutkan" data-id="{{ $row->id }}" role="button">
                                   <i class="fa fa-arrow-right" aria-hidden="true"></i>
                               </a>
-                            @elseif($row->status_so == "LANJUTAN")
+                            @elseif($row->status_so == "LANJUTAN" ||  $row->status_so == "TUTUP")
                               <a class="btn btn-info btn-sm" href="{{ route('orders.existing.print_so', $row->id) }}" role="button" target="_blank">
                                 <i class="fa fa-print" aria-hidden="true"></i>
                               </a>

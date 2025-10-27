@@ -66,11 +66,11 @@
                             @endphp
 
                             <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#detailModal-{{ $product->id }}">
-                                <i class="fa fa-eye"></i>
+                                <i class="fa fa-eye"></i> Show
                             </button>
                     
                             <button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#uploadModal-{{ $encodedId }}">
-                                <i class="fa fa-upload"></i>
+                                <i class="fa fa-upload"></i> Upload
                             </button>
 
                             <!-- Modal Upload -->
@@ -130,7 +130,7 @@
                             <div class="modal fade" id="detailModal-{{ $product->id }}" 
                                 tabindex="-1" 
                                 aria-labelledby="detailModalLabel-{{ $product->id }}">
-                                <div class="modal-dialog modal-xl">
+                                <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="detailModalLabel-{{ $product->id }}">Detail Produk</h5>
@@ -216,6 +216,7 @@
         // Aktifkan DataTables
         $('#product_table').DataTable({
             pageLength: 10,
+            responsive: true,
         });
 
         // Inisialisasi Select2
@@ -247,26 +248,5 @@
         $(this).find('.progress').addClass("d-none");
         $(this).find('.progress-bar').css("width", "0%");
     });
-
-    const section = document.querySelector("section"),
-    mainVideo = document.querySelector(".main-video video"),
-     videos = document.querySelectorAll(".videos"),
-     close = document.querySelector(".close");
-
-     for (var i = 0; i < videos.length; i++) {
-       videos[i].addEventListener("click", (e)=>{
-         const target = e.target;
-         section.classList.add("active");
-         target.classList.add("active");
-         let src = document.querySelector(".videos.active video").src;
-         mainVideo.src = src;
-
-         close.addEventListener("click", ()=>{
-           section.classList.remove("active");
-           target.classList.remove("active");
-           mainVideo.src = "";
-         });
-       });
-     };
 </script>
 @endsection

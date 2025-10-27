@@ -3,20 +3,37 @@
 namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\SoftDeletes;
+// use Alfa6661\AutoNumber\AutoNumberTrait;
 
 class Product extends Model
 {
-    protected $fillable = [
-        'packaging_id', 'category_id', 'brand_reference_id', 'sub_brand_reference_id', 'brand_name', 'count_pack',
-        'code', 'name', 'material_code', 'material_name', 'material_code_optional', 'material_name_optional', 'alias', 'description', 
-        'default_quantity', 'default_unit_id', 'ratio', 'default_warehouse_id', 
-        'vendor_id', 'vendor_optional_id', 'buying_price', 'selling_price', 'image', 'image_hd', 'videos_product_1', 'videos_product_2',
-        'status', 'product_finance_tax', 'gender'
-    ];
-    protected $table = 'master_products';
-    public $incrementing = false;
+    use SoftDeletes;
 
+    protected $fillable = [
+                        'id', 
+                        'product_id', 
+                        'warehouse_id', 
+                        'packaging_id', 
+                        'category_id', 
+                        'type_id', 
+                        'material_code', 
+                        'material_name', 
+                        'code', 
+                        'name',
+                        'price', 
+                        'gender', 
+                        'note', 
+                        'product_finance_tax', 
+                        'status',
+                        'condition',
+                        'updated_by',
+                        'deleted_by',
+                    ];
+
+    protected $table = 'master_products_packaging';
+    public $incrementing = false;
+    
     const NOTE = [
         'BEST SELLER',
         'NEW',
@@ -33,29 +50,82 @@ class Product extends Model
 
     const STATUS = [
         'DELETED' => 0,
-        'ACTIVE' => 1,
-        'INACTIVE' => 2,
-        'ENABLE' => 3,
-        'DISABLE' => 4
+        'ACTIVE' => 1
     ];
 
-    public function getImageUrlAttribute()
+    const CONDITION = [
+        'ENABLE' => 0, 
+        'DISABLE' => 1, 
+    ];
+
+    public function product()
     {
-        return $this->image ? url('file/product/' . basename($this->image)) : asset('default-image.png');
+        return $this->belongsTo('App\Entities\Master\Product', 'product_id', 'id');
     }
-    
-    public function getImageHdUrlAttribute()
+
+    public function type_product_pack()
     {
-        return $this->image_hd ? url('file/product/' . basename($this->image_hd)) : asset('default-image.png');
+        return $this->belongsTo('App\Entities\Master\ProductType', 'type_id', 'id');
     }
-    
-    public function getVideoProductUrlAttribute()
+
+    public function category_product_pack()
     {
-        return $this->videos_product_1 ? url('file/product/' . basename($this->videos_product_1)) : null;
+        return $this->belongsTo('App\Entities\Master\ProductCategory', 'category_id', 'id');
     }
-    
-    public function getVideoSosmedUrlAttribute()
+
+    public function cashback()
     {
-        return $this->videos_product_2 ? url('file/product/' . basename($this->videos_product_2)) : null;
+        return $this->hasMany('App\Entities\Master\ProductCategoryType', 'product_packaging_id');
+    }
+
+    public function warehouse()
+    {
+        return $this->belongsTo('App\Entities\Master\Warehouse', 'warehouse_id');
+    }
+
+    public function packaging()
+    {
+        return $this->belongsTo('App\Master\Packaging', 'packaging_id');
+    }
+
+    public function setting_price_log()
+    {
+        return $this->hasMany('App\Entities\Penjualan\SettingPriceLog', 'product_packaging_id');
+    }
+
+    public function status()
+    {
+        return array_search($this->status, self::STATUS);
+    }
+
+    public function condition()
+    {
+        return array_search($this->condition, self::CONDITION);
+    }
+
+    public function kemasan()
+    {
+        $id_product = $this->id;
+        
+        $pecah = explode("-", $id_product);
+
+        $packaging = Packaging::find($pecah[1]);
+
+        return $packaging;
+    }
+
+    public function receiving_detail()
+    {
+        return $this->hasMany('App\Entities\Gudang\ReceivingDetail', 'product_packaging_id', 'id');
+    }
+
+    public function so_detail()
+    {
+        return $this->hasMany('App\Entities\Penjualan\SalesOrderItem', 'product_packaging_id');
+    }
+
+    public function stock_adjustments()
+    {
+        return $this->hasMany('App\Entities\Gudang\StockAdjustment', 'product_packaging_id');
     }
 }

@@ -23,7 +23,8 @@
                     </div>
                     <div class="col">
                         <label for="dob" class="form-label">DOB</label>
-                        <input type="date" class="form-control" id="dob" name="dob" value="{{ old('dob', $contact->dob) }}">
+                        <input type="date" class="form-control" id="dob" name="dob"
+                            value="{{ old('dob', $contact->dob ? \Carbon\Carbon::parse($contact->dob)->format(date('Y') . '-m-d') : '') }}">
                     </div>
                 </div>
 

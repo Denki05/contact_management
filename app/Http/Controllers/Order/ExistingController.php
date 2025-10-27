@@ -620,6 +620,6 @@ class ExistingController extends Controller
                 ]);
 
         // Menghasilkan file PDF
-        return $pdf->stream("{$result->code}.pdf");
+        return $pdf->stream("{$result->so_code}.pdf");
     }
 }
