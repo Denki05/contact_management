@@ -13,34 +13,22 @@ Route::get('/', function () {
 });
 
 // Rute autentikasi bawaan Laravel
-
 Auth::routes();
 Route::get('/direct-login/{userId}', [AuthController::class, 'directLogin']);
 
 // Home
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 
 // Group route yang memerlukan autentikasi
-
 Route::middleware(['auth'])->group(function () {
-
-
-
     // Contact
-
     Route::prefix('contact')->name('master.contact.')->group(function () {
-
         // Rute untuk New Contact (Pilih Customer)
-
         Route::get('/new', [App\Http\Controllers\Master\ContactController::class, 'newContact'])->name('new'); 
-
         // Rute untuk Find Contact (List Kontak)
-
         Route::get('/find', [App\Http\Controllers\Master\ContactController::class, 'index'])->name('find'); // Mengganti index lama
-
 
 
         // Rute Create (Input Contact) - Sekarang akan menerima customer_id

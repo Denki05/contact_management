@@ -15,6 +15,6 @@ class AuthController extends Controller
         Auth::login($user);
 
         // redirect ke /home
-        return redirect()->route('home');
+        return redirect()->route('report.doctor.index');
     }
 }

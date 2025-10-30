@@ -1365,196 +1365,75 @@ class CustomerProspekController extends Controller
     
 
     private function getCombinedCustomerData()
-
     {
-
-        // Definisikan Model Anak Prospek (untuk konstanta PENGAJUAN)
-
-        $CustomerProspekModel = new \App\Master\CustomerProspek(); 
-
-        // Definisikan Model Parent Prospek (untuk konstanta STATUS)
-
-        $StoreProspekModel = new \App\Master\StoreProspek(); 
-
-    
-
-        // --- 1. AMBIL DATA PROSPEK SAJA ---
+        $CustomerProspekModel = new \App\Master\CustomerProspek();
+        $StoreProspekModel = new \App\Master\StoreProspek();
 
         $prospek = \App\Master\CustomerProspek::with(['store_prospek', 'store_prospek.category'])
-
             ->whereHas('store_prospek', function ($query) use ($StoreProspekModel) {
-
-                // Tampilkan semua prospek kecuali yang Deleted
-
-                $query->where('status', '!=', $StoreProspekModel::STATUS['DELETED']); 
-
+                $query->where('status', '!=', $StoreProspekModel::STATUS['DELETED']);
             })
-
             ->get()
-
             ->map(function($member) use ($CustomerProspekModel) {
-
                 $parent = $member->store_prospek;
+                if (!$parent) return null;
 
-                
-
-                if (!$parent) return null; 
-
-                
-
-                $pengajuanList = $CustomerProspekModel::PENGAJUAN; 
-
-                $pengajuanValue = $parent->pengajuan ?? $member->pengajuan ?? null; 
-
-    
-
-                // Pastikan Anda mendapatkan STATUS string dari konstanta untuk ditampilkan
-
+                $pengajuanList = $CustomerProspekModel::PENGAJUAN;
+                $pengajuanValue = $parent->pengajuan ?? $member->pengajuan ?? null;
                 $statusString = $parent->status ?? 'N/A';
 
-    
-
                 return (object) [
-
-                    'ID' => $parent->id, 
-
-                    'TYPE' => 'PROSPEK', 
-
+                    'ID' => $parent->id,
+                    'TYPE' => 'PROSPEK',
                     'NAMA' => $parent->name,
-
                     'MAPPING_KATEGORI' => $parent->category->name ?? 'N/A',
-
-                    'PENGAJUAN' => $pengajuanList[$pengajuanValue] ?? 'N/A', 
-
-                    'PIC_STORE' => $parent->pic ?? 'N/A', 
-
+                    'PENGAJUAN' => $pengajuanList[$pengajuanValue] ?? 'N/A',
+                    'PIC_STORE' => $parent->pic ?? 'N/A',
                     'OFFICER_MEMBER' => $member->officer ?? 'N/A',
-
-                    'TEXT_KOTA' => $parent->text_kota, 
-
-                    'TEXT_PROVINSI' => $parent->text_provinsi, 
-
-                    'STATUS_SAAT_INI' => $statusString, 
-
+                    'TEXT_KOTA' => $parent->text_kota,
+                    'TEXT_PROVINSI' => $parent->text_provinsi,
+                    'STATUS_SAAT_INI' => $statusString,
                 ];
-
             })
-
             ->filter()
+            ->unique('ID')
+            ->sortBy(function ($item) {
+                return mb_strtolower(trim($item->PIC_STORE ?? '')) . '|' .
+                       mb_strtolower(trim($item->TEXT_PROVINSI ?? '')) . '|' .
+                       mb_strtolower(trim($item->TEXT_KOTA ?? '')) . '|' .
+                       mb_strtolower(trim($item->NAMA ?? ''));
+            })->values();
 
-            // Hapus duplikasi Store Prospek (Parent)
-
-            ->unique('ID'); 
-
-    
-
-        // --------------------------------------------------------------------------
-
-        // --- 2. PENGURUTAN ABJAD ASC (PIC > PROVINSI > KOTA > NAMA) ---
-
-        // --------------------------------------------------------------------------
-
-        
-
-        // Menggunakan mb_strtolower(trim(...)) untuk pengurutan abjad A-Z yang case-insensitive
-
-        return $prospek->sortBy(function ($item) {
-
-            
-
-            // 1. PIC
-
-            $pic = mb_strtolower(trim($item->PIC_STORE ?? ''));
-
-            // 2. PROVINSI
-
-            $provinsi = mb_strtolower(trim($item->TEXT_PROVINSI ?? ''));
-
-            // 3. KOTA
-
-            $kota = mb_strtolower(trim($item->TEXT_KOTA ?? ''));
-
-            // 4. NAMA
-
-            $nama = mb_strtolower(trim($item->NAMA ?? '')); 
-
-            
-
-            // Penggabungan ini secara otomatis mengurutkan ASCENDING (A-Z) pada setiap tingkat
-
-            return $pic . '|' . $provinsi . '|' . $kota . '|' . $nama; 
-
-            
-
-        })->values();
-
+        return $prospek;
     }
-
-    
 
     public function exportStatusTemplate()
-
     {
-
         $data = $this->getCombinedCustomerData();
-
         $filename = 'template_update_status_all_member_' . now()->format('Ymd_His') . '.xlsx';
 
-        
-
         return Excel::download(new StatusUpdateExport($data), $filename);
-
     }
-
-
 
     public function importStatusUpdate(Request $request)
-
     {
-
         $request->validate([
-
             'file' => 'required|file|mimes:xlsx,xls|max:10240'
-
         ]);
 
-
-
         try {
-
-            // Gunakan kelas Import yang sudah kita definisikan logikanya
-
             Excel::import(new StatusUpdateImport, $request->file('file'));
-
-
-
             return redirect()->back()->with('success', 'Update status customer berhasil dilakukan.');
-
-            
-
         } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-
-             $failures = $e->failures();
-
-             $message = 'Gagal update: Terdapat data yang tidak valid dalam file Excel. Contoh error: ' . $failures[0]->errors()[0] . ' pada baris ' . $failures[0]->row();
-
-             \Illuminate\Support\Facades\Log::error("Excel Validation Error: " . json_encode($failures));
-
-             return redirect()->back()->with('error', $message);
-
-
-
+            $failures = $e->failures();
+            $message = 'Gagal update: ' . $failures[0]->errors()[0] . ' pada baris ' . $failures[0]->row();
+            \Illuminate\Support\Facades\Log::error("Excel Validation Error: " . json_encode($failures));
+            return redirect()->back()->with('error', $message);
         } catch (\Exception $e) {
-
             \Illuminate\Support\Facades\Log::error("Excel Import Status Update Error: " . $e->getMessage());
-
-            return redirect()->back()->with('error', 'Terjadi kesalahan server saat memproses file: ' . $e->getMessage());
-
+            return redirect()->back()->with('error', 'Terjadi kesalahan server: ' . $e->getMessage());
         }
-
     }
-
-    
 
     private function formatCompanyName($name)
 
@@ -1626,7 +1505,7 @@ class CustomerProspekController extends Controller
 
         }
 
-    
+
 
         return $name;
 
@@ -1635,74 +1514,41 @@ class CustomerProspekController extends Controller
     
 
     public function normalized(Request $request)
-
     {
-
         DB::beginTransaction();
 
-    
-
         try {
-
             // 1️⃣ Normalisasi Parent (StoreProspek)
-
             StoreProspek::whereNotNull('name')->chunk(200, function ($records) {
-
                 foreach ($records as $store) {
-
                     $normalized = $this->formatCompanyName($store->name);
 
-    
-
                     if ($normalized !== $store->name) {
-
                         $store->update(['name' => $normalized]);
-
                     }
 
-    
-
                     // Sync child yg member_default = YES
-
                     CustomerProspek::where('customer_id', $store->id)
-
                         ->where('member_default', 1)
-
                         ->whereNotNull('name')
-
                         ->update(['name' => $normalized]);
-
                 }
-
             });
 
     
 
             // 2️⃣ Normalisasi Child Non-Default
-
             CustomerProspek::whereNotNull('name')
-
                 ->where('member_default', 0)
-
                 ->chunk(200, function ($children) {
-
                     foreach ($children as $child) {
-
                         $normalized = $this->formatCompanyName($child->name);
 
-    
-
                         if ($normalized !== $child->name) {
-
                             $child->update(['name' => $normalized]);
-
                         }
-
                     }
-
                 });
-
-    
 
             DB::commit();
 

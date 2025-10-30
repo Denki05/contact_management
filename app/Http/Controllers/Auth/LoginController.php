@@ -55,6 +55,8 @@ class LoginController extends Controller
     public function authenticated(Request $request, $user)
     {
         session()->flash('welcome_message', true);
-        return redirect()->intended('/home');
+
+        // Langsung redirect ke halaman FileDoctor
+        return redirect()->route('report.doctor.index');
     }
 }
