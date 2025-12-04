@@ -6,23 +6,32 @@ use App\Http\Controllers\Master\CustomerProspekController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Auth;
 
 // Redirect root ke login
 Route::get('/', function () {
-    return redirect('/login');
+    if (Auth::check()) {
+        // Jika sudah login → arahkan ke halaman report dokter
+        return redirect()->route('report.doctor.index');
+    } else {
+        // Jika belum login → arahkan ke halaman login
+        return redirect('/login');
+    }
 });
 
 // Rute autentikasi bawaan Laravel
 Auth::routes();
+
 Route::get('/direct-login/{userId}', [AuthController::class, 'directLogin']);
+Route::get('/direct-login-user', [AuthController::class, 'directLoginuser'])
+     ->name('direct-login-user');
 
 // Home
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-
 // Group route yang memerlukan autentikasi
 Route::middleware(['auth'])->group(function () {
+
     // Contact
     Route::prefix('contact')->name('master.contact.')->group(function () {
         // Rute untuk New Contact (Pilih Customer)
@@ -30,204 +39,160 @@ Route::middleware(['auth'])->group(function () {
         // Rute untuk Find Contact (List Kontak)
         Route::get('/find', [App\Http\Controllers\Master\ContactController::class, 'index'])->name('find'); // Mengganti index lama
 
-
         // Rute Create (Input Contact) - Sekarang akan menerima customer_id
-
         Route::get('/create/{manage_id}', [App\Http\Controllers\Master\ContactController::class, 'create'])->name('create');
-
         
-
         Route::post('/store', [App\Http\Controllers\Master\ContactController::class, 'store'])->name('store');
-
         Route::delete('/{id}', [App\Http\Controllers\Master\ContactController::class, 'destroy'])->name('destroy');
-
         Route::get('/edit/{id}', [App\Http\Controllers\Master\ContactController::class, 'edit'])->name('edit');
-
         Route::get('/show/{id}', [App\Http\Controllers\Master\ContactController::class, 'show'])->name('show');
-
         Route::put('/update/{id}', [App\Http\Controllers\Master\ContactController::class, 'update'])->name('update');
-
+        
+        // Partial untuk AJAX
+        Route::get('/partial', [App\Http\Controllers\Master\ContactController::class, 'partialIndex'])->name('partialIndex');
+        Route::get('/partial/create', [App\Http\Controllers\Master\ContactController::class, 'partialCreate'])->name('partial_create');
     });
 
-
-
     // Customer
-
     Route::get('/customer', [App\Http\Controllers\Master\CustomerController::class, 'index'])->name('master.customer.index');
-
     
-
     // Customer Prosepk
-
      Route::prefix('customer_prospek')->name('master.customer_prospek.')->group(function () {
-
         Route::get('/index', [App\Http\Controllers\Master\CustomerProspekController::class, 'index'])->name('index');
-
         Route::get('/create', [App\Http\Controllers\Master\CustomerProspekController::class, 'create'])->name('create');
-
         Route::post('/store', [App\Http\Controllers\Master\CustomerProspekController::class, 'store'])->name('store');
-
         Route::post('/getkabupaten', [App\Http\Controllers\Master\CustomerProspekController::class, 'getkabupaten'])->name('getkabupaten');
-
         Route::post('/getkecamatan', [App\Http\Controllers\Master\CustomerProspekController::class, 'getkecamatan'])->name('getkecamatan');
-
         Route::post('/getkelurahan', [App\Http\Controllers\Master\CustomerProspekController::class, 'getkelurahan'])->name('getkelurahan');
-
         Route::post('/getzipcode', [App\Http\Controllers\Master\CustomerProspekController::class, 'getzipcode'])->name('getzipcode');
-
         Route::post('/ajax_handler', [App\Http\Controllers\Master\CustomerProspekController::class, 'handleAjax'])->name('handle_ajax');
-
         Route::get('template/export', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportTemplate'])->name('export_template');
-
         Route::post('import', [App\Http\Controllers\Master\CustomerProspekController::class, 'importBatch'])->name('import_batch');
-
         Route::delete('/destroy/{id}', [App\Http\Controllers\Master\CustomerProspekController::class, 'destroy'])
-
         ->name('destroy');
-
-        // Export PDF gabungan (existing + prospek)
-
-        Route::get('/export-pdf', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportPdf'])->name('export_pdf');
-
-    
-
-        // Export PDF khusus existing
-
-        Route::get('/export-pdf-existing', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportExistingPdf'])->name('export_pdf_existing');
-
-    
-
-        // Export PDF khusus prospek
-
-        Route::get('/export-pdf-prospek', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportProspekPdf'])->name('export_pdf_prospek');
+        
+        // BENAR — partial memakai controller agar customers & kategori terisi
+        Route::get('/partial', [App\Http\Controllers\Master\CustomerProspekController::class, 'partial'])
+            ->name('partial');
 
         
-
+        // Export PDF gabungan (existing + prospek)
+        Route::get('/export-pdf', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportPdf'])->name('export_pdf');
+    
+        // Export PDF khusus existing
+        Route::get('/export-pdf-existing', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportExistingPdf'])->name('export_pdf_existing');
+    
+        // Export PDF khusus prospek
+        Route::get('/export-pdf-prospek', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportProspekPdf'])->name('export_pdf_prospek');
+        
         Route::get('export-status-template', [App\Http\Controllers\Master\CustomerProspekController::class, 'exportStatusTemplate'])->name('export_status_template');
-
         Route::post('import-status-update', [App\Http\Controllers\Master\CustomerProspekController::class, 'importStatusUpdate'])->name('import_status_update');
-
-
+        
         // ✅ Route Normalisasi Nama
             Route::post('/normalize', 
                 [App\Http\Controllers\Master\CustomerProspekController::class, 'normalized']
             )->name('normalize');
+            
+        Route::get('/partial-create', 
+            [App\Http\Controllers\Master\CustomerProspekController::class, 'partialCreate']
+        )->name('partial_create');
     });
-
     
-
     // Product Prospek
-
     Route::prefix('product_prospek')->name('master.product_prospek.')->group(function () {
-
         Route::get('/index', [App\Http\Controllers\Master\ProductProspekController::class, 'index'])->name('index');
-
         Route::post('/store', [App\Http\Controllers\Master\ProductProspekController::class, 'store'])->name('store');
-
         Route::get('/show/{id}', [App\Http\Controllers\Master\ProductProspekController::class, 'show'])->name('show');
-
         Route::put('/update/{id}', [App\Http\Controllers\Master\ProductProspekController::class, 'update'])->name('update'); 
-
         Route::get('/api/existing', [App\Http\Controllers\Master\ProductProspekController::class, 'getExistingProducts'])->name('api.existing');
-
     });
-
-
 
     // Product
-
     Route::prefix('product')->name('master.product.')->group(function () {
-
         Route::get('/index', [App\Http\Controllers\Master\ProductController::class, 'index'])->name('index');
-
         Route::post('/upload_property/{encodedId}', [App\Http\Controllers\Master\ProductController::class, 'upload_property'])->name('upload_property');
-
     });
-
-
 
     // Export & Import Contact
-
     Route::prefix('contact')->group(function () {
-
         Route::get('/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
-
         Route::post('/import', [ContactExportImportController::class, 'import'])->name('contact.import');
-
     });
-
     
-
     // Route::prefix('existing')->name('orders.existing.')->group(function () {
-
     //     Route::get('/index', [App\Http\Controllers\Order\ExistingController::class, 'index'])->name('index');
-
     //     Route::get('/create/{step}/{brand}/{customer}/{type}/{indent}', [App\Http\Controllers\Order\ExistingController::class, 'create'])->name('create');
-
     //     Route::post('/store', [App\Http\Controllers\Order\ExistingController::class, 'store'])->name('store');
-
     //     Route::post('/get_product_pack', [App\Http\Controllers\Order\ExistingController::class, 'get_product_pack'])->name('get_product_pack');
-
     //     Route::get('/search_kontrak/{id}/{merek}', [App\Http\Controllers\Order\ExistingController::class, 'search_kontrak'])->name('search_kontrak');
-
     //     Route::post('/get_product_kontrak', [App\Http\Controllers\Order\ExistingController::class, 'get_product_kontrak'])->name('get_product_kontrak');
-
     //     Route::get('/edit/{id}', [App\Http\Controllers\Order\ExistingController::class, 'edit'])->name('edit');
-
     //     Route::put('/update/{id}', [App\Http\Controllers\Order\ExistingController::class, 'update'])->name('update');
-
     //     Route::get('/lanjutkan/{id}', [App\Http\Controllers\Order\ExistingController::class, 'lanjutkan'])->name('lanjutkan');
-
     //     Route::get('/print_so/{id}', [App\Http\Controllers\Order\ExistingController::class, 'print_so'])->name('print_so');
-
     // });
-
     
-
     Route::prefix('report')->group(function () {
-
         Route::prefix('doctor')->name('report.doctor.')->group(function () {
-
             Route::get('/index', [App\Http\Controllers\Report\FileDoctorController::class, 'index'])->name('index');
-
             Route::get('/excel-view/{officer}/{prov}/{kota}/{name}', [App\Http\Controllers\Report\FileDoctorController::class, 'viewExcel']);
-
             Route::get('/excel-data/{officer}/{prov}/{kota}/{name}', [App\Http\Controllers\Report\FileDoctorController::class, 'excelData'])->name('data');
-
             Route::get('/cities', [App\Http\Controllers\Report\FileDoctorController::class, 'getCitiesByOfficer'])->name('cities');\// routes/web.php
-
             Route::get('/agenda', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaIndex'])->name('agenda');
-
             Route::get('/agenda-data', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaData'])->name('agenda.data');
+            Route::get('/calendar-data', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaCalendarData'])->name('calendar.data');
 
-            Route::get('/detail/{customerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'getDoctorByCustomer'])->name('detail');
-
+            Route::get('/detail/{officerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'getDoctorVisitsByOfficer'])->name('detail');
             Route::get('/file-doctor/market-list', [App\Http\Controllers\Report\FileDoctorController::class, 'marketListPdf'])->name('filedoctor.marketListPdf');
-
             
-
             Route::get('/sampling', [App\Http\Controllers\Report\FileDoctorController::class, 'samplingReport'])
-
             ->name('sampling');
+            
+            Route::get('/get-list-market', [App\Http\Controllers\Report\FileDoctorController::class, 'getListMarket'])->name('getListMarket');
+            Route::get('/file-doctor/market-list', [App\Http\Controllers\Report\FileDoctorController::class, 'marketListPdf'])->name('filedoctor.marketListPdf');
+            
+            Route::get('/get-provinsi-by-zona', [App\Http\Controllers\Report\FileDoctorController::class, 'getProvinsiByZona'])
+                ->name('getProvinsiByZona');
+                
+            Route::get('/get-kota-by-provinsi', [App\Http\Controllers\Report\FileDoctorController::class, 'getKotaByProvinsi'])
+                ->name('getKotaByProvinsi');
+                
+            Route::get('/file-doctor/market-list-excel', [App\Http\Controllers\Report\FileDoctorController::class, 'downloadNationalExcel'])
+                ->name('filedoctor.marketListExcel');
+                
+            Route::get('/file-doctor/market-list-excel2', [App\Http\Controllers\Report\FileDoctorController::class, 'downloadNationalStatusExcel'])
+                ->name('filedoctor.marketListExcel2');
+                
+            Route::get('/export-pdf/{officerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'exportDoctorPDF'])
+                ->name('export.pdf');
 
-        });
-
+            Route::get('/export-pdf-all/{officerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'exportDoctorPDFAll'])
+                ->name('export.pdf.all');
+                
+            Route::get('/file-doctor/sampling-quotation', [App\Http\Controllers\Report\FileDoctorController::class, 'getSamplingQuotation'])
+                ->name('samplingQuotation');
+                
+            Route::get('/file-doctor/doctor-market', [App\Http\Controllers\Report\FileDoctorController::class, 'getDoctorMarket'])
+                ->name('getDoctorMarket');
+                
+            Route::get('/pdf-all', 
+                [App\Http\Controllers\Report\FileDoctorController::class, 'pdfAllAgenda']
+            )->name('pdf.all');
     
-
-        Route::prefix('pic')->name('report.pic.')->group(function () {
-
-            Route::get('/index', [App\Http\Controllers\Report\PicReportController::class, 'index'])->name('index');
-
-            Route::post('/generate-report', [App\Http\Controllers\Report\PicReportController::class, 'generateReport'])->name('generate');
-
+            Route::get('/pdf-date/{tanggal}', 
+                [App\Http\Controllers\Report\FileDoctorController::class, 'pdfPerDateAgenda']
+            )->name('pdf.date');
+            
+            Route::post('/report/preview', [App\Http\Controllers\Report\FileDoctorController::class, 'preview'])
+                ->name('report.doctor.preview');
         });
-
+    
+        Route::prefix('pic')->name('report.pic.')->group(function () {
+            Route::get('/index', [App\Http\Controllers\Report\PicReportController::class, 'index'])->name('index');
+            Route::post('/generate-report', [App\Http\Controllers\Report\PicReportController::class, 'generateReport'])->name('generate');
+        });
     });
-
-
 
 });
-
-
 
 Route::get('/file/product/{filename}', [App\Http\Controllers\FileController::class, 'showProductFile']);
