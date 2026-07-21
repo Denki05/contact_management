@@ -67,6 +67,10 @@
 </style>
 
 <div class="container-fluid px-3">
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     @if(session('failed_imports'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Peringatan Import!</strong> Import selesai, namun ditemukan {{ count(session('failed_imports')) }} data yang gagal.
@@ -130,6 +134,7 @@
                 <i class="fa fa-file-excel"></i> Import / Export
             </button>
             
+<<<<<<< HEAD
             
             <!--<button type="button" class="btn btn-info btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#updateStatusModal">-->
             <!--    <i class="fa fa-sync-alt"></i> Update Status Massal-->
@@ -145,6 +150,25 @@
             <!--        <i class="bi bi-check2-square"></i> Normalisasi Nama-->
             <!--    </button>-->
             <!--</form>-->
+=======
+            @if(auth::id() == 1)
+            <button type="button" class="btn btn-info btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
+                <i class="fa fa-sync-alt"></i> Update Status Massal
+            </button>
+            @endif
+
+            @if(auth::id() == 1)
+            <form action="{{ route('master.customer_prospek.normalize') }}"
+                method="POST"
+                class="d-inline-block ms-2"
+                onsubmit="return confirm('Apakah Anda yakin ingin menormalisasi seluruh nama? Proses ini permanen!')">
+                @csrf
+                <button type="submit" class="btn btn-warning btn-sm">
+                    <i class="bi bi-check2-square"></i> Normalisasi Nama
+                </button>
+            </form>
+            @endif
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
 
@@ -203,9 +227,15 @@
                     @php
                         $website = null;
                         if ($customer->type == 'prospek') {
+<<<<<<< HEAD
                             $website = $customer->website;
                         } elseif ($customer->type == 'existing') {
                             $website = $customer->website;
+=======
+                            $website = optional($customer->store_prospek)->website;
+                        } elseif ($customer->type == 'existing') {
+                            $website = optional($customer->store_existing)->website;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                         }
     
                         // Normalisasi agar "-" atau kosong dianggap null
@@ -227,11 +257,19 @@
     
                 {{-- Mapping & PIC --}}
                 @if ($customer->type == 'prospek')
+<<<<<<< HEAD
                     <td>{{ $customer->category_name ?? '-' }}</td>
                     <td>{{ $customer->pic ?? '-' }}</td>
                 @else
                     <td>{{ $customer->category_name ?? '-' }}</td>
                     <td>{{ $customer->pic ?? '-' }}</td>
+=======
+                    <td>{{ optional(optional($customer->store_prospek)->category)->name ?? '-' }}</td>
+                    <td>{{ optional($customer->store_prospek)->pic ?? '-' }}</td>
+                @else
+                    <td>{{ optional(optional($customer->store_existing)->category)->name ?? '-' }}</td>
+                    <td>{{ optional($customer->store_existing)->pic ?? '-' }}</td>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 @endif
     
                 {{-- Officer --}}

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<<<<<<< HEAD
 <style>
 /* --- Utilities & Table Styles --- */
 .max-width-lg { max-width: 992px; margin: 0 auto; }
@@ -228,14 +229,122 @@ body {
             <button type="button" class="btn btn-outline-danger fw-bold px-0 d-flex align-items-center justify-content-center flex-shrink-0" id="btnLogout" style="height: 26px; font-size: 11px; width: 75px; gap: 4px;">
                 <span style="font-size: 12.5px;">LOGOUT</span>
             </button>
+=======
+{{-- Kontainer Utama dengan max-width 992px di desktop, lebar penuh di mobile --}}
+<div class="container max-width-lg pb-5" style="background-color:#1e2227; min-height:100vh;">
+    
+    {{-- Header Utama: Pilihan Officer dan Navigasi dalam satu baris --}}
+    <div class="header-section mb-2 pt-2"> 
+        
+        {{-- Flex container untuk menempatkan Pilih Officer dan Navigasi sejajar --}}
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-stretch align-items-md-center gap-2">
+            
+            {{-- Tombol Dropdown Pilih Officer --}}
+            <div class="dropdown officer-dropdown flex-shrink-0" id="officerDropdownContainer">
+                <button id="btnSelectOfficer" class="btn btn-light fw-semibold py-2 rounded-pill shadow-sm flex-shrink-0 dropdown-toggle" 
+                    type="button" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false"
+                    style="min-width: 180px;"
+                >
+                    <i class="bi bi-person-circle me-2"></i> 
+                    <span id="selectedOfficer" data-officer-id="" class="fw-bold">Pilih Officer</span> 
+                    <i class="bi bi-chevron-down ms-1"></i>
+                </button>
+
+                {{-- Konten Dropdown Menu --}}
+                <div class="dropdown-menu p-2 shadow-lg officer-list-menu" aria-labelledby="btnSelectOfficer">
+                    
+                    {{-- Input Pencarian --}}
+                    <div class="px-2 pb-2">
+                        <div class="input-group shadow-sm rounded-pill overflow-hidden">
+                            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search"></i></span>
+                            <input type="text" id="searchOfficer" class="form-control border-start-0" placeholder="Cari nama officer..." style="border: none;">
+                        </div>
+                    </div>
+                    
+                    {{-- Daftar Officer DINAMIS --}}
+                    <ul id="officerList" class="list-group list-group-flush officer-list-container">
+                        @forelse ($officers as $officer)
+                            <li 
+                                class="list-group-item list-group-item-action officer-item d-flex justify-content-between align-items-center" 
+                                data-id="{{ $officer->officer }}" 
+                                data-name="{{ $officer->officer }}"
+                            >
+                                <span class="fw-medium">{{ $officer->officer }}</span>
+                                <i class="bi bi-arrow-right-circle text-primary"></i>
+                            </li>
+                        @empty
+                            <li class="list-group-item text-center text-danger">Data officer tidak ditemukan.</li>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+
+            {{-- Navigasi Kategori (Tab Navigasi Biasa) DITAMBAH Tombol LOGOUT --}}
+            {{-- Menggunakan d-grid gap-2 untuk membuat tombol logout di sebelah kanan navigasi --}}
+            <div class="d-flex flex-grow-1 gap-1">
+                <div class="btn-group nav-tabs-mobile flex-grow-1" role="group">
+                    <button type="button" class="btn btn-dark-outline fw-semibold nav-button" id="btnAgenda" disabled>
+                        AGENDA
+                    </button>
+                    <button type="button" class="btn btn-dark-outline fw-semibold nav-button" id="btnMarket" disabled>
+                        LIST MARKET
+                    </button>
+                    <button type="button" class="btn btn-dark-outline fw-semibold nav-button" id="btnBrowser" disabled>
+                        BROWSER
+                    </button>
+                    <button type="button" class="btn btn-dark-outline fw-semibold nav-button" id="btnLaporan" disabled>
+                        LAPORAN
+                    </button>
+                </div>
+                
+                {{-- DROPDOWN USER (MENGGANTIKAN TOMBOL LOGOUT) --}}
+                <!--<div class="dropdown flex-shrink-0">-->
+                <!--    <button class="btn btn-danger fw-semibold px-3 py-2 rounded-pill shadow-sm dropdown-toggle"-->
+                <!--            type="button"-->
+                <!--            id="dropdownUserMenu"-->
+                <!--            data-bs-toggle="dropdown"-->
+                <!--            aria-expanded="false">-->
+                <!--        <i class="bi bi-person-circle me-1"></i>-->
+                <!--        {{ Auth::user()->username ?? 'User' }}-->
+                <!--    </button>-->
+                
+                <!--    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="dropdownUserMenu">-->
+                <!--        <li>-->
+                <!--            <a class="dropdown-item text-danger fw-semibold" href="#"-->
+                <!--               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">-->
+                <!--                <i class="bi bi-box-arrow-right me-2"></i> Logout-->
+                <!--            </a>-->
+                <!--        </li>-->
+                <!--    </ul>-->
+                
+                <!--    {{-- FORM LOGOUT --}}-->
+                <!--    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">-->
+                <!--        @csrf-->
+                <!--    </form>-->
+                <!--</div>-->
+                <button type="button" id="btnLogout" class="btn btn-danger fw-semibold px-3 py-2 rounded-pill shadow-sm flex-shrink-0">
+                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                </button>
+
+            </div>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
     
     {{-- Area Konten (Card Utama) --}}
+<<<<<<< HEAD
     <div class="card p-2 p-md-2 bg-dark-card shadow-lg rounded-2 mt-1" id="dynamicContainer">
         <div id="contentArea" class="text-center text-muted">
             <p class="text-white" style="font-size: 11.5px;"></p>
             <p class="text-secondary m-0" style="font-size: 11.5px;"></p>
+=======
+    <div class="card p-2 p-md-2 bg-dark-card shadow-lg rounded-2">
+        <div id="contentArea" class="text-center text-muted">
+            <p class="text-white">Pilih Officer Dahulu.</p>
+            <p class="text-secondary m-0" style="font-size: 0.9rem;">Navigasi akan aktif setelah pemilihan.</p>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
 </div>
@@ -245,6 +354,10 @@ body {
     @csrf
 </form>
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <div class="modal fade" id="samplingModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -261,6 +374,7 @@ body {
 @endsection
 
 @push('scripts')
+<<<<<<< HEAD
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 // Pastikan FullCalendar JS dan CSS (termasuk locale 'id') sudah dimuat di layout utama!
@@ -268,6 +382,13 @@ const AGENDA_DATA_URL = '{{ route("report.doctor.agenda.data") }}';
 
 document.addEventListener("DOMContentLoaded", function () {
     // 1. Ambil semua elemen yang dibutuhkan
+=======
+<script>
+// Pastikan FullCalendar JS dan CSS (termasuk locale 'id') sudah dimuat di layout utama!
+const AGENDA_DATA_URL = '{{ route("report.doctor.agenda.data") }}'; 
+
+document.addEventListener("DOMContentLoaded", function () {
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     const btnSelectOfficer = document.getElementById("btnSelectOfficer");
     const officerDropdown = new bootstrap.Dropdown(btnSelectOfficer); 
     const selectedOfficerSpan = document.getElementById("selectedOfficer");
@@ -276,6 +397,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const officerListContainer = document.getElementById("officerList");
     const navButtons = document.querySelectorAll(".nav-button");
     const btnLogout = document.getElementById("btnLogout");
+<<<<<<< HEAD
     
     // Elemen tambahan untuk logika baru
     const itemAll = document.getElementById("itemAll");
@@ -305,12 +427,15 @@ document.addEventListener("DOMContentLoaded", function () {
              console.log(`Mensimulasikan render untuk ${featureName} dengan Officer: ${officerId}`);
         }
     }
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // --- Pencarian Officer ---
     searchInput.addEventListener("keyup", function () {
         const keyword = this.value.toLowerCase();
         const officerItems = officerListContainer.querySelectorAll(".officer-item"); 
         officerItems.forEach(item => {
+<<<<<<< HEAD
             const name = item.dataset.name.toLowerCase();
             if (item.classList.contains('officer-item')) {
                 // Jangan sembunyikan item jika dia punya class d-none (seperti item 'All' saat mode Agenda)
@@ -385,12 +510,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // --- Penanganan Pemilihan Officer dari List ---
+=======
+            const name = item.textContent.toLowerCase();
+            if (item.classList.contains('officer-item')) {
+                item.style.display = name.includes(keyword) ? "flex" : "none";
+            }
+        });
+    });
+
+    // --- Klik Officer (Menggunakan Event Delegation) ---
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     officerListContainer.addEventListener("click", function(event) {
         const item = event.target.closest(".list-group-item.officer-item");
         if (item) {
             const name = item.dataset.name;
             const id = item.dataset.id;
             
+<<<<<<< HEAD
             // 1. Update Label Terpilih
             selectedOfficerSpan.textContent = name;
             selectedOfficerSpan.dataset.officerId = id;
@@ -421,17 +557,91 @@ document.addEventListener("DOMContentLoaded", function () {
                         <h6>Officer <span class="text-info fw-bold">${name}</span> berhasil dipilih!</h6>
                     </div>
                 `;
+=======
+            // 1. Update Officer Terpilih
+            selectedOfficerSpan.textContent = name;
+            selectedOfficerSpan.dataset.officerId = id;
+            
+            officerDropdown.hide(); 
+
+            // 2. Aktifkan Tombol Navigasi dan hapus highlight nav sebelumnya
+            navButtons.forEach(btn => {
+                btn.removeAttribute('disabled');
+                btn.classList.remove('active-nav');
+            });
+            
+            // 3. Update Area Konten (Reset)
+            contentArea.innerHTML = `
+                <div class="text-white mt-5">
+                    <i class="bi bi-check-circle-fill fs-1 text-success mb-3"></i>
+                    <h4>Officer <span class="text-info fw-bold">${name}</span> berhasil dipilih!</h4>
+                    <p class="text-secondary">Silakan jelajahi data menggunakan Navigasi di atas.</p>
+                </div>
+            `;
+            
+            // 4. Highlight Officer Terpilih di dropdown
+            officerListContainer.querySelectorAll(".officer-item").forEach(i => {
+                i.classList.remove("active", "bg-primary", "text-white");
+                const icon = i.querySelector('i');
+                if (icon) {
+                    icon.classList.replace('bi-check-circle-fill', 'bi-arrow-right-circle');
+                }
+            });
+            item.classList.add("active", "bg-primary", "text-white");
+            const itemIcon = item.querySelector('i');
+            if (itemIcon) {
+                itemIcon.classList.replace('bi-arrow-right-circle', 'bi-check-circle-fill'); 
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             }
         }
     });
 
+<<<<<<< HEAD
     // --- Logout ---
+=======
+    // --- Penanganan Klik Tombol Navigasi ---
+    navButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            if (this.disabled) return; 
+
+            const officerName = selectedOfficerSpan.textContent;
+            const officerId = selectedOfficerSpan.dataset.officerId;
+            const feature = this.textContent.trim();
+            
+            if (!officerId || officerName === 'Pilih Officer') {
+                alert("Harap pilih Officer terlebih dahulu.");
+                return;
+            }
+
+            // Highlight tombol yang aktif
+            navButtons.forEach(btn => btn.classList.remove('active-nav'));
+            this.classList.add('active-nav');
+            
+            // Tampilkan status loading sebelum memuat konten
+            contentArea.innerHTML = `
+                <div class="text-white mt-5">
+                    <div class="spinner-border text-info" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <h4>Memuat data ${feature} untuk <span class="text-info fw-bold">${officerName}</span>...</h4>
+                    <p class="text-secondary">Tunggu sebentar...</p>
+                </div>
+            `;
+            
+            // Panggil fungsi pemuat konten utama
+            loadContent(feature, officerId, contentArea);
+        });
+    });
+    
+    // --- Penanganan Klik Tombol Logout BARU ---
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     if (btnLogout) {
         btnLogout.addEventListener('click', function(e) {
             e.preventDefault();
             document.getElementById('logout-form').submit();
         });
     }
+<<<<<<< HEAD
     
     // =====================================================================
     // AUTOLOAD / FIRST LOAD
@@ -446,6 +656,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Inisialisasi: Hapus blokir navigasi awal
     // (Kode lama yang men-disable navigasi sudah dihapus)
+=======
+
+    // Inisialisasi: Pastikan tombol navigasi disabled saat pertama kali dimuat
+    if (selectedOfficerSpan.dataset.officerId === "" || selectedOfficerSpan.textContent === 'Pilih Officer') {
+        navButtons.forEach(btn => btn.setAttribute('disabled', ''));
+    }
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 });
 
 // =========================================================================
@@ -470,6 +687,7 @@ function loadContent(feature, officerId, targetElement) {
     const oldScript = document.getElementById('fullCalendarScript');
     if (oldStyle) oldStyle.remove();
     if (oldScript) oldScript.remove();
+<<<<<<< HEAD
     
     if (!window.pdfjsLib) {
         const s = document.createElement('script');
@@ -3090,6 +3308,807 @@ function loadContent(feature, officerId, targetElement) {
         // Initial Load
         loadData('listMarketArea');
     } else if (featureName === 'BROWSER') {
+=======
+
+    if (featureName === 'AGENDA') { 
+
+        // --- 1. Style ---
+        const agendaStyle = `
+            /* ==================== FullCalendar Styles ==================== */
+            #calendar { 
+                max-width: 950px; 
+                margin: -5px auto 10px auto; 
+                font-size: 0.9rem;
+            }
+        
+            .fc-toolbar { margin-bottom: 2px; }
+            .fc-toolbar-title { font-size: 1rem; font-weight: 500; color: #f8f9fa; } 
+        
+            .fc-prev-button, .fc-next-button { 
+                background-color: #0d6efd !important; 
+                border: none !important; 
+                padding: 5px 8px !important; 
+                font-size: 0.8rem !important;
+                border-radius: 6px !important;
+            }
+        
+            .fc-col-header-cell-cushion { 
+                padding: 2px 0; 
+                font-size: 0.85rem; 
+                color: #000; 
+                background-color: #fff; 
+            }
+        
+            .fc-daygrid-day { 
+                padding: 1px !important; 
+                cursor: pointer; 
+                line-height: 1.2; 
+                border: 1px solid #3e444b; 
+            }
+        
+            .fc-daygrid-day-number { 
+                font-size: 0.8rem; 
+                padding: 4px; 
+                color: #f8f9fa; 
+                font-weight: 500; 
+            }
+        
+            .fc-day-today { background-color: rgba(25, 135, 84, 0.4) !important; } 
+            .fc-day-other { background-color: #24292f !important; } 
+            .fc-day-other .fc-daygrid-day-number { visibility: hidden; }
+        
+            .fc-event { 
+                padding: 0 4px !important; 
+                margin: 1px 0 !important; 
+                font-size: 0.7rem !important; 
+                line-height: 1.2 !important; 
+                height: 18px;
+                border-radius: 4px !important;
+                font-weight: 500;
+            }
+        
+            /* ==================== Task Card Colors ==================== */
+            .card-task {
+                border-radius: 5px;
+                padding: 10px 15px;
+                margin-bottom: 5px;
+                color: #f8f9fa;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                text-align: left;
+            }
+        
+            .card-task.status-1 { background-color: #fff !important; color: #000; }
+            .card-task.status-2 { background-color: #198754 !important; color: #fff; }
+            .card-task.status-3 { background-color: #dc3545 !important; color: #fff !important; }
+        
+            .card-task p { margin: 0; font-size: 0.9rem; }
+        
+            /* ==================== Modal: Tinggi Selalu Stabil ==================== */
+            #agendaModal .modal-dialog {
+                max-width: 900px;
+                width: 100%;
+            }
+        
+            /* Modal harus fix-height agar tidak berubah-ubah */
+            #agendaModal .modal-content {
+                height: 78vh;
+                max-height: 78vh;
+                display: flex;
+                flex-direction: column;
+            }
+        
+            #agendaModal .modal-header {
+                flex-shrink: 0;
+            }
+        
+            /* Body tidak scroll – isi di dalamnya yang scroll */
+            #agendaModal .modal-body {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+                min-height: 0;
+            }
+        
+            /* ==================== Tabs ==================== */
+            .custom-agenda-tabs { 
+                display: flex; 
+                width: 100%; 
+                border-bottom: 1px solid #444; 
+                flex-shrink: 0;
+            }
+        
+            .custom-agenda-tabs .nav-item { flex: 1; }
+        
+            .custom-agenda-tabs .nav-link { 
+                width: 100%; 
+                text-align: center; 
+                padding: 10px 0 !important; 
+                border-radius: 6px 6px 0 0 !important; 
+                background-color: #1e1e1e; 
+                color: #cfcfcf; 
+                border: 1px solid #333 !important; 
+                margin-right: 4px; 
+                transition: background 0.15s, color 0.15s; 
+                font-size: 0.9rem; 
+            }
+        
+            .custom-agenda-tabs .nav-link:last-child { margin-right: 0; }
+        
+            .custom-agenda-tabs .nav-link.active { 
+                background-color: #0d6efd !important; 
+                color: #fff !important; 
+                border-bottom: 2px solid #0a58ca !important; 
+            }
+        
+            /* ==================== Empty Message ==================== */
+            #no-agenda-per-tab {
+                position: absolute;
+                top: 30%;                        /* Tidak terlalu tengah agar tidak aneh */
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        
+            #no-agenda-per-tab p {
+                margin: 0;
+                font-size: 0.95rem;
+            }
+        
+            /* ==================== Task Layout ==================== */
+            .task-container {
+                flex: 1;
+                display: flex;
+                gap: 8px;
+                min-height: 0;
+            }
+        
+            .task-container .flex-grow-1 {
+                display: flex;
+                flex-direction: column;
+                min-height: 0;
+            }
+        
+            /* Area task ini yang scroll */
+            #agenda-tasks {
+                flex: 1;
+                overflow-y: auto;
+                min-height: 0;
+            }
+            
+            #agendaModal .modal-footer {
+                flex-shrink: 0;
+            }
+        
+            /* ==================== Navigation Buttons ==================== */
+            .nav-btn-wrapper {
+                width: 52px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+        
+            #modal-prev-btn,
+            #modal-next-btn {
+                min-width: 40px;
+                height: 40px;
+                border-radius: 6px;
+                background-color: #0d6efd;
+                color: #fff;
+                border: none;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+        `;
+    
+        // --- 2. DOM ---
+        const agendaDom = `
+        <div class="container-fluid px-3">
+            <div id="calendar"></div>
+        </div>
+    
+        <div class="modal fade" id="agendaModal" tabindex="-1" aria-labelledby="agendaModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg position-relative">
+                <div class="modal-content bg-dark-card border-0">
+    
+                    <div class="modal-header bg-primary text-white py-2">
+                        <h6 class="modal-title">
+                            Detail Agenda: <span id="current-modal-date"></span>
+                        </h6>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+    
+                    <div class="modal-body">
+    
+                        <!-- TAB MENU -->
+                        <ul class="nav nav-tabs custom-agenda-tabs mb-3" id="agendaTabMenu">
+                            <li class="nav-item"><button class="nav-link active" data-type="0">Agenda</button></li>
+                            <li class="nav-item"><button class="nav-link" data-type="1">Tagihan</button></li>
+                            <li class="nav-item"><button class="nav-link" data-type="2">Sampling</button></li>
+                        </ul>
+    
+                        <!-- TASK LIST -->
+                        <div class="task-container">
+                            <div class="nav-btn-wrapper"><button id="modal-prev-btn">&lt;</button></div>
+                        
+                            <div class="flex-grow-1 position-relative">
+                                <div id="agenda-tasks"></div>
+                        
+                                <!-- NO AGENDA moved inside task-container -->
+                                <div id="no-agenda-per-tab" class="text-center py-2 d-none position-absolute top-50 start-50 translate-middle">
+                                    <p class="lead fw-bold" style="color: #ffffff; text-shadow: 0 0 4px rgba(0,0,0,0.7);">
+                                        Tidak ada data agenda.
+                                    </p>
+                                </div>
+                            </div>
+                        
+                            <div class="nav-btn-wrapper"><button id="modal-next-btn">&gt;</button></div>
+                        </div>
+    
+                        <div id="pagination-wrapper" class="text-center mt-1"></div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+        `;
+    
+        // --- 3. Script ---
+        const agendaScript = `
+        (function() {
+            const OFFICER_PARAM = "${officerId}";
+            const calendarEl = document.getElementById('calendar');
+            let currentModalDate = null;
+            let activeTypeAgenda = 0;
+    
+            let currentPage = 1;
+            const itemsPerPage = 10;
+            let paginatedTasks = [];
+    
+            const modalElement = document.getElementById('agendaModal');
+            const agendaModalInstance = new bootstrap.Modal(modalElement);
+    
+            function formatIndonesianDate(date) {
+                return date.toLocaleDateString('id-ID', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+            }
+    
+            function formatIndonesianDateTime(dateStr) {
+                if (!dateStr) return 'Waktu tidak tersedia';
+            
+                const d = new Date(dateStr); // ISO+offset akan terbaca benar
+            
+                const weekday = d.toLocaleDateString('id-ID', { weekday: 'long' });
+                const day     = String(d.getDate()).padStart(2,'0');
+                const month   = d.toLocaleDateString('id-ID', { month: 'long' });
+                const year    = d.getFullYear();
+                const hours   = String(d.getHours()).padStart(2,'0');
+                const minutes = String(d.getMinutes()).padStart(2,'0');
+                const seconds = String(d.getSeconds()).padStart(2,'0');
+            
+                return weekday + ', ' + day + ' ' + month + ' ' + year + ' ' + hours + ':' + minutes + ':' + seconds;
+            }
+
+            function formatDateToISO(date) {
+                const d = new Date(date);
+                d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+                return d.toISOString().split('T')[0];
+            }
+    
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                themeSystem: 'bootstrap5',
+                locale: 'id',
+                firstDay: 1,
+                showNonCurrentDates: false,
+                headerToolbar: { left: 'prev', center: 'title', right: 'next' },
+                events: {
+                    url: AGENDA_DATA_URL,
+                    extraParams: () => ({ officer: OFFICER_PARAM }),
+                    failure: () => alert('Gagal memuat data agenda.')
+                },
+                dateClick: function(info) {
+                    if (info.dayEl.classList.contains('fc-day-other')) return;
+                    currentModalDate = info.date;
+                    showAgendaModal(currentModalDate, calendar);
+                },
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    currentModalDate = new Date(info.event.start);
+                    showAgendaModal(currentModalDate, calendar);
+                }
+            });
+    
+            calendar.render();
+    
+            document.querySelectorAll('#agendaTabMenu .nav-link').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('#agendaTabMenu .nav-link').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    activeTypeAgenda = this.getAttribute('data-type');
+                    if (currentModalDate) showAgendaModal(currentModalDate, calendar);
+                });
+            });
+    
+            function showAgendaModal(dateObject, calendarInstance) {
+                currentModalDate = dateObject;
+                const formattedDate = formatDateToISO(dateObject);
+                const displayDate = formatIndonesianDate(dateObject);
+                document.getElementById('current-modal-date').innerText = displayDate;
+    
+                const events = calendarInstance.getEvents().filter(event => {
+                    if (!event.start) return false;
+                    return formatDateToISO(new Date(event.start)) === formattedDate;
+                });
+    
+                const taskContainer = document.getElementById('agenda-tasks');
+                const noAgendaPerTab = document.getElementById('no-agenda-per-tab');
+    
+                taskContainer.innerHTML = '';
+                noAgendaPerTab.classList.add('d-none');
+    
+                let collectedTasks = [];
+                events.forEach(event => {
+                    const props = event.extendedProps || {};
+                    const listTask = props.keterangan_task || [];
+                    listTask.forEach(task => {
+                        if (String(task.type_agenda) === String(activeTypeAgenda)) 
+                            collectedTasks.push(task);
+                    });
+                });
+    
+                paginatedTasks = collectedTasks;
+                currentPage = 1;
+    
+                renderPaginatedTasks();
+    
+                if (!modalElement.classList.contains('show')) agendaModalInstance.show();
+            }
+    
+            function renderPaginatedTasks() {
+                const taskContainer = document.getElementById('agenda-tasks');
+                const noAgendaPerTab = document.getElementById('no-agenda-per-tab');
+            
+                taskContainer.innerHTML = '';
+            
+                if (paginatedTasks.length === 0) {
+                    noAgendaPerTab.classList.remove('d-none');
+                    document.getElementById('pagination-wrapper').innerHTML = '';
+                    return;
+                }
+            
+                noAgendaPerTab.classList.add('d-none');
+            
+                const start = (currentPage - 1) * itemsPerPage;
+                const end = start + itemsPerPage;
+                const sliced = paginatedTasks.slice(start, end);
+            
+                let number = start + 1;
+            
+                sliced.forEach(task => {
+                    const card = document.createElement('div');
+                    card.classList.add('card-task', 'status-' + task.status);
+            
+                    const createdAt = task.created_at ? formatIndonesianDateTime(task.created_at) : 'Waktu tidak tersedia';
+            
+                    const p = document.createElement('p');
+                    p.className = 'fw-medium';
+                    p.setAttribute('title', createdAt);
+            
+                    const strong = document.createElement('strong');
+                    strong.textContent = number + '. ';
+            
+                    p.appendChild(strong);
+                    p.appendChild(document.createTextNode(task.keterangan || ''));
+                    card.appendChild(p);
+            
+                    taskContainer.appendChild(card);
+            
+                    setTimeout(() => { try { new bootstrap.Tooltip(p); } catch(err){} }, 20);
+            
+                    number++;
+                });
+            
+                renderPaginationButtons();
+            }
+
+    
+            function renderPaginationButtons() {
+                const wrapper = document.getElementById('pagination-wrapper');
+                const totalPages = Math.ceil(paginatedTasks.length / itemsPerPage);
+            
+                if (totalPages <= 1) {
+                    wrapper.innerHTML = '';
+                    return;
+                }
+            
+                // Gunakan string biasa + konkatenasi (hindari backtick di dalam agendaScript yang juga dipakai backtick)
+                wrapper.innerHTML =
+                    '<button class="btn btn-sm btn-primary me-2" id="page-prev" ' + (currentPage === 1 ? 'disabled' : '') + '>Prev</button>' +
+                    '<span class="text-white">' + currentPage + ' / ' + totalPages + '</span>' +
+                    '<button class="btn btn-sm btn-primary ms-2" id="page-next" ' + (currentPage === totalPages ? 'disabled' : '') + '>Next</button>';
+            
+                var prevBtn = document.getElementById('page-prev');
+                var nextBtn = document.getElementById('page-next');
+            
+                if (prevBtn) {
+                    prevBtn.onclick = function() {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            renderPaginatedTasks();
+                        }
+                    };
+                }
+            
+                if (nextBtn) {
+                    nextBtn.onclick = function() {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            renderPaginatedTasks();
+                        }
+                    };
+                }
+            }
+    
+    
+            document.getElementById('modal-prev-btn').addEventListener('click', () => {
+                if (currentModalDate) {
+                    const d = new Date(currentModalDate);
+                    d.setDate(d.getDate() - 1);
+                    showAgendaModal(d, calendar);
+                }
+            });
+            document.getElementById('modal-next-btn').addEventListener('click', () => {
+                if (currentModalDate) {
+                    const d = new Date(currentModalDate);
+                    d.setDate(d.getDate() + 1);
+                    showAgendaModal(d, calendar);
+                }
+            });
+    
+        })();
+        `;
+    
+        // --- 4. Render DOM dan Style ---
+        const styleElement = document.createElement('style');
+        styleElement.id = 'fullCalendarStyle';
+        styleElement.textContent = agendaStyle;
+        document.head.appendChild(styleElement);
+    
+        targetElement.innerHTML = agendaDom;
+    
+        const newScript = document.createElement('script');
+        newScript.id = 'fullCalendarScript'; 
+        newScript.textContent = agendaScript;
+        document.body.appendChild(newScript); 
+    } else if (featureName === 'LIST MARKET') {
+        const officerId = selectedOfficerSpan.dataset.officerId;
+        const officerName = selectedOfficerSpan.textContent.trim() || 'Officer Tertentu';
+    
+        const zones = [
+            "JABODETABEK",
+            "JABAR",
+            "JATENG - JATIM",
+            "SUMATERA",
+            "BALI - KALIMANTAN - SULAWESI"
+        ];
+    
+        const provinces = @json($provinces ?? []);
+        const cities = @json($cities ?? []);
+    
+        // --- Opsi Zona, Provinsi, Kota
+        let zoneOptions = `<option value="">Semua Zona</option>`;
+        zones.forEach(z => zoneOptions += `<option value="${z}">${z}</option>`);
+    
+        let provinceOptions = `<option value="">Semua Provinsi</option>`;
+        provinces.forEach(p => provinceOptions += `<option value="${p}">${p}</option>`);
+    
+        let cityOptions = `<option value="">Semua Kota</option>`;
+        cities.forEach(c => cityOptions += `<option value="${c}">${c}</option>`);
+    
+        // --- Render Struktur HTML
+        targetElement.innerHTML = `
+            <div class="d-flex flex-wrap align-items-center">
+                <h6 class="text-white mb-0 me-2">List Nasional :</h6>
+                <div class="btn-group">
+                    <a href="{{ route('master.customer_prospek.export_pdf') }}" target="_blank" 
+                       class="btn btn-danger btn-sm rounded-pill">
+                        <i class="bi bi-file-earmark-pdf me-1"></i> PDF
+                    </a>
+                    <a href="{{ route('report.doctor.filedoctor.marketListExcel') }}" target="_blank" 
+                       class="btn btn-success btn-sm rounded-pill ms-1">
+                        <i class="bi bi-file-earmark-excel me-1"></i> Excel
+                    </a>
+                    <a href="{{ route('report.doctor.filedoctor.marketListExcel2') }}" target="_blank" 
+                       class="btn btn-success btn-sm rounded-pill ms-1">
+                        <i class="bi bi-file-earmark-excel me-1"></i> Excel 2
+                    </a>
+                </div>
+            </div>
+    
+            <hr class="my-1" style="margin-top:2px; margin-bottom:4px;"/>
+    
+            <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+                <h6 class="text-white mb-0 me-2">Officer :</h6>
+                <form id="marketFilterForm" 
+                      class="d-flex flex-nowrap align-items-center gap-2 flex-grow-1 mb-0"
+                      style="margin-top:-3px;">
+                    <select class="form-select form-select-sm bg-dark-input text-dark border-secondary" 
+                            id="zoneFilter" name="zona" style="width: 150px;">
+                        ${zoneOptions}
+                    </select>
+    
+                    <select class="form-select form-select-sm bg-dark-input text-dark border-secondary" 
+                            id="provinceFilter" name="provinsi" style="width: 150px;">
+                        ${provinceOptions}
+                    </select>
+    
+                    <select class="form-select form-select-sm bg-dark-input text-dark border-secondary" 
+                            id="cityFilter" name="kota" style="width: 150px;">
+                        ${cityOptions}
+                    </select>
+    
+                    <button type="submit" id="btnFilter" class="btn btn-sm btn-primary rounded-pill">
+                        <i class="bi bi-funnel"></i>
+                    </button>
+                    <button type="button" id="btnDownloadProv" class="btn btn-sm btn-warning rounded-pill">
+                        <i class="bi bi-download"></i>
+                    </button>
+                </form>
+            </div>
+    
+            <hr class="my-1" style="margin-top:2px; margin-bottom:3px;"/>
+    
+            <div id="pdfActionArea" class="mt-1" style="margin-top:0!important;">
+                <div class="alert alert-info text-center py-1 mb-0">
+                    Silakan gunakan filter untuk melihat List Market berdasarkan Officer.
+                </div>
+            </div>
+        `;
+    
+        // ----------------------------------------------------------------------------------
+        // START: LOGIC JAVASCRIPT
+        // ----------------------------------------------------------------------------------
+    
+        function base64UrlEncode(str) {
+            return btoa(str).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+        }
+    
+        // --- Event Listener Tombol Download Zoning
+        function updateDownloadProvUrl() {
+            const officerId = selectedOfficerSpan.dataset.officerId;
+            if (officerId) {
+                const zona = document.getElementById('zoneFilter').value.trim().toUpperCase();
+                const prov = document.getElementById('provinceFilter').value.trim().toUpperCase();
+                const kota = document.getElementById('cityFilter').value.trim().toUpperCase();
+                const pdfUrl = `{{ route('report.doctor.filedoctor.marketListPdf') }}?officer=${officerId}&zona=${zona}&provinsi=${prov}&kota=${kota}`;
+                $('#btnDownloadProv').data('pdf-url', pdfUrl); 
+            }
+        }
+    
+        updateDownloadProvUrl();
+        document.getElementById('marketFilterForm').addEventListener('change', updateDownloadProvUrl);
+    
+        $(document).on('click', '#btnDownloadProv', function (e) {
+            e.preventDefault();
+            const pdfUrl = $(this).data('pdf-url');
+            if (!pdfUrl) return alert('Silakan pilih officer terlebih dahulu.');
+            window.open(pdfUrl, '_blank');
+        });
+    
+        // --- Event Listener Tombol Filter
+        document.getElementById('marketFilterForm').addEventListener('submit', function(e){
+            e.preventDefault();
+    
+            const officerId = selectedOfficerSpan.dataset.officerId;
+            const zona = document.getElementById('zoneFilter').value.trim().toUpperCase();
+            const prov = document.getElementById('provinceFilter').value.trim().toUpperCase();
+            const kota = document.getElementById('cityFilter').value.trim().toUpperCase();
+            const actionArea = document.getElementById('pdfActionArea');
+    
+            actionArea.innerHTML = `<div class="text-center py-4"><div class="spinner-border text-light"></div></div>`;
+    
+            fetch(`{{ route('report.doctor.getListMarket') }}?officer=${officerId}&zona=${zona}&provinsi=${prov}&kota=${kota}`)
+            .then(res => res.json())
+            .then(response => {
+                let allData = [...response.existing, ...response.prospek];
+    
+                // --- Sorting data
+                allData.sort((a, b) => {
+                    const kategoriCompare = (a.kategori ?? '').localeCompare(b.kategori ?? '');
+                    if(kategoriCompare !== 0) return kategoriCompare;
+    
+                    const provCompare = (a.text_provinsi ?? '').localeCompare(b.text_provinsi ?? '');
+                    if(provCompare !== 0) return provCompare;
+    
+                    const kotaCompare = (a.text_kota ?? '').localeCompare(b.text_kota ?? '');
+                    if(kotaCompare !== 0) return kotaCompare;
+    
+                    return (a.name ?? '').localeCompare(b.name ?? '');
+                });
+    
+                if(allData.length === 0){
+                    actionArea.innerHTML = `<div class="alert alert-warning text-center mt-3">Tidak ditemukan data List Market untuk filter ini.</div>`;
+                    return;
+                }
+    
+                // --- Grup Data berdasarkan Kategori
+                const groupedData = allData.reduce((acc, curr) => {
+                    const category = curr.kategori || 'Tanpa Kategori';
+                    if (!acc[category]) acc[category] = [];
+                    acc[category].push(curr);
+                    return acc;
+                }, {});
+    
+                // --- Render Card + Table langsung per kategori
+                let combinedHtml = ``;
+    
+                // Urutan kategori yang diinginkan
+                const kategoriOrder = [
+                    'Umum (semua prospek)',
+                    'Agen - perfumery trusted',
+                    'Smreseller',
+                    'Bigreseller',
+                    'Smperfumery',
+                    'Bigperfumery',
+                    'Umum project (semua prospek)',
+                    'Home industri pkrt',
+                    'Home industri kosmetik',
+                    'Industri pkrt (PPN)',
+                    'Industri kosmetik (PPN)'
+                ];
+    
+                const kategoriKeys = Object.keys(groupedData);
+    
+                // Urutkan berdasarkan custom order
+                kategoriKeys.sort((a, b) => {
+                    const indexA = kategoriOrder.findIndex(k => k.toLowerCase() === a.toLowerCase());
+                    const indexB = kategoriOrder.findIndex(k => k.toLowerCase() === b.toLowerCase());
+                    if (indexA === -1 && indexB === -1) return a.localeCompare(b);
+                    if (indexA === -1) return 1;
+                    if (indexB === -1) return -1;
+                    return indexA - indexB;
+                });
+    
+                // Render tabel
+                kategoriKeys.forEach(kategori => {
+                    const dataArray = groupedData[kategori];
+                    const totalCount = dataArray.length;
+                    const cardId = 'card-' + kategori.replace(/\s/g, '_');
+    
+                    combinedHtml += `
+                        <div class="mb-3">
+                            <div class="card bg-white border-primary shadow-sm cursor-pointer"
+                                 id="${cardId}"
+                                 data-bs-toggle="collapse"
+                                 data-bs-target="#collapse-${cardId}"
+                                 aria-expanded="false"
+                                 aria-controls="collapse-${cardId}">
+                                <div class="card-body py-2 d-flex justify-content-between align-items-center">
+                                    <h6 class="card-title text-primary mb-0">${kategori}</h6>
+                                    <p class="card-text mb-0">Total Data: <strong>${totalCount}</strong></p>
+                                </div>
+                            </div>
+    
+                            <div class="collapse mt-2" id="collapse-${cardId}">
+                                <div class="card card-body bg-white">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                                <tr style="font-size: 0.9em;">
+                                                    <th style="width: 20px;">#</th>
+                                                    <th style="width: 120px;">PROVINSI</th>
+                                                    <th style="width: 120px;">KOTA</th>
+                                                    <th style="width: 180px;">MAPPING</th>
+                                                    <th style="width: 200px;">NAMA</th>
+                                                    <th style="width: 80px;">SOURCE</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="font-size: 0.8em;">
+                    `;
+    
+                    dataArray.forEach((c, index) => {
+                        const rowClass = c.status?.toLowerCase() === 'existing' ? 'row-existing' :
+                                         c.status?.toLowerCase() === 'prospek' ? 'row-prospek' : '';
+                        const customerId = c.customer_id ?? c.id;
+                        const encodedId = base64UrlEncode(customerId);
+                        const officer = encodeURIComponent(officerId);
+    
+                        combinedHtml += `
+                            <tr class="${rowClass}">
+                                <td>${index + 1}</td>
+                                <td>${c.text_provinsi ?? '-'}</td>
+                                <td>${c.text_kota ?? '-'}</td>
+                                <td>${c.kategori ?? '-'}</td>
+                                <td><a href="#" class="open-customer" data-customer-id="${encodedId}" data-officer="${officer}">${c.name ?? '-'}</a></td>
+                                <td>${c.pengajuan ?? '-'}</td>
+                            </tr>
+                        `;
+                    });
+    
+                    combinedHtml += `
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+    
+                actionArea.innerHTML = combinedHtml;
+    
+                // --- Pasang event delegation untuk link customer
+                actionArea.addEventListener('click', function(e){
+                    const target = e.target;
+                    if(target && target.classList.contains('open-customer')){
+                        e.preventDefault();
+                        const encodedId = target.dataset.customerId;
+                        const officer = target.dataset.officer;
+                        const url = `https://sys-af.lsfragrance.id/file-doctor/customer-one-time/${encodedId}?officer=${officer}`;
+                        window.open(url, '_blank');
+                    }
+                });
+
+            })
+            .catch(err=>{
+                console.error(err);
+                actionArea.innerHTML = `<div class="alert alert-danger text-center mt-3">Terjadi kesalahan saat memuat data.</div>`;
+            });
+        });
+    
+        // --- Event: Filter Zona -> Provinsi -> Kota
+        document.getElementById('zoneFilter').addEventListener('change', function(){
+            const zona = this.value;
+            const provSelect = document.getElementById('provinceFilter');
+            const citySelect = document.getElementById('cityFilter');
+    
+            provSelect.innerHTML = `<option value="">Memuat provinsi...</option>`;
+            citySelect.innerHTML = `<option value="">Semua Kota</option>`;
+    
+            if(!zona){
+                provSelect.innerHTML = `<option value="">Semua Provinsi</option>`;
+                @json($provinces ?? []).forEach(p => {
+                    provSelect.innerHTML += `<option value="${p}">${p}</option>`;
+                });
+                return;
+            }
+    
+            fetch(`{{ route('report.doctor.getProvinsiByZona') }}?zona=${encodeURIComponent(zona)}`)
+            .then(res=>res.json())
+            .then(data=>{
+                provSelect.innerHTML = `<option value="">Semua Provinsi</option>`;
+                data.forEach(p => provSelect.innerHTML += `<option value="${p}">${p}</option>`);
+            }).catch(err=>{
+                console.error(err);
+                provSelect.innerHTML = `<option value="">Gagal memuat data</option>`;
+            });
+        });
+    
+        document.getElementById('provinceFilter').addEventListener('change', function(){
+            const provinsi = this.value;
+            const zona = document.getElementById('zoneFilter').value;
+            const citySelect = document.getElementById('cityFilter');
+    
+            citySelect.innerHTML = `<option value="">Memuat kota...</option>`;
+    
+            if(!provinsi || !zona){
+                citySelect.innerHTML = `<option value="">Semua Kota</option>`;
+                return;
+            }
+    
+            fetch(`{{ route('report.doctor.getKotaByProvinsi') }}?zona=${encodeURIComponent(zona)}&provinsi=${encodeURIComponent(provinsi)}`)
+            .then(res=>res.json())
+            .then(data=>{
+                citySelect.innerHTML = `<option value="">Semua Kota</option>`;
+                data.forEach(k => citySelect.innerHTML += `<option value="${k}">${k}</option>`);
+            }).catch(err=>{
+                console.error(err);
+                citySelect.innerHTML = `<option value="">Gagal memuat data</option>`;
+            });
+        });
+    }  else if (featureName === 'BROWSER') {
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         contentArea.innerHTML = `
         <div class="container-fluid px-3">
             <div class="row">
@@ -3116,17 +4135,42 @@ function loadContent(feature, officerId, targetElement) {
                 <!-- Frame B: Konten Kanan -->
                 <div class="col-12 col-md-9">
                     <div class="p-1 bg-white border rounded h-100 d-flex flex-column shadow-sm" style="min-height:80vh;">
+<<<<<<< HEAD
+=======
+                        
+                        <!-- Header -->
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                         <div id="reviewCaption" class="mb-1 flex-shrink-1" style="font-size: 0.90em;">
                             <div class="fw-semibold text-primary" id="reviewHeaderTitle"></div>
                             <div class="text-muted fst-italic small text-center" id="reviewHeaderHint">
                                 Silakan tentukan tanggal dan pilih salah satu menu di kiri untuk menampilkan data.
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div id="reviewCardsWrapper" class="flex-grow-1" style="overflow-y: auto; max-height: 70vh; padding-right:4px; padding-left:4px;">
                             <div id="reviewContent"></div>
                         </div>
                     </div>
                 </div>
+=======
+
+                        <!-- Bagian konten scroll: fix 70vh -->
+                        <div id="reviewCardsWrapper"
+                            class="flex-grow-1"
+                            style="overflow-y:auto; height:50vh; padding-right:4px; padding-left:4px;">
+                            <div id="reviewContent"></div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div id="reviewPagination"
+                            class="d-flex justify-content-center align-items-center gap-1 p-2 border-top"
+                            style="position: sticky; bottom: 0; background:#fff; z-index:50;">
+                        </div>
+
+                    </div>
+                </div>
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             </div>
         </div>
     
@@ -3349,6 +4393,7 @@ function loadContent(feature, officerId, targetElement) {
             const startDate = document.getElementById('modalStartDate')?.value || '';
             const endDate = document.getElementById('modalEndDate')?.value || '';
             const selectedOfficer = document.getElementById('selectedOfficer')?.dataset.officerId || '';
+<<<<<<< HEAD
         
             // --- Header sticky ---
             const reviewHeaderTitle = document.getElementById('reviewHeaderTitle');
@@ -3375,12 +4420,38 @@ function loadContent(feature, officerId, targetElement) {
             frameB.innerHTML = "";
         
             // --- Group Data ---
+=======
+
+            // --- Header sticky ---
+            const reviewHeaderTitle = document.getElementById('reviewHeaderTitle');
+            reviewHeaderTitle.innerHTML = `
+                <div class="d-flex justify-content-between align-items-start bg-white px-2 border-bottom shadow-sm"
+                    style="position: sticky; top: 0; z-index: 20;">
+                    <div class="small fw-semibold text-start">
+                        Periode: <span class="text-primary">${formatDateDisplay(startDate)} s/d ${formatDateDisplay(endDate)}</span>
+                        <br>Officer: <span class="text-dark fw-bold">${selectedOfficer.toUpperCase()}</span>
+                    </div>
+                    <div>
+                        <a href="/report/doctor/pdf-all?officer=${selectedOfficer}&start=${startDate}&end=${endDate}"
+                        target="_blank"
+                        class="btn btn-danger btn-sm px-3">
+                            <i class="bi bi-file-earmark-pdf me-1"></i> PDF ALL
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            frameB.innerHTML = "";
+
+            // --- Group data by tanggal ---
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             const grouped = {};
             data.forEach(item => {
                 const tgl = item.tanggal || 'unknown';
                 if (!grouped[tgl]) grouped[tgl] = [];
                 grouped[tgl].push(item);
             });
+<<<<<<< HEAD
         
             const sortedDates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
         
@@ -3395,6 +4466,65 @@ function loadContent(feature, officerId, targetElement) {
                 const endIdx = startIdx + perPage;
                 const pageDates = sortedDates.slice(startIdx, endIdx);
         
+=======
+
+            const sortedDates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
+
+            // =========================================================
+            //         DYNAMIC PAGINATION BASED ON TEXT LENGTH
+            // =========================================================
+
+            const frameWidth = frameB.clientWidth;
+            const maxHeightPerPage = window.innerHeight * 0.70;  // 70vh
+            const pages = [];
+            let currentPage = [];
+            let currentHeight = 0;
+
+            // --- Helper: Estimasi tinggi satu card agenda ---
+            function estimateAgendaHeight(items) {
+                let totalChar = 0;
+
+                items.forEach(i => {
+                    if (i.tasks) {
+                        i.tasks.forEach(t => {
+                            totalChar += (t.keterangan || "").length;
+                        });
+                    }
+                });
+
+                // Formula estimasi
+                const charHeight = Math.ceil(totalChar / 35) * 18;
+                const baseCard = 80;
+                return baseCard + charHeight;
+            }
+
+            // --- Bangun halaman berdasarkan batas tinggi ---
+            sortedDates.forEach(tgl => {
+                const estHeight = estimateAgendaHeight(grouped[tgl]);
+
+                if (currentHeight + estHeight > maxHeightPerPage) {
+                    pages.push(currentPage);
+                    currentPage = [tgl];
+                    currentHeight = estHeight;
+                } else {
+                    currentPage.push(tgl);
+                    currentHeight += estHeight;
+                }
+            });
+
+            if (currentPage.length > 0) pages.push(currentPage);
+
+            let currentPageIndex = 0;
+
+            // =========================================================
+            //         RENDER HALAMAN
+            // =========================================================
+            function renderPage(idx) {
+                frameB.querySelectorAll('.agenda-page').forEach(e => e.remove());
+
+                const pageDates = pages[idx];
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 pageDates.forEach(tanggal => {
                     let html = `
                         <div class="agenda-page card mb-2 shadow-sm bg-white">
@@ -3406,24 +4536,38 @@ function loadContent(feature, officerId, targetElement) {
                             </div>
                             <div class="card-body p-2 text-start">
                     `;
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     const picGroups = {};
                     grouped[tanggal].forEach(item => {
                         const pic = item.pic_key || 'Tanpa PIC';
                         if (!picGroups[pic]) picGroups[pic] = [];
                         picGroups[pic].push(item);
                     });
+<<<<<<< HEAD
         
                     Object.keys(picGroups).forEach(picKey => {
                         picGroups[picKey].forEach(agenda => {
                             html += `<div class="mb-2 pb-2 border-bottom text-start">`;
         
                             if (agenda.tasks && agenda.tasks.length > 0) {
+=======
+
+                    Object.keys(picGroups).forEach(picKey => {
+                        picGroups[picKey].forEach(agenda => {
+                            html += `<div class="mb-2 pb-2 border-bottom text-start">`;
+
+                            if (agenda.tasks?.length) {
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                                 html += `<ul class="small ps-3 mt-1 text-start">`;
                                 agenda.tasks.forEach(t => {
                                     const createdAt = formatCreatedAtToWIB(t.created_at);
                                     const status = Number(t.status);
                                     let color = status === 3 ? 'red' : status === 2 ? 'green' : 'black';
+<<<<<<< HEAD
                                     html += `<li style="color:${color} !important">
                                                 <span class="fw-semibold">${t.keterangan}</span>
                                                 <br><small class="text-muted">${createdAt}</small>
@@ -3489,6 +4633,85 @@ function loadContent(feature, officerId, targetElement) {
             renderPage(currentPage);
         }
     
+=======
+                                    html += `
+                                        <li style="color:${color}">
+                                            <span class="fw-semibold">${t.keterangan}</span>
+                                            <br><small class="text-muted">${createdAt}</small>
+                                        </li>`;
+                                });
+                                html += `</ul>`;
+                            } else {
+                                html += `<div class="small text-muted">Tidak ada task.</div>`;
+                            }
+
+                            html += `</div>`;
+                        });
+                    });
+
+                    html += `</div></div>`;
+                    frameB.insertAdjacentHTML('beforeend', html);
+                });
+
+                renderPagination();
+            }
+
+            // =========================================================
+            //         PAGINATION BUTTON
+            // =========================================================
+            function renderPagination() {
+                const pag = document.getElementById('reviewPagination');
+                pag.innerHTML = "";  // bersihkan
+
+                if (pages.length <= 1) return;
+
+                // prev
+                const prev = document.createElement('button');
+                prev.className = `btn btn-sm ${currentPageIndex === 0 ? 'btn-secondary' : 'btn-outline-primary'}`;
+                prev.disabled = currentPageIndex === 0;
+                prev.innerHTML = `<i class="bi bi-chevron-left"></i>`;
+                prev.onclick = () => {
+                    if (currentPageIndex > 0) {
+                        currentPageIndex--;
+                        renderPage(currentPageIndex);
+                        frameB.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                };
+                pag.appendChild(prev);
+
+                // page numbers
+                pages.forEach((_, i) => {
+                    const btn = document.createElement('button');
+                    btn.textContent = i + 1;
+                    btn.className = `btn btn-sm ${i === currentPageIndex ? 'btn-primary' : 'btn-outline-primary'}`;
+                    btn.onclick = () => {
+                        currentPageIndex = i;
+                        renderPage(currentPageIndex);
+                        frameB.scrollTo({ top: 0, behavior: 'smooth' });
+                    };
+                    pag.appendChild(btn);
+                });
+
+                // next
+                const next = document.createElement('button');
+                next.className = `btn btn-sm ${currentPageIndex === pages.length - 1 ? 'btn-secondary' : 'btn-outline-primary'}`;
+                next.disabled = currentPageIndex === pages.length - 1;
+                next.innerHTML = `<i class="bi bi-chevron-right"></i>`;
+                next.onclick = () => {
+                    if (currentPageIndex < pages.length - 1) {
+                        currentPageIndex++;
+                        renderPage(currentPageIndex);
+                        frameB.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                };
+                pag.appendChild(next);
+            }
+
+
+            renderPage(currentPageIndex);
+        }
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         // --- Fungsi Load Kegiatan ---
         function loadKegiatan(){
             const frameB = document.getElementById('reviewContent');
@@ -3632,6 +4855,7 @@ function loadContent(feature, officerId, targetElement) {
                 }
         
                 function renderPagination(){
+<<<<<<< HEAD
                     let paginationDiv = document.getElementById('reviewPagination');
                     if(!paginationDiv){
                         paginationDiv = document.createElement('div');
@@ -3647,11 +4871,17 @@ function loadContent(feature, officerId, targetElement) {
         
                     paginationDiv.innerHTML = '';
         
+=======
+                    const paginationDiv = document.getElementById('reviewPagination');
+                    paginationDiv.innerHTML = '';
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     // Prev
                     const prevBtn = document.createElement('button');
                     prevBtn.className = `btn btn-sm ${currentPage===1 ? 'btn-secondary' : 'btn-outline-primary'} mx-1`;
                     prevBtn.disabled = currentPage===1;
                     prevBtn.innerHTML = `<i class="bi bi-chevron-left"></i>`;
+<<<<<<< HEAD
                     prevBtn.addEventListener('click', () => {
                         if(currentPage>1){ renderPage(currentPage-1); window.scrollTo({top:0, behavior:'smooth'}); }
                     });
@@ -3666,14 +4896,45 @@ function loadContent(feature, officerId, targetElement) {
                         paginationDiv.appendChild(btn);
                     }
         
+=======
+                    prevBtn.onclick = () => {
+                        if(currentPage > 1){
+                            renderPage(currentPage - 1);
+                            frameB.scrollTop = 0;
+                        }
+                    };
+                    paginationDiv.appendChild(prevBtn);
+
+                    // Page numbers
+                    for(let i=1; i<=totalPages; i++){
+                        const btn = document.createElement('button');
+                        btn.className = `btn btn-sm mx-1 ${i===currentPage ? 'btn-primary text-white' : 'btn-outline-primary'}`;
+                        btn.textContent = i;
+                        btn.onclick = () => {
+                            renderPage(i);
+                            frameB.scrollTop = 0;
+                        };
+                        paginationDiv.appendChild(btn);
+                    }
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     // Next
                     const nextBtn = document.createElement('button');
                     nextBtn.className = `btn btn-sm ${currentPage===totalPages ? 'btn-secondary' : 'btn-outline-primary'} mx-1`;
                     nextBtn.disabled = currentPage===totalPages;
                     nextBtn.innerHTML = `<i class="bi bi-chevron-right"></i>`;
+<<<<<<< HEAD
                     nextBtn.addEventListener('click', () => {
                         if(currentPage<totalPages){ renderPage(currentPage+1); window.scrollTo({top:0, behavior:'smooth'}); }
                     });
+=======
+                    nextBtn.onclick = () => {
+                        if(currentPage < totalPages){
+                            renderPage(currentPage + 1);
+                            frameB.scrollTop = 0;
+                        }
+                    };
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     paginationDiv.appendChild(nextBtn);
                 }
         
@@ -3687,7 +4948,11 @@ function loadContent(feature, officerId, targetElement) {
                 frameB.innerHTML = `<div class="text-center py-3 text-danger">Gagal memuat data.</div>`;
             });
         }
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         // --- Load kegiatan dengan filter ---
         function loadKegiatanFiltered(){
             const frameB = document.getElementById('reviewContent');
@@ -3702,7 +4967,11 @@ function loadContent(feature, officerId, targetElement) {
             }
         
             frameB.innerHTML = `<div class="text-center py-3 text-primary">Memuat Kegiatan...</div>`;
+<<<<<<< HEAD
             frameB.style.paddingBottom = '50px';
+=======
+            frameB.style.paddingBottom = "70px";
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         
             fetch(`/report/doctor/detail/${officerId}?start_date=${startDate}&end_date=${endDate}`)
             .then(res=>res.json())
@@ -3787,7 +5056,10 @@ function loadContent(feature, officerId, targetElement) {
                 frameB.innerHTML = `<div class="text-center py-3 text-danger">Gagal memuat data.</div>`;
             });
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     
         // --- Fungsi export PDF per tanggal ---
         function exportPDF(tanggal){
@@ -4244,15 +5516,23 @@ function loadContent(feature, officerId, targetElement) {
                 window.open(url, '_blank');
             }
         });
+<<<<<<< HEAD
     } else if (featureName === 'LAPORAN') {
 
         const today = new Date().toISOString().split("T")[0];
         const monthID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
     
+=======
+    
+    } else if (featureName === 'LAPORAN') {
+        const today = new Date().toISOString().split("T")[0];
+        const monthID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         const formatID = (d) => {
             const x = new Date(d);
             return `${String(x.getDate()).padStart(2,"0")} ${monthID[x.getMonth()]} ${String(x.getFullYear()).slice(-2)}`;
         };
+<<<<<<< HEAD
     
         if (window.laporanAbortController) window.laporanAbortController.abort();
         window.laporanAbortController = new AbortController();
@@ -5423,6 +6703,167 @@ function loadContent(feature, officerId, targetElement) {
         function renderQuarterButtons() {
             quarterWrapper.innerHTML = "";
             const quarters = quarterMode === 3 ? ["Q1","Q2","Q3","Q4"] : quarterMode === 4 ? ["Q1","Q2","Q3"] : ["Q1","Q2"];
+=======
+
+        // ============================================================
+        // TEMPLATE HTML
+        // ============================================================
+        contentArea.innerHTML = `
+        <div class="laporan-container text-start">
+
+            <!-- FRAME A -->
+            <div class="bg-dark p-3 rounded-2 mb-1 shadow-sm">
+
+                <div class="row g-2 mb-2">
+                    <div class="col-md-4">
+                        <select id="reportType" class="form-select form-select-sm">
+                            <option value="">Pilih Jenis Laporan</option>
+                            <option value="target">Target / Penjualan</option>
+                            <option value="aktivitas">Aktivitas / Relasi</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <select id="subReportType" class="form-select form-select-sm">
+                            <option value="">Sub Laporan</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4" id="dateContainer" style="position: relative;">
+                        <button id="btnRangeDate" class="btn btn-secondary btn-sm w-100">
+                            <i class="bi bi-calendar"></i>
+                            <span id="rangeLabel">${formatID(today)} - ${formatID(today)}</span>
+                        </button>
+                        <input id="datePicker" class="form-control form-select-sm" 
+                            style="position:absolute; top:35px; left:0; width:100%; opacity:0; z-index:-1;">
+                    </div>
+                </div>
+
+                <div class="row g-2 align-items-center">
+                    <div class="col-md-8 d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-light btn-sm quick-range" data-range="1D">1D</button>
+                        <button class="btn btn-outline-light btn-sm quick-range" data-range="1M">1M</button>
+                        <button class="btn btn-outline-light btn-sm quick-range" data-range="3M">3M</button>
+                        <button class="btn btn-outline-light btn-sm quick-range" data-range="YTD">YTD</button>
+                    </div>
+
+                    <div class="col-md-4 d-flex gap-2 justify-content-end" id="quarterWrapper"></div>
+                </div>
+
+            </div>
+
+            <!-- FRAME B -->
+            <div class="bg-dark p-2 rounded-2 shadow-sm">
+                <iframe id="pdfViewer" src="" class="w-100" style="height:70vh;border:none;"></iframe>
+            </div>
+
+        </div>
+        `;
+
+        // ============================================================
+        // RE-BIND ELEMENTS
+        // ============================================================
+        const reportType = document.getElementById("reportType");
+        const subReportType = document.getElementById("subReportType");
+        const pdfViewer = document.getElementById("pdfViewer");
+        const btnRangeDate = document.getElementById("btnRangeDate");
+        const rangeLabel = document.getElementById("rangeLabel");
+        const datePicker = document.getElementById("datePicker");
+
+        // STATE
+        let startDate = today;
+        let endDate = today;
+        let accountOfficer = selectedOfficerSpan.dataset.officerId;
+        let quarterMode = 3;
+
+        // ============================================================
+        // MAPPING SUB LAPORAN
+        // ============================================================
+        const subMap = {
+            target: [
+                { value: "pembayaran", label: "Pembayaran" },
+                { value: "penjualan", label: "Penjualan" },
+                { value: "customer", label: "Customer" },
+                { value: "varian", label: "Varian" }
+            ],
+            aktivitas: [
+                { value: "prospek_followup", label: "Prospek - Follow Up" },
+                { value: "prospek_sampling", label: "Prospek - Sampling" },
+                { value: "prospek_visit", label: "Prospek - Visit" },
+                { value: "existing_followup", label: "Existing - Follow Up" },
+                { value: "existing_sampling", label: "Existing - Sampling" },
+                { value: "existing_visit", label: "Existing - Visit" }
+            ]
+        };
+
+        // UPDATE SUB LAPORAN OTOMATIS
+        reportType.addEventListener("change", () => {
+            const type = reportType.value;
+            subReportType.innerHTML = `<option value="">Sub Laporan</option>`;
+            if (subMap[type]) {
+                subMap[type].forEach(s => {
+                    const opt = document.createElement("option");
+                    opt.value = s.value;
+                    opt.textContent = s.label;
+                    subReportType.appendChild(opt);
+                });
+            }
+            renderPDF();
+        });
+
+        // ============================================================
+        // RENDER PDF VIA POST FETCH
+        // ============================================================
+        const renderPDF = async () => {
+            const type = reportType.value;
+            const sub = subReportType.value;
+            if (!type || !sub) return;
+
+            const payload = { type, sub, start: startDate, end: endDate, officer: accountOfficer };
+
+            console.log('📤 Mengirim payload ke backend:', payload); // <- LOG SEBELUM KIRIM
+
+            try {
+                const res = await fetch('/report/doctor/report/preview', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                const data = await res.json();
+                console.log('📥 Respons dari backend:', data); // <- LOG SESUDAH TERIMA
+
+                if(data.status === false){
+                    alert('Gagal generate report: ' + data.message);
+                } else {
+                    alert('Payload berhasil diterima backend. Cek console untuk detail.');
+                    pdfViewer.src = 'data:application/pdf;base64,' + data.pdf_base64; // Render di iframe
+                }
+
+            } catch (err) {
+                console.error('❌ Gagal kirim payload ke backend', err);
+                alert('Gagal kirim payload ke backend');
+            }
+        };
+
+        subReportType.addEventListener("change", renderPDF);
+
+        // ============================================================
+        // QUARTER BUTTONS
+        // ============================================================
+        const quarterWrapper = document.getElementById("quarterWrapper");
+
+        function renderQuarterButtons() {
+            quarterWrapper.innerHTML = "";
+            let quarters = [];
+            if (quarterMode === 3) quarters = ["Q1","Q2","Q3","Q4"];
+            if (quarterMode === 4) quarters = ["Q1","Q2","Q3"];
+            if (quarterMode === 6) quarters = ["Q1","Q2"];
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             quarters.forEach(q => {
                 const btn = document.createElement("button");
                 btn.className = "btn btn-outline-info btn-sm quarter-btn";
@@ -5430,6 +6871,7 @@ function loadContent(feature, officerId, targetElement) {
                 btn.innerText = q;
                 quarterWrapper.appendChild(btn);
             });
+<<<<<<< HEAD
             const modeBtn = document.createElement("button");
             modeBtn.id = "btnQuarterMode";
             modeBtn.className = "btn btn-warning btn-sm";
@@ -5489,16 +6931,110 @@ function loadContent(feature, officerId, targetElement) {
                         window.__laporanState.endDate   = endDate;
                         updateStep2Summary();
                         if (hasRenderedOnce) renderPDF();
+=======
+
+            const modeBtn = document.createElement("button");
+            modeBtn.id = "btnQuarterMode";
+            modeBtn.className = "btn btn-warning btn-sm";
+            modeBtn.innerText = quarterMode;
+            quarterWrapper.appendChild(modeBtn);
+
+            attachQuarterEvents();
+        }
+
+        function attachQuarterEvents() {
+            document.querySelectorAll(".quarter-btn").forEach(btn => {
+                btn.onclick = () => {
+                    const y = new Date().getFullYear();
+                    let start, end;
+                    const q = btn.dataset.quarter;
+
+                    if (quarterMode === 3) {
+                        if (q === "Q1") { start=`${y}-01-01`; end=`${y}-03-31`; }
+                        if (q === "Q2") { start=`${y}-04-01`; end=`${y}-06-30`; }
+                        if (q === "Q3") { start=`${y}-07-01`; end=`${y}-09-30`; }
+                        if (q === "Q4") { start=`${y}-10-01`; end=`${y}-12-31`; }
+                    }
+                    if (quarterMode === 4) {
+                        if (q === "Q1") { start=`${y}-01-01`; end=`${y}-04-30`; }
+                        if (q === "Q2") { start=`${y}-05-01`; end=`${y}-08-31`; }
+                        if (q === "Q3") { start=`${y}-09-01`; end=`${y}-12-31`; }
+                    }
+                    if (quarterMode === 6) {
+                        if (q === "Q1") { start=`${y}-01-01`; end=`${y}-06-30`; }
+                        if (q === "Q2") { start=`${y}-07-01`; end=`${y}-12-31`; }
+                    }
+
+                    startDate = start;
+                    endDate = end;
+                    rangeLabel.innerText = `${formatID(start)} - ${formatID(end)}`;
+                    renderPDF();
+                };
+            });
+
+            document.getElementById("btnQuarterMode").onclick = () => {
+                if (quarterMode === 3) quarterMode = 4;
+                else if (quarterMode === 4) quarterMode = 6;
+                else quarterMode = 3;
+
+                renderQuarterButtons();
+            };
+        }
+
+        renderQuarterButtons();
+
+        function toYMD(d) {
+            return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        }
+
+        // ============================================================
+        // FLATPICKR DATE RANGE PICKER
+        // ============================================================
+        let fpInstance = null;
+
+        function initFlatpickr() {
+            if (fpInstance && typeof fpInstance.destroy === "function") fpInstance.destroy();
+
+            fpInstance = flatpickr(datePicker, {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                allowInput: false,
+                clickOpens: false,
+                showMonths: 2,
+                defaultDate: [startDate, endDate],
+                locale: "en",
+                appendTo: document.body,
+                position: "auto",
+                onChange: function(dates) {
+                    if (dates.length === 2) {
+                        let a = dates[0], b = dates[1];
+                        let startObj = a <= b ? a : b;
+                        let endObj = a <= b ? b : a;
+
+                        startDate = toYMD(startObj);
+                        endDate = toYMD(endObj);
+
+                        rangeLabel.innerText = `${formatID(startDate)} - ${formatID(endDate)}`;
+                        renderPDF();
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     }
                 }
             });
         }
+<<<<<<< HEAD
         setTimeout(initFlatpickr, 50);
         btnRangeDate.addEventListener("click", () => {
+=======
+
+        setTimeout(initFlatpickr, 50);
+
+        btnRangeDate.addEventListener("click", function () {
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             if (!fpInstance) initFlatpickr();
             try { fpInstance.setDate([startDate, endDate], false); } catch(e){}
             fpInstance.open();
         });
+<<<<<<< HEAD
     
         document.querySelectorAll(".quick-range").forEach(btn => {
             btn.onclick = () => {
@@ -6743,6 +8279,34 @@ function loadContent(feature, officerId, targetElement) {
 
         return;
 
+=======
+
+        // ============================================================
+        // QUICK RANGE BUTTONS
+        // ============================================================
+        document.querySelectorAll(".quick-range").forEach(btn => {
+            btn.onclick = () => {
+                const now = new Date();
+                let start = new Date();
+                const range = btn.dataset.range;
+
+                if (range === "1D") start = now;
+                if (range === "1M") start = new Date(now.getFullYear(), now.getMonth(), 1);
+                if (range === "3M") start = new Date(now.getFullYear(), now.getMonth() - 2, 1);
+                if (range === "YTD") start = new Date(now.getFullYear(), 0, 1);
+
+                startDate = toYMD(start);
+                endDate = toYMD(now);
+
+                rangeLabel.innerText = `${formatID(startDate)} - ${formatID(endDate)}`;
+                renderPDF();
+
+                if (fpInstance) {
+                    try { fpInstance.setDate([startDate, endDate], false); } catch(e){}
+                }
+            };
+        });
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     } else {
         setTimeout(() => {
             targetElement.innerHTML = `
@@ -6753,6 +8317,243 @@ function loadContent(feature, officerId, targetElement) {
         }, 800);
     }
 }
+<<<<<<< HEAD
 
 </script>
+=======
+</script>
+
+<style>
+/* Warna baris berdasarkan status */
+.row-existing td {
+    background-color: #d4edda !important; /* Hijau muda */
+    color: #000 !important;
+    font-weight: 500;
+}
+
+.row-prospek td {
+    /*background-color: #cce5ff !important; */
+    background-color: #ffffff !important; /* Biru langit */
+    color: #000 !important;
+    font-weight: 500;
+}
+
+/* Tambahan opsional: efek hover */
+.row-existing:hover td,
+.row-prospek:hover td {
+    filter: brightness(0.95);
+    transition: 0.2s ease;
+}
+
+
+/* --- Custom Max Width Container (Untuk memperkecil area konten utama) --- */
+.max-width-lg {
+    max-width: 992px; 
+}
+
+/* --- Global Styles --- */
+.bg-dark-card {
+    background-color: #2a3036;
+}
+.bg-gray-dark {
+    background-color: #3e444b;
+}
+
+/* --- Select Officer Button --- */
+#btnSelectOfficer {
+    background-color: #f8f9fa; 
+    color: #212529;
+    border: none;
+    transition: background-color 0.3s;
+}
+#btnSelectOfficer:hover {
+    background-color: #e2e6ea;
+}
+
+/* --- Custom Style Dropdown Officer --- */
+.officer-dropdown {
+    width: auto; 
+}
+.officer-list-menu {
+    min-width: 300px;
+    max-width: 90vw; 
+    max-height: 400px; 
+    overflow-y: auto;
+    background-color: #f8f9fa; 
+    border-radius: 10px;
+}
+.officer-list-menu .list-group-flush {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.officer-list-menu .officer-item {
+    background-color: transparent; 
+}
+.officer-list-menu .officer-item:hover {
+    background-color: #e9ecef;
+}
+.officer-list-menu .officer-item.active {
+    background-color: #0c82f9 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+.officer-list-menu .officer-item.active i {
+    color: #ffffff !important;
+}
+
+
+/* --- Navigation Tabs (Group Style) --- */
+.btn-group.nav-tabs-mobile {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+.btn-dark-outline {
+    background-color: transparent;
+    border: 1px solid #3e444b;
+    color: #f8f9fa; 
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+    padding: 8px 10px; 
+    border-radius: 0; 
+}
+.btn-dark-outline:not(:last-child) {
+    border-right: none;
+}
+.btn-dark-outline:hover, .btn-dark-outline.active-nav {
+    background-color: #0c82f9 !important;
+    border-color: #0c82f9 !important;
+    color: #ffffff;
+    box-shadow: none;
+    z-index: 1;
+}
+
+/* Khusus untuk tampilan Mobile (<= 768px) */
+    @media (max-width: 768px) {
+    .max-width-lg {
+        max-width: 100%;
+    }
+    .btn-group.nav-tabs-mobile {
+        width: 100%;
+    }
+    .btn-dark-outline {
+        padding: 8px 5px; 
+    }
+    /* Sembunyikan label text di mobile agar tombol muat */
+    .btn-dark-outline span {
+        display: none !important; 
+    }
+    #btnSelectOfficer {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .header-section > .d-flex {
+        flex-direction: column; 
+    }
+
+    /* Dropdown Full Width di Mobile */
+    .officer-list-menu {
+        width: calc(100% - 30px); 
+        margin-left: 15px !important; 
+        margin-right: 15px !important; 
+        transform: translate3d(0, 0, 0) !important; 
+    }
+
+    /* Untuk membuat tombol logout di bawah nav di mobile */
+    .header-section .d-flex.gap-2 {
+        flex-direction: column;
+        gap: 0.5rem !important;
+    }
+    #btnLogout {
+        width: 100%;
+    }
+    
+    #reviewContent {
+        max-height: 600px;
+        overflow-y: auto;
+        padding-bottom: 40px; /* space untuk pagination */
+        box-sizing: border-box;
+    }
+}
+/* Maksimal lebar container di desktop, full width di HP */
+.max-width-lg {
+    max-width: 992px;
+    margin: 0 auto;
+}
+
+/* --- Responsive Layout --- */
+@media (max-width: 768px) {
+
+    /* Stack header item menjadi vertikal */
+    .header-section .d-flex {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    /* Dropdown Officer full width */
+    #btnSelectOfficer {
+        width: 100% !important;
+    }
+
+    .officer-dropdown {
+        width: 100%;
+    }
+
+    /* Navigasi jadi scroll horizontal agar tidak overflow */
+    .nav-tabs-mobile {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none; /* Firefox */
+    }
+    .nav-tabs-mobile::-webkit-scrollbar {
+        display: none; /* Chrome & Safari */
+    }
+
+    .nav-button {
+        flex: 0 0 auto;
+        min-width: 130px;
+    }
+
+    /* Button logout turun ke bawah dengan lebar penuh */
+    #btnLogout {
+        width: 100%;
+        margin-top: 5px;
+    }
+
+    /* Dropdown menu officer mengikuti lebar layar */
+    .officer-list-menu {
+        width: 100% !important;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .flatpickr-calendar.flatpickr-in-modal {
+        z-index: 99999 !important;
+    }
+
+    /* Agar konten tidak tertutup pagination */
+    #reviewContent {
+        padding-bottom: 70px !important;
+    }
+
+    /* Pagination sticky */
+    .agenda-pagination-fixed {
+        position: fixed !important;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: #ffffff;
+        border-top: 1px solid #ddd;
+        padding: 8px 0;
+        z-index: 9999;
+    }
+
+    /* FIX agar flatpickr tampil normal meski CSS lain konflik */
+    .flatpickr-calendar {
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+    }
+}
+</style>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 @endpush

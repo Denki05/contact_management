@@ -51,6 +51,7 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
+<<<<<<< HEAD
     
     // public function authenticated(Request $request, $user)
     // {
@@ -71,5 +72,14 @@ class LoginController extends Controller
     
         // Jika login manual
         return redirect()->route('home');
+=======
+
+    public function authenticated(Request $request, $user)
+    {
+        session()->flash('welcome_message', true);
+
+        // Langsung redirect ke halaman FileDoctor
+        return redirect()->route('report.doctor.index');
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     }
 }

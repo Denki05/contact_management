@@ -4,7 +4,10 @@ namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Master\Contact;
+<<<<<<< HEAD
 use App\Master\Store;
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
 class Customer extends Model
 {
@@ -54,6 +57,14 @@ class Customer extends Model
     public function contacts()
     {
         return $this->hasMany(Contact::class, 'manage_id');
+<<<<<<< HEAD
+=======
+    }
+
+    public function store_existing()
+    {
+        return $this->belongsTo('App\Master\Store', 'customer_id'); 
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     }
 
     public function store_existing()

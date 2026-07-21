@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game Edukasi Anak</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #cce7ff; text-align:center; }
+    h1 { margin-top: 20px; }
+    .menu { margin-top: 20px; }
+    .menu button { margin:5px; padding:10px 20px; font-size:16px; cursor:pointer; }
+    .game-container { margin-top:30px; }
+    .container { display:flex; justify-content: space-around; margin-top:20px; }
+    .targets, .pieces { display:flex; flex-direction:column; gap:20px; }
+    .target, .piece { width:100px; height:100px; border:2px dashed #555; display:flex; align-items:center; justify-content:center; font-weight:bold; font-size:16px; background:white; cursor:grab; transition: transform 0.2s, background 0.2s; }
+    .piece.dragging { opacity:0.5; }
+    .message { margin-top:20px; font-size:20px; font-weight:bold; }
+    .score { margin-top:10px; font-size:18px; }
+    .math-button { margin:5px; padding:10px 15px; font-size:16px; cursor:pointer; }
+</style>
+</head>
+<body>
+
+<h1>Game Edukasi Anak</h1>
+
+<div class="menu">
+    <button onclick="startGame('matchImage')">Pencocokan Gambar</button>
+    <button onclick="startGame('matchWord')">Pencocokan Kata</button>
+    <button onclick="startGame('math')">Penjumlahan & Pengurangan</button>
+</div>
+
+<div class="score">Skor: <span id="score">0</span></div>
+<div class="message" id="message"></div>
+
+<div class="game-container" id="game-container"></div>
+
+<script>
+// --- Skor ---
+let score = 0;
+
+function updateScore(points){
+    score += points;
+    document.getElementById("score").textContent = score;
+}
+
+// --- Start game ---
+function startGame(type){
+    const container = document.getElementById("game-container");
+    container.innerHTML = ""; // reset
+    document.getElementById("message").textContent = "";
+    if(type === 'matchImage') loadMatchImage(container);
+    else if(type === 'matchWord') loadMatchWord(container);
+    else if(type === 'math') loadMathGame(container);
+}
+
+/* ---------- Game 1: Pencocokan Gambar ---------- */
+const imageLevels = [
+    { "Apple": "🍎", "Banana": "🍌", "Orange": "🍊" },
+    { "Cat": "🐱", "Dog": "🐶", "Rabbit": "🐰" }
+];
+let currentImageLevel = 0;
+
+function loadMatchImage(container){
+    container.innerHTML = '<div class="container"><div class="pieces" id="pieces"></div><div class="targets" id="targets"></div></div>';
+    const piecesDiv = document.getElementById("pieces");
+    const targetsDiv = document.getElementById("targets");
+    const data = imageLevels[currentImageLevel];
+    const keys = Object.keys(data);
+    const shuffledKeys = [...keys].sort(()=>Math.random()-0.5);
+    let correctCount = 0;
+
+    // buat target
+    keys.forEach(key=>{
+        const div = document.createElement("div");
+        div.className="target";
+        div.dataset.name=key;
+        div.textContent=key;
+        div.addEventListener("dragover", e=>e.preventDefault());
+        div.addEventListener("drop", dropPiece);
+        targetsDiv.appendChild(div);
+    });
+
+    // buat pieces
+    shuffledKeys.forEach(key=>{
+        const div = document.createElement("div");
+        div.className="piece";
+        div.draggable=true;
+        div.dataset.name=key;
+        div.textContent=data[key];
+        div.addEventListener("dragstart", dragStart);
+        div.addEventListener("dragend", dragEnd);
+        piecesDiv.appendChild(div);
+    });
+
+    function dragStart(e){ e.dataTransfer.setData("text/plain", e.target.dataset.name); e.target.classList.add("dragging"); }
+    function dragEnd(e){ e.target.classList.remove("dragging"); }
+
+    function dropPiece(e){
+        e.preventDefault();
+        const pieceName = e.dataTransfer.getData("text");
+        const targetName = e.currentTarget.dataset.name;
+        const pieceDiv = document.querySelector(`.piece[data-name='${pieceName}']`);
+        if(pieceName === targetName){
+            correctCount++;
+            updateScore(10);
+            document.getElementById("message").textContent="Benar!";
+            pieceDiv.remove();
+            e.currentTarget.style.background="#a0ffa0";
+        } else{
+            document.getElementById("message").textContent="Salah!";
+        }
+        if(correctCount === keys.length){
+            currentImageLevel = (currentImageLevel+1)%imageLevels.length;
+            setTimeout(()=>loadMatchImage(container), 1000);
+        }
+    }
+}
+
+/* ---------- Game 2: Pencocokan Kata ---------- */
+const wordPairs = [
+    ["Meja","Table"],
+    ["Kucing","Cat"],
+    ["Apel","Apple"]
+];
+
+function loadMatchWord(container){
+    container.innerHTML='<div class="container"><div class="pieces" id="pieces"></div><div class="targets" id="targets"></div></div>';
+    const piecesDiv = document.getElementById("pieces");
+    const targetsDiv = document.getElementById("targets");
+    const keys = [...wordPairs];
+    const shuffledKeys = [...keys].sort(()=>Math.random()-0.5);
+    let correctCount=0;
+
+    // target: bahasa Inggris
+    keys.forEach(pair=>{
+        const div = document.createElement("div");
+        div.className="target";
+        div.dataset.name=pair[0];
+        div.textContent=pair[1];
+        div.addEventListener("dragover", e=>e.preventDefault());
+        div.addEventListener("drop", dropPiece);
+        targetsDiv.appendChild(div);
+    });
+
+    // pieces: bahasa Indonesia
+    shuffledKeys.forEach(pair=>{
+        const div = document.createElement("div");
+        div.className="piece";
+        div.draggable=true;
+        div.dataset.name=pair[0];
+        div.textContent=pair[0];
+        div.addEventListener("dragstart", e=>{ e.dataTransfer.setData("text/plain", e.target.dataset.name); e.target.classList.add("dragging"); });
+        div.addEventListener("dragend", e=>{ e.target.classList.remove("dragging"); });
+        piecesDiv.appendChild(div);
+    });
+
+    function dropPiece(e){
+        e.preventDefault();
+        const pieceName = e.dataTransfer.getData("text");
+        const targetName = e.currentTarget.dataset.name;
+        const pieceDiv = document.querySelector(`.piece[data-name='${pieceName}']`);
+        if(pieceName === targetName){
+            correctCount++;
+            updateScore(10);
+            document.getElementById("message").textContent="Benar!";
+            pieceDiv.remove();
+            e.currentTarget.style.background="#a0ffa0";
+        } else {
+            document.getElementById("message").textContent="Salah!";
+        }
+        if(correctCount===keys.length){
+            setTimeout(()=>loadMatchWord(container),1000);
+        }
+    }
+}
+
+/* ---------- Game 3: Penjumlahan & Pengurangan ---------- */
+function loadMathGame(container){
+    container.innerHTML='';
+    const num1=Math.floor(Math.random()*10)+1;
+    const num2=Math.floor(Math.random()*10)+1;
+    const operators=['+','-'];
+    const op = operators[Math.floor(Math.random()*2)];
+    let result = op==='+'? num1+num2 : num1-num2;
+
+    const question = document.createElement("div");
+    question.innerHTML=`<h2>Berapa hasil: ${num1} ${op} ${num2} ?</h2>`;
+    container.appendChild(question);
+
+    const buttonsDiv = document.createElement("div");
+    [result, result+1, result-1].sort(()=>Math.random()-0.5).forEach(val=>{
+        const btn = document.createElement("button");
+        btn.className="math-button";
+        btn.textContent=val;
+        btn.onclick=()=>{
+            if(val===result){
+                updateScore(10);
+                document.getElementById("message").textContent="Benar!";
+            } else{
+                document.getElementById("message").textContent="Salah!";
+            }
+            setTimeout(()=>loadMathGame(container),500);
+        };
+        buttonsDiv.appendChild(btn);
+    });
+    container.appendChild(buttonsDiv);
+}
+</script>
+
+</body>
+</html>

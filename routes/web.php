@@ -72,12 +72,15 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/destroy/{id}', [App\Http\Controllers\Master\CustomerProspekController::class, 'destroy'])
         ->name('destroy');
         
+
         Route::post('/master/customer-prospek/{id}/update-existing', [CustomerProspekController::class, 'updateExisting'])
             ->name('update_existing');
         
         Route::post('/master/customer-prospek/{id}/update-prospek',  [CustomerProspekController::class, 'updateProspek'])
             ->name('update_prospek');
         
+
+
         // BENAR — partial memakai controller agar customers & kategori terisi
         Route::get('/partial', [App\Http\Controllers\Master\CustomerProspekController::class, 'partial'])
             ->name('partial');
@@ -105,6 +108,7 @@ Route::middleware(['auth'])->group(function () {
         )->name('partial_create');
     });
     
+
     // ====================================================================
     // PROSPEK TAMPUNG (Data Mutasi L1 & L2)
     // ====================================================================
@@ -152,6 +156,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('import', [App\Http\Controllers\Master\ProspekTampungController::class, 'import'])->name('import');
     });
     
+
+
     // Product Prospek
     Route::prefix('product_prospek')->name('master.product_prospek.')->group(function () {
         Route::get('/index', [App\Http\Controllers\Master\ProductProspekController::class, 'index'])->name('index');
@@ -160,6 +166,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/update/{id}', [App\Http\Controllers\Master\ProductProspekController::class, 'update'])->name('update'); 
         Route::get('/api/existing', [App\Http\Controllers\Master\ProductProspekController::class, 'getExistingProducts'])->name('api.existing');
     });
+
     
     
 
@@ -211,6 +218,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/extra-assets', [App\Http\Controllers\ExtraAssetsController::class, 'index'])->name('extra.assets.index');
     // ====================================================================
 
+
+    // Product
+    Route::prefix('product')->name('master.product.')->group(function () {
+        Route::get('/index', [App\Http\Controllers\Master\ProductController::class, 'index'])->name('index');
+        Route::post('/upload_property/{encodedId}', [App\Http\Controllers\Master\ProductController::class, 'upload_property'])->name('upload_property');
+    });
+
     // Export & Import Contact
     Route::prefix('contact')->group(function () {
         Route::get('/export-template', [ContactExportImportController::class, 'exportTemplate'])->name('contact.exportTemplate');
@@ -235,7 +249,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/index', [App\Http\Controllers\Report\FileDoctorController::class, 'index'])->name('index');
             Route::get('/excel-view/{officer}/{prov}/{kota}/{name}', [App\Http\Controllers\Report\FileDoctorController::class, 'viewExcel']);
             Route::get('/excel-data/{officer}/{prov}/{kota}/{name}', [App\Http\Controllers\Report\FileDoctorController::class, 'excelData'])->name('data');
+
             Route::get('/cities', [App\Http\Controllers\Report\FileDoctorController::class, 'getCitiesByOfficer'])->name('cities');
+
+            Route::get('/cities', [App\Http\Controllers\Report\FileDoctorController::class, 'getCitiesByOfficer'])->name('cities');\// routes/web.php
+
             Route::get('/agenda', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaIndex'])->name('agenda');
             Route::get('/agenda-data', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaData'])->name('agenda.data');
             Route::get('/calendar-data', [App\Http\Controllers\Report\FileDoctorController::class, 'agendaCalendarData'])->name('calendar.data');
@@ -267,9 +285,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/export-pdf-all/{officerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'exportDoctorPDFAll'])
                 ->name('export.pdf.all');
                 
+
             Route::get('/export-pdf-all-v2/{officerId}', [App\Http\Controllers\Report\FileDoctorController::class, 'exportDoctorPDFAllV2'])
                 ->name('export.pdf.all.v2');
                 
+
+
             Route::get('/file-doctor/sampling-quotation', [App\Http\Controllers\Report\FileDoctorController::class, 'getSamplingQuotation'])
                 ->name('samplingQuotation');
                 
@@ -286,6 +307,7 @@ Route::middleware(['auth'])->group(function () {
             
             Route::post('/report/preview', [App\Http\Controllers\Report\FileDoctorController::class, 'preview'])
                 ->name('report.doctor.preview');
+
                 
             Route::get('/proxy/product-pack', [App\Http\Controllers\Report\FileDoctorController::class, 'proxyProductPack']);
 
@@ -333,6 +355,8 @@ Route::middleware(['auth'])->group(function () {
                 ->name('events.template.file');
                 
             Route::post('/events/{id}/generate-batch', [App\Http\Controllers\Report\EventController::class, 'generateBatchImages'])->name('events.invitations.batch');
+
+
         });
     
         Route::prefix('pic')->name('report.pic.')->group(function () {
@@ -342,6 +366,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
+
 
 Route::get('/file/product/{filename}', [App\Http\Controllers\FileController::class, 'showProductFile']);
 
@@ -381,3 +406,6 @@ Route::get('/proxy-image', function () {
         return response('Error: ' . $e->getMessage(), 500);
     }
 })->name('proxy.image');
+
+Route::get('/file/product/{filename}', [App\Http\Controllers\FileController::class, 'showProductFile']);
+

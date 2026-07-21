@@ -17,6 +17,7 @@ class AuthController extends Controller
         // redirect ke /home
         return redirect()->route('report.doctor.index');
     }
+
     
     public function directLoginuser()
     {
@@ -32,5 +33,7 @@ class AuthController extends Controller
     
         return redirect()->route('home');
     }
+
+
 
 }

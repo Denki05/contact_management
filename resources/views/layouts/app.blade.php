@@ -13,19 +13,29 @@
     
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+<<<<<<< HEAD
     <!--<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/css/select2.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+=======
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     <style>
     /* Global Dark Mode Base */
     body {
         /* Tetapkan background gelap global */
         background-color: #1e2227; 
         color: #fff;
+<<<<<<< HEAD
         font-size: 12px;
+=======
+        font-size: 14px;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         /* Penting: Pastikan tidak ada margin/padding default yang mengganggu tampilan full-width */
         margin: 0;
         padding: 0;
@@ -90,7 +100,11 @@
     /* Laptop/Desktop (lg breakpoint Bootstrap: >= 992px) */
     @media (min-width: 992px) {
         body {
+<<<<<<< HEAD
             font-size: 12px;
+=======
+            font-size: 16px;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         }
     }
     </style>
@@ -108,6 +122,7 @@
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/id.js"></script>
+<<<<<<< HEAD
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
@@ -118,6 +133,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js"></script>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     {{-- Menggunakan @stack untuk memuat script dan CSS dari @push di index --}}
     @stack('scripts') 
 </body>

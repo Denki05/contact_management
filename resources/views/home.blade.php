@@ -4,6 +4,7 @@
 
 @section('content')
 <style>
+<<<<<<< HEAD
     .max-width-lg { max-width: 992px; }
     body {
         background-color: #1e2227;
@@ -162,6 +163,52 @@
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="btn btn-outline-danger fw-bold px-0 d-flex align-items-center justify-content-center text-decoration-none flex-shrink-0" style="height: 26px; font-size: 11px; width: 75px; gap: 4px;">
                 <span style="font-size: 12.5px;">LOGOUT</span>
             </a>
+=======
+    .max-width-lg { max-width: 936px; }
+    body {
+        overflow-y: scroll !important;
+        background-color: #1e2227;
+    }
+</style>
+
+<div class="container max-width-lg pb-2" style="background-color:#1e2227; min-height:100vh;">
+
+    {{-- ====== TOP MENU ====== --}}
+    <div class="header-section pt-2">
+        <div class="mb-2">
+            <div class="row text-center g-2 align-items-stretch">
+
+                <div class="col-6 col-md-3 d-flex">
+                    <button id="loadAgenda" class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1
+                        d-flex flex-column justify-content-center align-items-center">
+                        AGENDA
+                    </button>
+                </div>
+
+                <div class="col-6 col-md-3 d-flex">
+                    <button id="loadCustomer" class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1
+                        d-flex flex-column justify-content-center align-items-center">
+                        CUSTOMER
+                    </button>
+                </div>
+
+                <div class="col-6 col-md-3 d-flex">
+                    <button id="loadContact" class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1
+                        d-flex flex-column justify-content-center align-items-center">
+                        CONTACT
+                    </button>
+                </div>
+
+                <div class="col-6 col-md-3 d-flex">
+                    <a class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1 
+                        d-flex flex-column justify-content-center align-items-center"
+                       href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        LOGOUT
+                    </a>
+                </div>
+
+            </div>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
 
@@ -183,6 +230,7 @@
 </div>
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">@csrf</form>
+<<<<<<< HEAD
 
 @include('master.tampung_prospek.modal_import_export')
 
@@ -302,6 +350,23 @@
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+=======
+@endsection
+
+@push('scripts')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+    #dynamicContainer { 
+        min-height: 60vh; 
+        position: relative; 
+    }
+</style>
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <script>
 $(document).ready(function(){
 
@@ -317,8 +382,11 @@ $(document).ready(function(){
 
     // ================== GENERAL FUNCTIONS ==================
     function loadPartial(url, data = {}) {
+<<<<<<< HEAD
         // Tetap tampilkan loading tapi jangan hapus tinggi kontainer
         $("#dynamicContainer").css('min-height', '568px'); 
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         $("#dynamicContainer").html('<div class="text-center text-white p-3">Loading...</div>');
         return $.get(url, data);
     }
@@ -342,6 +410,7 @@ $(document).ready(function(){
 
     // ================== CUSTOMER ==================
     window.currentCustomerType = "all"; // menyimpan filter aktif
+<<<<<<< HEAD
     window.currentCustomerPage = 1;     // menyimpan page terakhir
     window.currentCustomerSearch = "";  // BARU: menyimpan keyword pencarian terakhir
     
@@ -371,6 +440,28 @@ $(document).ready(function(){
                 // Catatan: Script binding $(document).on("click", ".customer-pagination"...) 
                 // SAYA HAPUS dari sini karena sudah ditangani oleh script 
                 // $(document).on('click','.ci-pgn'...) yang ada di dalam partial_index.blade.php
+=======
+    window.currentCustomerPage = 1; // menyimpan page terakhir
+    
+    function loadCustomerList(type = null, page = 1) {
+        if(type !== null) window.currentCustomerType = type;
+        window.currentCustomerPage = page;
+    
+        $("#dynamicContainer").fadeOut(150, function() {
+            loadPartial("{{ route('master.customer_prospek.partial') }}", { 
+                type: window.currentCustomerType,
+                page: window.currentCustomerPage
+            }).done(function(res){
+                $("#dynamicContainer").html(res).fadeIn(150);
+                initCustomerTable();
+    
+                // Bind pagination di partial
+                $(document).off("click", ".customer-pagination").on("click", ".customer-pagination", function(e){
+                    e.preventDefault();
+                    let page = $(this).data("page");
+                    loadCustomerList(window.currentCustomerType, page);
+                });
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             });
         });
     }
@@ -379,7 +470,11 @@ $(document).ready(function(){
     $(document).on("click", ".filter-btn", function(e){
         e.preventDefault();
         let type = $(this).data("type");
+<<<<<<< HEAD
         window.loadCustomerList(type, 1); // Tambahkan window.
+=======
+        loadCustomerList(type, 1);
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     });
     
     // Tombol Create Customer
@@ -405,6 +500,7 @@ $(document).ready(function(){
                 if (typeof initCustomerIndexEvents === 'function') initCustomerIndexEvents();
             });
     };
+<<<<<<< HEAD
     
     window.initCreateFormEvents = function () {
 
@@ -498,6 +594,9 @@ $(document).ready(function(){
             });
         });
     };
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // ================== CONTACT ==================
     window.loadContactList = function(page = 1, search = '') {
@@ -588,6 +687,7 @@ $(document).ready(function(){
         e.preventDefault();
         loadCreateContactNew();
     });
+<<<<<<< HEAD
     
     // ✅ Tombol PRODUCT
     $(document).on("click", "#loadProduct", function(e){
@@ -617,6 +717,8 @@ $(document).ready(function(){
             $('#btnImportExportProspek').addClass('d-none').removeClass('d-flex');  // TAMBAHKAN INI
         }
     });
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // ================== CONTACT PAGINATION & SEARCH ==================
     $(document).off("click", ".ajax-pagination").on("click", ".ajax-pagination", function(e){
@@ -649,6 +751,7 @@ $(document).ready(function(){
             `).fadeIn(150);
         });
     });
+<<<<<<< HEAD
     
     // ========== Active Menu Highlighter ==========
     $('.nav-button').on('click', function() {
@@ -657,6 +760,8 @@ $(document).ready(function(){
         // Tambahkan warna biru hanya pada tombol yang sedang diklik
         $(this).addClass('active-nav');
     });
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 });
 </script>
 @endpush

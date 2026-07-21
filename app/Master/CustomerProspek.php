@@ -4,7 +4,10 @@ namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+<<<<<<< HEAD
 use App\Master\StoreProspek;
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
 class CustomerProspek extends Model
 {
@@ -16,7 +19,11 @@ class CustomerProspek extends Model
         'gps_latitude', 'gps_longitude',
         'provinsi', 'kota', 'kecamatan', 'kelurahan',
         'text_provinsi', 'text_kota', 'text_kecamatan', 'text_kelurahan',
+<<<<<<< HEAD
         'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'status_request', 'situation', 'status_key', 'source', 'rating', 'additional_information', 'additional_notes', 'last_updated', 'last_updated_notes',
+=======
+        'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'situation', 'status_key', 'rating', 'additional_information', 'additional_notes'
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     ];
     protected $table = 'master_customer_other_addresses_prospek';
     public $incrementing = false;
@@ -60,6 +67,7 @@ class CustomerProspek extends Model
         2 => 'ERICK',
         3 => 'LINDY',
         4 => 'KUMALA',
+<<<<<<< HEAD
     ];
     
     const STATUS_REQUEST = [
@@ -68,6 +76,9 @@ class CustomerProspek extends Model
         2 => 'DISETUJUI',
         3 => 'DITOLAK',
         4 => 'NONAKTIF / DIARSIP',
+=======
+        5 => 'NIA',
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     ];
     
     public function contacts()
@@ -77,12 +88,19 @@ class CustomerProspek extends Model
 
     public function store_prospek()
     {
+<<<<<<< HEAD
         return $this->hasMany(StoreProspek::class, 'customer_id', 'id'); 
         // pastikan foreign key di table prospek = customer_id
     }
 
 
 
+=======
+        return $this->belongsTo('App\Master\StoreProspek', 'customer_id', 'id'); 
+    }
+
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function dokumen(){
         return $this->hasMany('App\Entities\Master\Dokumen','customer_other_address_id');
     }

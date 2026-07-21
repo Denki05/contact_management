@@ -166,6 +166,10 @@ return [
          * Package Service Providers...
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+<<<<<<< HEAD
+=======
+        Barryvdh\DomPDF\ServiceProvider::class,
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         /*
          * Application Service Providers...
          */
@@ -174,7 +178,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -226,7 +229,11 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+<<<<<<< HEAD
         'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
+=======
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     ],
 
 ];

@@ -13,7 +13,11 @@ return array(
     */
     'show_warnings' => false,   // Throw an Exception on warnings from dompdf
 
+<<<<<<< HEAD
     'public_path' => null,
+=======
+    'public_path' => null,  // Override the public path if needed
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     /*
      * Dejavu Sans font is missing glyphs for converted entities, turn it off if you need to show € and £.
@@ -78,9 +82,13 @@ return array(
          * direct class use like:
          * $dompdf = new DOMPDF();  $dompdf->load_html($htmldata); $dompdf->render(); $pdfdata = $dompdf->output();
          */
+<<<<<<< HEAD
         "chroot" => base_path('public'),
         
         'isRemoteEnabled' => true, // <-- Pastikan ini 'true' jika ada gambar dari URL, tapi baiknya disetel 'true'
+=======
+        "chroot" => realpath(base_path()),
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         /**
          * Protocol whitelist
