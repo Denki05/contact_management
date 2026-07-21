@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        // Daftarkan class command kita di sini
+        \App\Console\Commands\UpdateEventStatus::class,
     ];
 
     /**
@@ -24,8 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // Jalankan perintah setiap hari jam 00:01 pagi
+        $schedule->command('event:check-expiry')->dailyAt('00:01');
     }
 
     /**
@@ -36,7 +37,6 @@ class Kernel extends ConsoleKernel
     protected function commands()
     {
         $this->load(__DIR__.'/Commands');
-
         require base_path('routes/console.php');
     }
 }

@@ -3,20 +3,20 @@
 namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Master\Contact;
+use App\Master\Store;
 
 class Customer extends Model
 {
-    protected $appends = ['img_ktp', 'img_npwp'];
     protected $fillable = [
-        'customer_id', 'member_default', 'officer', 'account_representative', 'account_representative_optional_1', 'account_representative_optional_2', 'name', 'contact_person', 'npwp', 'ktp', 'phone', 'address',
+        'customer_id', 'member_default', 'pengajuan', 'officer', 'account_representative', 'account_representative_optional_1', 'account_representative_optional_2', 'name', 'contact_person', 'npwp', 'ktp', 'phone', 'address',
         'gps_latitude', 'gps_longitude',
         'provinsi', 'kota', 'kecamatan', 'kelurahan',
         'text_provinsi', 'text_kota', 'text_kecamatan', 'text_kelurahan',
-        'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'situation', 'status_key'
+        'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'situation', 'status_key', 'last_updated', 'last_updated_notes',
     ];
     protected $table = 'master_customer_other_addresses';
     public $incrementing = false;
-    public static $directory_image = 'superuser_assets/media/master/member/';
 
     const STATUS = [
         'DELETED' => 0,
@@ -50,38 +50,26 @@ class Customer extends Model
         0 => 'NON FREE',
         1 => 'FREE',
     ];
-
-    public function store()
+    
+    public function contacts()
     {
-        return $this->BelongsTo('App\Entities\Master\Customer', 'customer_id');
+        return $this->hasMany(Contact::class, 'manage_id');
     }
+
+    public function store_existing()
+{
+    return $this->hasMany(Store::class, 'customer_id', 'id'); 
+    // foreignKey = customer_id di tabel Store
+    // localKey = id di master_customers
+}
 
     public function dokumen(){
         return $this->hasMany('App\Entities\Master\Dokumen','customer_other_address_id');
     }
 
-    public function getImgKtpAttribute()
-    {
-        if (!$this->image_ktp OR !file_exists(Self::$directory_image.$this->image_ktp)) {
-          return img_holder();
-        }
+    
 
-        return asset(Self::$directory_image.$this->image_ktp);
-    }
-
-    public function getImgNpwpAttribute()
-    {
-        if (!$this->image_npwp OR !file_exists(Self::$directory_image.$this->image_npwp)) {
-          return img_holder();
-        }
-
-        return asset(Self::$directory_image.$this->image_npwp);
-    }
-
-    public function routeNotificationForWhatsApp()
-    {
-        return $this->phone;
-    }
+    
 
     public function default()
     {

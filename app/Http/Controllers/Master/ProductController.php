@@ -1,0 +1,266 @@
+<?php
+namespace App\Http\Controllers\Master;
+
+use App\Http\Controllers\Controller;
+use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use App\Master\Product;
+use DB;
+
+// WAJIB ditambahkan
+use GuzzleHttp\Client;
+use Exception;
+
+class ProductController extends Controller
+{
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function partial()
+    {
+        return view('master.product.partial_product');
+    }
+
+    public function partialExtra()
+    {
+        return view('master.product.partial_extra');
+    }
+
+    public function index()
+    {
+        $data['products'] = Product::get();
+        return view('master.product.index', $data);
+    }
+
+    public function upload_property(Request $request, $encodedId)
+    {
+        try {
+            $decodedId = base64_decode($encodedId);
+            Log::info('Decoded ID:', ['id' => $decodedId]);
+
+            $product = Product::findOrFail($decodedId);
+
+            $validator = Validator::make($request->all(), [
+                'img_thumbnail' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+                'img_hd'        => 'nullable|image|mimes:jpeg,png,jpg|max:4096',
+                'video_product' => 'nullable|mimes:mp4,mov,avi,flv|max:51200',
+                'video_sosmed'  => 'nullable|mimes:mp4,mov,avi,flv|max:51200',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $path = 'media/products/';
+
+            if ($request->hasFile('img_thumbnail')) {
+                if ($product->image) @unlink(storage_path('app/' . $product->image));
+                $product->image = $request->file('img_thumbnail')->store($path);
+            }
+
+            if ($request->hasFile('img_hd')) {
+                if ($product->image_hd) @unlink(storage_path('app/' . $product->image_hd));
+                $product->image_hd = $request->file('img_hd')->store($path);
+            }
+
+            if ($request->hasFile('video_product')) {
+                if ($product->videos_product_1) @unlink(storage_path('app/' . $product->videos_product_1));
+                $product->videos_product_1 = $request->file('video_product')->store($path);
+            }
+
+            if ($request->hasFile('video_sosmed')) {
+                if ($product->videos_product_2) @unlink(storage_path('app/' . $product->videos_product_2));
+                $product->videos_product_2 = $request->file('video_sosmed')->store($path);
+            }
+
+            $product->save();
+
+            return redirect()->route('master.product.index')
+                             ->with('success', 'Media produk berhasil diunggah!');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                             ->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
+    }
+    
+    // ── GABUNGAN FUNGSI PROXY BARU ──────────────────────────
+
+    public function fetchFromTrans(Request $request)
+    {
+        $queryParams = $request->all();
+        $client = new Client();
+        $targetUrl = 'https://trans.lssoft88.xyz/api/product-assets';
+
+        try {
+            $response = $client->request('GET', $targetUrl, [
+                'query' => $queryParams,
+                'verify' => false 
+            ]);
+
+            $body = $response->getBody()->getContents();
+            return response()->json(json_decode($body, true));
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal terhubung ke server pusat',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function fetchFromDrive(Request $request)
+    {
+        $path = $request->query('path');
+        if (!$path) return response()->json(['error' => 'Path parameter is missing'], 400);
+
+        $client = new Client();
+        $targetUrl = 'https://drive.lssoft88.xyz/api/list?path=' . $path;
+
+        try {
+            $response = $client->request('GET', $targetUrl, ['verify' => false]);
+            $body = $response->getBody()->getContents();
+            return response()->json(json_decode($body, true));
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal terhubung ke server drive',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+    public function fetchExtraProxy(Request $request)
+    {
+        $queryParams = $request->all();
+        $client = new Client();
+        $targetUrl = 'https://drive.lssoft88.xyz/api/extra/list'; 
+
+        try {
+            $response = $client->request('GET', $targetUrl, [
+                'query' => $queryParams,
+                'verify' => false 
+            ]);
+
+            $body = $response->getBody()->getContents();
+            return response()->json(json_decode($body, true));
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Gagal terhubung ke server storage', 'message' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function streamExtraFile(Request $request)
+    {
+        $path = $request->query('path');
+        if (!$path) return response()->json(['error' => 'Parameter path tidak ada'], 400);
+    
+        $client = new Client();
+        $targetUrl = 'https://drive.lssoft88.xyz/api/extra/file?path=' . $path;
+    
+        try {
+            $response = $client->request('GET', $targetUrl, [
+                'verify' => false,
+                'stream' => true, 
+            ]);
+    
+            $contentType = $response->getHeaderLine('Content-Type') ?: 'application/octet-stream';
+            $contentLength = $response->getHeaderLine('Content-Length');
+            $body = $response->getBody();
+    
+            $headers = [
+                'Content-Type'              => $contentType,
+                'Access-Control-Allow-Origin' => '*',
+                'Cache-Control'             => 'public, max-age=3600',
+            ];
+    
+            if ($contentLength) $headers['Content-Length'] = $contentLength;
+    
+            return response()->stream(function () use ($body) {
+                while (!$body->eof()) {
+                    echo $body->read(1024 * 64);
+                    flush();
+                }
+            }, 200, $headers);
+    
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Gagal stream file', 'message' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function proxyImage(Request $request)
+    {
+        $url = $request->query('url');
+        if (!$url) {
+            return response()->json(['error' => 'Parameter URL tidak ada'], 400);
+        }
+
+        $client = new Client();
+
+        try {
+            $response = $client->request('GET', $url, [
+                'verify' => false,
+                'stream' => true, 
+            ]);
+
+            $contentType = $response->getHeaderLine('Content-Type') ?: 'image/jpeg';
+            $contentLength = $response->getHeaderLine('Content-Length');
+            $body = $response->getBody();
+
+            $headers = [
+                'Content-Type'              => $contentType,
+                'Access-Control-Allow-Origin' => '*',
+                'Cache-Control'             => 'public, max-age=3600',
+            ];
+
+            if ($contentLength) {
+                $headers['Content-Length'] = $contentLength;
+            }
+
+            return response()->stream(function () use ($body) {
+                while (!$body->eof()) {
+                    echo $body->read(1024 * 64);
+                    flush();
+                }
+            }, 200, $headers);
+
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Gagal proxy gambar', 'message' => $e->getMessage()], 500);
+        }
+    }
+    
+    public function fetchDesignThumbnails(Request $request)
+    {
+        $queryParams = array_filter([
+            'merek'        => $request->get('merek'),
+            'brand'        => $request->get('brand'),
+            'searah'       => $request->get('searah'),
+            'product_name' => $request->get('product_name'),
+        ]);
+    
+        $client    = new Client();
+        $targetUrl = 'https://drive.lssoft88.xyz/drive-app/assets/thumbnails';
+    
+        try {
+            $response = $client->request('GET', $targetUrl, [
+                'query'   => $queryParams,
+                'verify'  => false,
+                'timeout' => 15
+            ]);
+    
+            $data = json_decode($response->getBody()->getContents(), true);
+            return response()->json($data);
+    
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal terhubung ke server design',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
+    }
+}

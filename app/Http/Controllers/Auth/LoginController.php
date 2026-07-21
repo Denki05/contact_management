@@ -51,4 +51,25 @@ class LoginController extends Controller
             'password' => 'required|string',
         ]);
     }
+    
+    // public function authenticated(Request $request, $user)
+    // {
+    //     session()->flash('welcome_message', true);
+
+    //     // Langsung redirect ke halaman FileDoctor
+    //     return redirect()->route('report.doctor.index');
+    // }
+    
+    public function authenticated(Request $request, $user)
+    {
+        session()->flash('welcome_message', true);
+    
+        // Jika berasal dari direct login (ada session penanda)
+        if (session()->pull('direct_login') === true) {
+            return redirect()->route('report.doctor.index');
+        }
+    
+        // Jika login manual
+        return redirect()->route('home');
+    }
 }
