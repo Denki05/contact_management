@@ -11,7 +11,11 @@
         .header p { font-size:10pt; margin:5px 0 0; }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         /* Zona */
+=======
+        /* Group Level Styles */
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         /* Group Level Styles */
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -24,7 +28,10 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         /* Provinsi */
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         .group-prov {
@@ -32,9 +39,13 @@
             font-weight:bold;
             margin-top:15px;
 <<<<<<< HEAD
+<<<<<<< HEAD
             padding:6px 12px;
             background-color: #F0F0F0;
             border-radius: 4px;
+=======
+            padding-bottom:3px;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
             padding-bottom:3px;
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -49,8 +60,11 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         /* Table */
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         .group-status {
             font-size: 8pt;
             font-weight: bold;
@@ -89,6 +103,9 @@
         }
 
         /* Detail Table */
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         table.customer-table {
             border-collapse: collapse;
@@ -99,7 +116,12 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         table.customer-table th, table.customer-table td {
+=======
+        table.customer-table th, 
+        table.customer-table td {
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         table.customer-table th, 
         table.customer-table td {
@@ -123,6 +145,7 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         .col-name { width: 35%; }
         .col-pengajuan { width: 12%; }
         .col-category { width: 38%; }
@@ -134,11 +157,16 @@
         .row-e { background-color: #d4edda; } /* hijau muda */
         .row-p { background-color: #d1ecf1; } /* biru langit muda */
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         .col-name { width: 38%; }
         .col-pengajuan { width: 12%; }
         .col-category { width: 26%; }
         .col-pic { width: 12%; }
         .col-officer { width: 12%; }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         .no-data {
@@ -152,7 +180,13 @@
 <body>
     @forelse($groupedCustomers as $zone => $provGroups)
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div class="group-zona">{{ $zoneLabels[$zone] ?? strtoupper($zone) }}</div>
+=======
+        <div class="group-zona">
+            {{ $zoneLabels[$zone] ?? strtoupper($zone) }}
+        </div>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         <div class="group-zona">
             {{ $zoneLabels[$zone] ?? strtoupper($zone) }}
@@ -162,6 +196,7 @@
         @foreach($provGroups as $prov => $kotaGroups)
             <div class="group-prov">{{ strtoupper($prov) }}</div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
             @foreach($kotaGroups as $kota => $customers)
                 <div class="group-kota">{{ strtoupper($kota) }}</div>
@@ -203,6 +238,8 @@
     @empty
         <p class="no-data" style="text-align:center; margin-top:50px;">Tidak ada data Customer yang ditemukan.</p>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             @foreach($kotaGroups as $kota => $statusGroups)
                 <div class="group-kota">{{ strtoupper($kota) }}</div>
 
@@ -271,6 +308,9 @@
         <p class="no-data" style="text-align:center; margin-top:50px;">
             Tidak ada data Customer yang ditemukan.
         </p>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     @endforelse
 </body>

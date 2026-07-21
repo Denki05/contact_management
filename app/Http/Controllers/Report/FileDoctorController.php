@@ -28,7 +28,11 @@ class FileDoctorController extends Controller
     const PROSPEK_MODEL = 'App\Master\CustomerProspek';
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Konstanta Zona
+=======
+    // âœ… Konstanta Zona
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
     // âœ… Konstanta Zona
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -45,6 +49,7 @@ class FileDoctorController extends Controller
     // ============================================================
     public function index(Request $request)
     {
+<<<<<<< HEAD
 <<<<<<< HEAD
         // =========================
         // MASTER OFFICER (MANUAL)
@@ -99,6 +104,8 @@ class FileDoctorController extends Controller
         // FILTER PROVINSI
         // =========================
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         $allowedOfficers = ['Erick', 'Lindy', 'Kumala', 'Kantor'];
 
         $data['zona'] = self::ZONA_LIST;
@@ -117,11 +124,15 @@ class FileDoctorController extends Controller
         $locations = $this->getNormalizedLocations();
 
         // Filter provinsi berdasarkan zona yang dipilih
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         $data['provinces'] = [];
         if ($selectedZona && isset($locations[strtoupper($selectedZona)])) {
             $data['provinces'] = array_keys($locations[strtoupper($selectedZona)]);
         } else {
+<<<<<<< HEAD
 <<<<<<< HEAD
             foreach ($locations as $zonaData) {
                 $data['provinces'] = array_merge(
@@ -155,6 +166,8 @@ class FileDoctorController extends Controller
         $data['selectedOfficer']  = $selectedOfficer;
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
              // Tampilkan semua provinsi jika zona tidak dipilih (opsional)
              foreach ($locations as $zonaData) {
                  $data['provinces'] = array_merge($data['provinces'], array_keys($zonaData));
@@ -175,6 +188,9 @@ class FileDoctorController extends Controller
         $data['selectedCity']      = $selectedKota;
         $data['selectedOfficer']  = $selectedOfficer;
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         return view('report.doctor.index', $data);
     }
@@ -182,6 +198,7 @@ class FileDoctorController extends Controller
     // ============================================================
     // GET LIST MARKET (Lengkap dan Aman)
     // ============================================================
+<<<<<<< HEAD
 <<<<<<< HEAD
     // public function getListMarket(Request $request)
     // {
@@ -284,6 +301,8 @@ class FileDoctorController extends Controller
 
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function getListMarket(Request $request)
     {
         $officer  = $request->get('officer');
@@ -300,6 +319,7 @@ class FileDoctorController extends Controller
         }
     
         $officerLower = strtolower(trim($officer));
+<<<<<<< HEAD
 <<<<<<< HEAD
     
         // 🔥 FLAG KANTOR (TANPA FILTER)
@@ -343,6 +363,8 @@ class FileDoctorController extends Controller
             );
         }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         // -------------------------------
         // Tentukan filter officer
@@ -370,6 +392,9 @@ class FileDoctorController extends Controller
         if ($zona) $existingQuery->whereRaw('UPPER(TRIM(s.zone)) LIKE ?', ['%' . strtoupper(trim($zona)) . '%']);
         if ($provinsi) $existingQuery->whereRaw('UPPER(TRIM(s.text_provinsi)) LIKE ?', ['%' . strtoupper(trim($provinsi)) . '%']);
         if ($kota) $existingQuery->whereRaw('UPPER(TRIM(s.text_kota)) LIKE ?', ['%' . strtoupper(trim($kota)) . '%']);
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     
         $existing = $existingQuery->select(
@@ -379,7 +404,11 @@ class FileDoctorController extends Controller
             's.name',
             's.officer',
 <<<<<<< HEAD
+<<<<<<< HEAD
             DB::raw('COALESCE(s.pengajuan, "KANTOR") as pengajuan'),
+=======
+            DB::raw('COALESCE(s.pengajuan, "KANTOR") as pengajuan'), // cek null
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
             DB::raw('COALESCE(s.pengajuan, "KANTOR") as pengajuan'), // cek null
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -389,6 +418,7 @@ class FileDoctorController extends Controller
             DB::raw('COALESCE(cat.name, "Tanpa Kategori") as kategori')
         )->get();
     
+<<<<<<< HEAD
 <<<<<<< HEAD
         // =====================================================
         // PROSPEK CUSTOMERS
@@ -426,6 +456,8 @@ class FileDoctorController extends Controller
             );
         }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         // -------------------------------
         // Prospek Customers
         // -------------------------------
@@ -439,6 +471,9 @@ class FileDoctorController extends Controller
         if ($zona) $prospekQuery->whereRaw('UPPER(TRIM(s.zone)) = ?', [strtoupper(trim($zona))]);
         if ($provinsi) $prospekQuery->whereRaw('UPPER(TRIM(s.text_provinsi)) = ?', [strtoupper(trim($provinsi))]);
         if ($kota) $prospekQuery->whereRaw('UPPER(TRIM(s.text_kota)) = ?', [strtoupper(trim($kota))]);
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     
         $prospek = $prospekQuery->select(
@@ -447,6 +482,7 @@ class FileDoctorController extends Controller
             's.id',
             's.name',
             's.officer',
+<<<<<<< HEAD
 <<<<<<< HEAD
             DB::raw("
                 CASE s.pengajuan 
@@ -459,6 +495,8 @@ class FileDoctorController extends Controller
                 END as pengajuan
             "),
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             DB::raw("CASE s.pengajuan 
                 WHEN 1 THEN 'KANTOR'
                 WHEN 2 THEN 'ERICK'
@@ -466,6 +504,9 @@ class FileDoctorController extends Controller
                 WHEN 4 THEN 'KUMALA'
                 WHEN 5 THEN 'NIA'
                 ELSE '-' END as pengajuan"),
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             DB::raw('UPPER(TRIM(s.zone)) as zona'),
             DB::raw('UPPER(TRIM(s.text_provinsi)) as text_provinsi'),
@@ -474,9 +515,12 @@ class FileDoctorController extends Controller
         )->get();
     
 <<<<<<< HEAD
+<<<<<<< HEAD
         // =====================================================
         // RESPONSE
         // =====================================================
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         return response()->json([
@@ -486,6 +530,10 @@ class FileDoctorController extends Controller
         ]);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -593,7 +641,11 @@ class FileDoctorController extends Controller
         $end     = $request->get('end');
     
 <<<<<<< HEAD
+<<<<<<< HEAD
         $eventsByDate = []; // <=== Simpan per TANGGAL
+=======
+        $events = [];
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         $events = [];
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -606,7 +658,10 @@ class FileDoctorController extends Controller
     
             $response = $client->request('GET', '/api/tasks');
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             if ($response->getStatusCode() === 200) {
@@ -622,6 +677,7 @@ class FileDoctorController extends Controller
                     });
     
                 foreach ($filtered as $agenda) {
+<<<<<<< HEAD
 <<<<<<< HEAD
     
                     $dateKey = Carbon::parse($agenda['tanggal'])->format('Y-m-d');
@@ -655,6 +711,8 @@ class FileDoctorController extends Controller
                                         ? Carbon::parse($task['created_at'])->timezone('Asia/Jakarta')->format('Y-m-d\TH:i:sP')
                                         : null,
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     $taskList = [];
                 
                     if (isset($agenda['tasks']) && is_array($agenda['tasks'])) {
@@ -672,16 +730,22 @@ class FileDoctorController extends Controller
                                     'status'      => $task['status'],
                                     'type_agenda' => $task['type_agenda'],
                                     'created_at'  => $createdAtWIB,
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                                 ];
                             }
                         }
                     }
 <<<<<<< HEAD
+<<<<<<< HEAD
                 }
             }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 
                     $events[] = [
                         'title' => $agenda['judul'] ?? 'Agenda',
@@ -694,11 +758,15 @@ class FileDoctorController extends Controller
                     ];
                 }
             }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         } catch (\Exception $e) {
             \Log::error("Agenda API Failed: " . $e->getMessage());
         }
     
+<<<<<<< HEAD
 <<<<<<< HEAD
         // 🔥 Convert ke format FullCalendar
         $events = [];
@@ -720,6 +788,8 @@ class FileDoctorController extends Controller
             ];
         }
     
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         return response()->json($events);
@@ -825,6 +895,7 @@ class FileDoctorController extends Controller
     
             // Filter berdasarkan pic_customer (officer)
 <<<<<<< HEAD
+<<<<<<< HEAD
             // $officerData = collect($allVisits)->filter(function ($item) use ($officerId) {
             //     return isset($item['pic_customer']) && strcasecmp(trim($item['pic_customer']), trim($officerId)) === 0;
             // });
@@ -840,6 +911,11 @@ class FileDoctorController extends Controller
                 });
             }
 
+=======
+            $officerData = collect($allVisits)->filter(function ($item) use ($officerId) {
+                return isset($item['pic_customer']) && strcasecmp(trim($item['pic_customer']), trim($officerId)) === 0;
+            });
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
             $officerData = collect($allVisits)->filter(function ($item) use ($officerId) {
                 return isset($item['pic_customer']) && strcasecmp(trim($item['pic_customer']), trim($officerId)) === 0;
@@ -895,7 +971,11 @@ class FileDoctorController extends Controller
                         'customer'        => $header['customer_name'] ?? 'N/A',
                         'kegiatan'        => $detail['kegiatan'] ?? '-',
 <<<<<<< HEAD
+<<<<<<< HEAD
                         'kegiatan_text'   => $detail['kegiatan_text'] ?? $detail['keterangan'] ?? '-',
+=======
+                        'kegiatan_text'       => $detail['kegiatan_text'] ?? $detail['keterangan'] ?? '-',
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
                         'kegiatan_text'       => $detail['kegiatan_text'] ?? $detail['keterangan'] ?? '-',
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -908,9 +988,12 @@ class FileDoctorController extends Controller
                         'text_kota'       => $source->text_kota ?? '-',
                         'text_provinsi'   => $source->text_provinsi ?? '-',
 <<<<<<< HEAD
+<<<<<<< HEAD
                     
                         // ✅ INI YANG PALING PENTING
                         'pic_customer'    => strtoupper(trim($header['pic_customer'] ?? '-')),
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     ]);
@@ -1257,6 +1340,7 @@ class FileDoctorController extends Controller
     }
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function exportDoctorPDFAllV2($officerId, Request $request)
     {
         $startDate = $request->get('start_date');
@@ -1322,6 +1406,8 @@ class FileDoctorController extends Controller
         return $pdf->stream("FollowUp_All_{$officerId}_{$periode}.pdf");
     }
     
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     // public function getSamplingQuotation(Request $request)
@@ -1627,6 +1713,7 @@ class FileDoctorController extends Controller
     public function preview(Request $r)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         try {
     
             // Debug request dari frontend
@@ -1756,6 +1843,8 @@ class FileDoctorController extends Controller
             \Log::error('Proxy product-pack error', ['error' => $e->getMessage()]);
             return response()->json([], 200); // kembalikan array kosong agar JS tidak crash
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         $payload = [
             'type'  => $r->type,
             'sub'   => $r->sub,
@@ -1797,6 +1886,9 @@ class FileDoctorController extends Controller
             // Error umum
             \Log::error('Guzzle Generic Error', ['error' => $e->getMessage()]);
             return response("Terjadi kesalahan saat memproses laporan: {$e->getMessage()}", 500);
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         }
     }

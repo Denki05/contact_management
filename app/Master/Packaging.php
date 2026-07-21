@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Master;
@@ -41,6 +42,8 @@ class Packaging extends Model
     }
 }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Master;
@@ -82,4 +85,7 @@ class Packaging extends Model
         return $this->belongsTo('App\Entities\Master\Unit', 'unit_id');
     }
 }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744

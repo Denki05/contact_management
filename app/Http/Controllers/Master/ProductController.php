@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 namespace App\Http\Controllers\Master;
 
@@ -265,6 +266,8 @@ class ProductController extends Controller
         }
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Http\Controllers\Master;
@@ -343,5 +346,8 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

@@ -52,6 +52,7 @@ class LoginController extends Controller
         ]);
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     // public function authenticated(Request $request, $user)
     // {
@@ -73,6 +74,8 @@ class LoginController extends Controller
         // Jika login manual
         return redirect()->route('home');
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     public function authenticated(Request $request, $user)
     {
@@ -80,6 +83,9 @@ class LoginController extends Controller
 
         // Langsung redirect ke halaman FileDoctor
         return redirect()->route('report.doctor.index');
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     }
 }

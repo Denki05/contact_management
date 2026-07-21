@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Master;
@@ -110,6 +111,8 @@ class Contact extends Model
         return Customer::find($this->manage_id) ? 'Existing' : 'Prospek';
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Master;
@@ -209,5 +212,8 @@ class Contact extends Model
 
         return Customer::find($this->manage_id) ? 'Existing' : 'Prospek';
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

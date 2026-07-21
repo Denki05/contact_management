@@ -21,6 +21,7 @@ use PDF;
 class CustomerProspekController extends Controller
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
     // public function index(Request $request)
     // {
     //     if (!auth()->check()) {
@@ -588,6 +589,8 @@ class CustomerProspekController extends Controller
     }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function index(Request $request)
     {
 
@@ -1075,6 +1078,9 @@ class CustomerProspekController extends Controller
 
     
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function handleAjax(Request $request)
     {
@@ -1082,22 +1088,32 @@ class CustomerProspekController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
         $action = $request->input('action');
         $id = $request->input('id');
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         $action = $request->input('action');
         $id = $request->input('id');
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         if ($action === 'show') {
             // ... (LOGIKA SHOW TIDAK BERUBAH) ...
             $dataType = $request->input('data_type', 'prospek');
             $customer = null;
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -1107,6 +1123,7 @@ class CustomerProspekController extends Controller
                 $customer = CustomerProspek::with(['store_prospek', 'store_prospek.category'])->find($id);
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
             if (!$customer) {
                 return response()->json(['message' => 'Data not found'], 404);
@@ -1115,6 +1132,8 @@ class CustomerProspekController extends Controller
             return response()->json($customer);
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             if (!$customer) {
                 return response()->json(['message' => 'Data not found'], 404);
@@ -1122,6 +1141,9 @@ class CustomerProspekController extends Controller
 
             return response()->json($customer);
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         } elseif ($action === 'update_batch') { // Aksi BARU untuk update massal
             // === LOGIKA UPDATE BATCH (HANYA UNTUK PROSPEK) ===
@@ -1133,6 +1155,7 @@ class CustomerProspekController extends Controller
                 'updates.*.value' => 'nullable|string',
             ]);
 <<<<<<< HEAD
+<<<<<<< HEAD
             
             $id = $request->input('id'); // ID diambil sebagai string
             
@@ -1143,6 +1166,8 @@ class CustomerProspekController extends Controller
             }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             $id = $request->input('id'); // ID diambil sebagai string
             $customer = CustomerProspek::with('store_prospek')->find($id);
@@ -1151,6 +1176,9 @@ class CustomerProspekController extends Controller
                 return response()->json(['message' => 'Data not found for update (Update hanya diizinkan untuk Prospek)'], 404);
             }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             $updates = $request->input('updates');
             $prospekUpdates = [];
@@ -1161,7 +1189,11 @@ class CustomerProspekController extends Controller
                 $field = $update['field'];
                 $value = $update['value'];
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -1178,8 +1210,14 @@ class CustomerProspekController extends Controller
                     // return response()->json(['message' => 'Invalid field: ' . $field], 400); 
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
             }
     
+=======
+
+            }
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
             }
@@ -1190,7 +1228,11 @@ class CustomerProspekController extends Controller
                 $customer->update($prospekUpdates);
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -1203,6 +1245,7 @@ class CustomerProspekController extends Controller
                     return response()->json(['message' => 'Relasi Store Prospek tidak ditemukan.'], 400);
                 }
             }
+<<<<<<< HEAD
 <<<<<<< HEAD
     
             return response()->json(['message' => 'Semua data customer berhasil diupdate!']);
@@ -1638,6 +1681,8 @@ class CustomerProspekController extends Controller
                 // Tampilkan semua prospek kecuali yang Deleted
                 $query->where('status', '!=', $StoreProspekModel::STATUS['DELETED']); 
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             return response()->json(['message' => 'Semua data customer berhasil diupdate!']);
         }
@@ -2422,11 +2467,15 @@ class CustomerProspekController extends Controller
         $prospek = \App\Master\CustomerProspek::with(['store_prospek', 'store_prospek.category'])
             ->whereHas('store_prospek', function ($query) use ($StoreProspekModel) {
                 $query->where('status', '!=', $StoreProspekModel::STATUS['DELETED']);
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             })
             ->get()
             ->map(function($member) use ($CustomerProspekModel) {
                 $parent = $member->store_prospek;
+<<<<<<< HEAD
 <<<<<<< HEAD
                 
                 if (!$parent) return null; 
@@ -2477,6 +2526,8 @@ class CustomerProspekController extends Controller
     }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 if (!$parent) return null;
 
                 $pengajuanList = $CustomerProspekModel::PENGAJUAN;
@@ -2508,6 +2559,9 @@ class CustomerProspekController extends Controller
         return $prospek;
     }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function exportStatusTemplate()
     {
@@ -2537,6 +2591,7 @@ class CustomerProspekController extends Controller
         }
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     private function formatCompanyName($name)
     {
@@ -2582,6 +2637,8 @@ class CustomerProspekController extends Controller
         DB::beginTransaction();
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     private function formatCompanyName($name)
 
@@ -2665,6 +2722,9 @@ class CustomerProspekController extends Controller
     {
         DB::beginTransaction();
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         try {
             // 1️⃣ Normalisasi Parent (StoreProspek)
@@ -2672,17 +2732,23 @@ class CustomerProspekController extends Controller
                 foreach ($records as $store) {
                     $normalized = $this->formatCompanyName($store->name);
 <<<<<<< HEAD
+<<<<<<< HEAD
     
                     if ($normalized !== $store->name) {
                         $store->update(['name' => $normalized]);
                     }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
                     if ($normalized !== $store->name) {
                         $store->update(['name' => $normalized]);
                     }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     // Sync child yg member_default = YES
                     CustomerProspek::where('customer_id', $store->id)
@@ -2692,7 +2758,13 @@ class CustomerProspekController extends Controller
                 }
             });
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+    
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
     
@@ -2705,7 +2777,11 @@ class CustomerProspekController extends Controller
                     foreach ($children as $child) {
                         $normalized = $this->formatCompanyName($child->name);
 <<<<<<< HEAD
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -2714,6 +2790,7 @@ class CustomerProspekController extends Controller
                         }
                     }
                 });
+<<<<<<< HEAD
 <<<<<<< HEAD
     
             DB::commit();
@@ -2725,6 +2802,8 @@ class CustomerProspekController extends Controller
         }
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             DB::commit();
 
@@ -2742,5 +2821,8 @@ class CustomerProspekController extends Controller
 
     }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

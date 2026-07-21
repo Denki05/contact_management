@@ -2,6 +2,7 @@
 
 @section('content')
 <<<<<<< HEAD
+<<<<<<< HEAD
 <style>
 /* --- Utilities & Table Styles --- */
 .max-width-lg { max-width: 992px; margin: 0 auto; }
@@ -230,6 +231,8 @@ body {
                 <span style="font-size: 12.5px;">LOGOUT</span>
             </button>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 {{-- Kontainer Utama dengan max-width 992px di desktop, lebar penuh di mobile --}}
 <div class="container max-width-lg pb-5" style="background-color:#1e2227; min-height:100vh;">
     
@@ -329,21 +332,30 @@ body {
                 </button>
 
             </div>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
     
     {{-- Area Konten (Card Utama) --}}
 <<<<<<< HEAD
+<<<<<<< HEAD
     <div class="card p-2 p-md-2 bg-dark-card shadow-lg rounded-2 mt-1" id="dynamicContainer">
         <div id="contentArea" class="text-center text-muted">
             <p class="text-white" style="font-size: 11.5px;"></p>
             <p class="text-secondary m-0" style="font-size: 11.5px;"></p>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     <div class="card p-2 p-md-2 bg-dark-card shadow-lg rounded-2">
         <div id="contentArea" class="text-center text-muted">
             <p class="text-white">Pilih Officer Dahulu.</p>
             <p class="text-secondary m-0" style="font-size: 0.9rem;">Navigasi akan aktif setelah pemilihan.</p>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
@@ -355,6 +367,10 @@ body {
 </form>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -375,6 +391,7 @@ body {
 
 @push('scripts')
 <<<<<<< HEAD
+<<<<<<< HEAD
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 // Pastikan FullCalendar JS dan CSS (termasuk locale 'id') sudah dimuat di layout utama!
@@ -383,11 +400,16 @@ const AGENDA_DATA_URL = '{{ route("report.doctor.agenda.data") }}';
 document.addEventListener("DOMContentLoaded", function () {
     // 1. Ambil semua elemen yang dibutuhkan
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <script>
 // Pastikan FullCalendar JS dan CSS (termasuk locale 'id') sudah dimuat di layout utama!
 const AGENDA_DATA_URL = '{{ route("report.doctor.agenda.data") }}'; 
 
 document.addEventListener("DOMContentLoaded", function () {
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     const btnSelectOfficer = document.getElementById("btnSelectOfficer");
     const officerDropdown = new bootstrap.Dropdown(btnSelectOfficer); 
@@ -397,6 +419,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const officerListContainer = document.getElementById("officerList");
     const navButtons = document.querySelectorAll(".nav-button");
     const btnLogout = document.getElementById("btnLogout");
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     // Elemen tambahan untuk logika baru
@@ -429,12 +452,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // --- Pencarian Officer ---
     searchInput.addEventListener("keyup", function () {
         const keyword = this.value.toLowerCase();
         const officerItems = officerListContainer.querySelectorAll(".officer-item"); 
         officerItems.forEach(item => {
+<<<<<<< HEAD
 <<<<<<< HEAD
             const name = item.dataset.name.toLowerCase();
             if (item.classList.contains('officer-item')) {
@@ -511,6 +537,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // --- Penanganan Pemilihan Officer dari List ---
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             const name = item.textContent.toLowerCase();
             if (item.classList.contains('officer-item')) {
                 item.style.display = name.includes(keyword) ? "flex" : "none";
@@ -519,6 +547,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     // --- Klik Officer (Menggunakan Event Delegation) ---
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     officerListContainer.addEventListener("click", function(event) {
         const item = event.target.closest(".list-group-item.officer-item");
@@ -526,6 +557,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const name = item.dataset.name;
             const id = item.dataset.id;
             
+<<<<<<< HEAD
 <<<<<<< HEAD
             // 1. Update Label Terpilih
             selectedOfficerSpan.textContent = name;
@@ -558,6 +590,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                 `;
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             // 1. Update Officer Terpilih
             selectedOfficerSpan.textContent = name;
             selectedOfficerSpan.dataset.officerId = id;
@@ -591,14 +625,20 @@ document.addEventListener("DOMContentLoaded", function () {
             const itemIcon = item.querySelector('i');
             if (itemIcon) {
                 itemIcon.classList.replace('bi-arrow-right-circle', 'bi-check-circle-fill'); 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             }
         }
     });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // --- Logout ---
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     // --- Penanganan Klik Tombol Navigasi ---
     navButtons.forEach(button => {
         button.addEventListener("click", function() {
@@ -634,6 +674,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     
     // --- Penanganan Klik Tombol Logout BARU ---
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     if (btnLogout) {
         btnLogout.addEventListener('click', function(e) {
@@ -641,6 +684,7 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById('logout-form').submit();
         });
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     // =====================================================================
@@ -657,11 +701,16 @@ document.addEventListener("DOMContentLoaded", function () {
     // Inisialisasi: Hapus blokir navigasi awal
     // (Kode lama yang men-disable navigasi sudah dihapus)
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // Inisialisasi: Pastikan tombol navigasi disabled saat pertama kali dimuat
     if (selectedOfficerSpan.dataset.officerId === "" || selectedOfficerSpan.textContent === 'Pilih Officer') {
         navButtons.forEach(btn => btn.setAttribute('disabled', ''));
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 });
 
@@ -687,6 +736,7 @@ function loadContent(feature, officerId, targetElement) {
     const oldScript = document.getElementById('fullCalendarScript');
     if (oldStyle) oldStyle.remove();
     if (oldScript) oldScript.remove();
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     if (!window.pdfjsLib) {
@@ -3309,6 +3359,8 @@ function loadContent(feature, officerId, targetElement) {
         loadData('listMarketArea');
     } else if (featureName === 'BROWSER') {
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     if (featureName === 'AGENDA') { 
 
@@ -4108,6 +4160,9 @@ function loadContent(feature, officerId, targetElement) {
             });
         });
     }  else if (featureName === 'BROWSER') {
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         contentArea.innerHTML = `
         <div class="container-fluid px-3">
@@ -4136,6 +4191,11 @@ function loadContent(feature, officerId, targetElement) {
                 <div class="col-12 col-md-9">
                     <div class="p-1 bg-white border rounded h-100 d-flex flex-column shadow-sm" style="min-height:80vh;">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                        
+                        <!-- Header -->
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
                         
                         <!-- Header -->
@@ -4147,12 +4207,15 @@ function loadContent(feature, officerId, targetElement) {
                             </div>
                         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <div id="reviewCardsWrapper" class="flex-grow-1" style="overflow-y: auto; max-height: 70vh; padding-right:4px; padding-left:4px;">
                             <div id="reviewContent"></div>
                         </div>
                     </div>
                 </div>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
                         <!-- Bagian konten scroll: fix 70vh -->
                         <div id="reviewCardsWrapper"
@@ -4170,6 +4233,9 @@ function loadContent(feature, officerId, targetElement) {
                     </div>
                 </div>
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             </div>
         </div>
@@ -4394,6 +4460,7 @@ function loadContent(feature, officerId, targetElement) {
             const endDate = document.getElementById('modalEndDate')?.value || '';
             const selectedOfficer = document.getElementById('selectedOfficer')?.dataset.officerId || '';
 <<<<<<< HEAD
+<<<<<<< HEAD
         
             // --- Header sticky ---
             const reviewHeaderTitle = document.getElementById('reviewHeaderTitle');
@@ -4421,6 +4488,8 @@ function loadContent(feature, officerId, targetElement) {
         
             // --- Group Data ---
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             // --- Header sticky ---
             const reviewHeaderTitle = document.getElementById('reviewHeaderTitle');
@@ -4444,6 +4513,9 @@ function loadContent(feature, officerId, targetElement) {
             frameB.innerHTML = "";
 
             // --- Group data by tanggal ---
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             const grouped = {};
             data.forEach(item => {
@@ -4451,6 +4523,7 @@ function loadContent(feature, officerId, targetElement) {
                 if (!grouped[tgl]) grouped[tgl] = [];
                 grouped[tgl].push(item);
             });
+<<<<<<< HEAD
 <<<<<<< HEAD
         
             const sortedDates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
@@ -4467,6 +4540,8 @@ function loadContent(feature, officerId, targetElement) {
                 const pageDates = sortedDates.slice(startIdx, endIdx);
         
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             const sortedDates = Object.keys(grouped).sort((a, b) => new Date(a) - new Date(b));
 
@@ -4524,6 +4599,9 @@ function loadContent(feature, officerId, targetElement) {
 
                 const pageDates = pages[idx];
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 pageDates.forEach(tanggal => {
                     let html = `
@@ -4537,7 +4615,11 @@ function loadContent(feature, officerId, targetElement) {
                             <div class="card-body p-2 text-start">
                     `;
 <<<<<<< HEAD
+<<<<<<< HEAD
         
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -4548,6 +4630,7 @@ function loadContent(feature, officerId, targetElement) {
                         picGroups[pic].push(item);
                     });
 <<<<<<< HEAD
+<<<<<<< HEAD
         
                     Object.keys(picGroups).forEach(picKey => {
                         picGroups[picKey].forEach(agenda => {
@@ -4555,18 +4638,24 @@ function loadContent(feature, officerId, targetElement) {
         
                             if (agenda.tasks && agenda.tasks.length > 0) {
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
                     Object.keys(picGroups).forEach(picKey => {
                         picGroups[picKey].forEach(agenda => {
                             html += `<div class="mb-2 pb-2 border-bottom text-start">`;
 
                             if (agenda.tasks?.length) {
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                                 html += `<ul class="small ps-3 mt-1 text-start">`;
                                 agenda.tasks.forEach(t => {
                                     const createdAt = formatCreatedAtToWIB(t.created_at);
                                     const status = Number(t.status);
                                     let color = status === 3 ? 'red' : status === 2 ? 'green' : 'black';
+<<<<<<< HEAD
 <<<<<<< HEAD
                                     html += `<li style="color:${color} !important">
                                                 <span class="fw-semibold">${t.keterangan}</span>
@@ -4634,6 +4723,8 @@ function loadContent(feature, officerId, targetElement) {
         }
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                                     html += `
                                         <li style="color:${color}">
                                             <span class="fw-semibold">${t.keterangan}</span>
@@ -4711,6 +4802,9 @@ function loadContent(feature, officerId, targetElement) {
             renderPage(currentPageIndex);
         }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         // --- Fungsi Load Kegiatan ---
         function loadKegiatan(){
@@ -4856,6 +4950,7 @@ function loadContent(feature, officerId, targetElement) {
         
                 function renderPagination(){
 <<<<<<< HEAD
+<<<<<<< HEAD
                     let paginationDiv = document.getElementById('reviewPagination');
                     if(!paginationDiv){
                         paginationDiv = document.createElement('div');
@@ -4876,11 +4971,17 @@ function loadContent(feature, officerId, targetElement) {
                     paginationDiv.innerHTML = '';
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+                    const paginationDiv = document.getElementById('reviewPagination');
+                    paginationDiv.innerHTML = '';
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     // Prev
                     const prevBtn = document.createElement('button');
                     prevBtn.className = `btn btn-sm ${currentPage===1 ? 'btn-secondary' : 'btn-outline-primary'} mx-1`;
                     prevBtn.disabled = currentPage===1;
                     prevBtn.innerHTML = `<i class="bi bi-chevron-left"></i>`;
+<<<<<<< HEAD
 <<<<<<< HEAD
                     prevBtn.addEventListener('click', () => {
                         if(currentPage>1){ renderPage(currentPage-1); window.scrollTo({top:0, behavior:'smooth'}); }
@@ -4897,6 +4998,8 @@ function loadContent(feature, officerId, targetElement) {
                     }
         
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     prevBtn.onclick = () => {
                         if(currentPage > 1){
                             renderPage(currentPage - 1);
@@ -4917,6 +5020,9 @@ function loadContent(feature, officerId, targetElement) {
                         paginationDiv.appendChild(btn);
                     }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     // Next
                     const nextBtn = document.createElement('button');
@@ -4924,16 +5030,22 @@ function loadContent(feature, officerId, targetElement) {
                     nextBtn.disabled = currentPage===totalPages;
                     nextBtn.innerHTML = `<i class="bi bi-chevron-right"></i>`;
 <<<<<<< HEAD
+<<<<<<< HEAD
                     nextBtn.addEventListener('click', () => {
                         if(currentPage<totalPages){ renderPage(currentPage+1); window.scrollTo({top:0, behavior:'smooth'}); }
                     });
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     nextBtn.onclick = () => {
                         if(currentPage < totalPages){
                             renderPage(currentPage + 1);
                             frameB.scrollTop = 0;
                         }
                     };
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     paginationDiv.appendChild(nextBtn);
                 }
@@ -4949,7 +5061,11 @@ function loadContent(feature, officerId, targetElement) {
             });
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -4968,7 +5084,11 @@ function loadContent(feature, officerId, targetElement) {
         
             frameB.innerHTML = `<div class="text-center py-3 text-primary">Memuat Kegiatan...</div>`;
 <<<<<<< HEAD
+<<<<<<< HEAD
             frameB.style.paddingBottom = '50px';
+=======
+            frameB.style.paddingBottom = "70px";
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
             frameB.style.paddingBottom = "70px";
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -5057,7 +5177,10 @@ function loadContent(feature, officerId, targetElement) {
             });
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     
@@ -5517,21 +5640,28 @@ function loadContent(feature, officerId, targetElement) {
             }
         });
 <<<<<<< HEAD
+<<<<<<< HEAD
     } else if (featureName === 'LAPORAN') {
 
         const today = new Date().toISOString().split("T")[0];
         const monthID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
     
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     
     } else if (featureName === 'LAPORAN') {
         const today = new Date().toISOString().split("T")[0];
         const monthID = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         const formatID = (d) => {
             const x = new Date(d);
             return `${String(x.getDate()).padStart(2,"0")} ${monthID[x.getMonth()]} ${String(x.getFullYear()).slice(-2)}`;
         };
+<<<<<<< HEAD
 <<<<<<< HEAD
     
         if (window.laporanAbortController) window.laporanAbortController.abort();
@@ -6704,6 +6834,8 @@ function loadContent(feature, officerId, targetElement) {
             quarterWrapper.innerHTML = "";
             const quarters = quarterMode === 3 ? ["Q1","Q2","Q3","Q4"] : quarterMode === 4 ? ["Q1","Q2","Q3"] : ["Q1","Q2"];
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         // ============================================================
         // TEMPLATE HTML
@@ -6863,6 +6995,9 @@ function loadContent(feature, officerId, targetElement) {
             if (quarterMode === 4) quarters = ["Q1","Q2","Q3"];
             if (quarterMode === 6) quarters = ["Q1","Q2"];
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             quarters.forEach(q => {
                 const btn = document.createElement("button");
@@ -6871,6 +7006,7 @@ function loadContent(feature, officerId, targetElement) {
                 btn.innerText = q;
                 quarterWrapper.appendChild(btn);
             });
+<<<<<<< HEAD
 <<<<<<< HEAD
             const modeBtn = document.createElement("button");
             modeBtn.id = "btnQuarterMode";
@@ -6932,6 +7068,8 @@ function loadContent(feature, officerId, targetElement) {
                         updateStep2Summary();
                         if (hasRenderedOnce) renderPDF();
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
             const modeBtn = document.createElement("button");
             modeBtn.id = "btnQuarterMode";
@@ -7016,24 +7154,34 @@ function loadContent(feature, officerId, targetElement) {
 
                         rangeLabel.innerText = `${formatID(startDate)} - ${formatID(endDate)}`;
                         renderPDF();
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     }
                 }
             });
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
         setTimeout(initFlatpickr, 50);
         btnRangeDate.addEventListener("click", () => {
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         setTimeout(initFlatpickr, 50);
 
         btnRangeDate.addEventListener("click", function () {
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             if (!fpInstance) initFlatpickr();
             try { fpInstance.setDate([startDate, endDate], false); } catch(e){}
             fpInstance.open();
         });
+<<<<<<< HEAD
 <<<<<<< HEAD
     
         document.querySelectorAll(".quick-range").forEach(btn => {
@@ -8280,6 +8428,8 @@ function loadContent(feature, officerId, targetElement) {
         return;
 
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
         // ============================================================
         // QUICK RANGE BUTTONS
@@ -8306,6 +8456,9 @@ function loadContent(feature, officerId, targetElement) {
                 }
             };
         });
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     } else {
         setTimeout(() => {
@@ -8318,9 +8471,12 @@ function loadContent(feature, officerId, targetElement) {
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 </script>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 </script>
 
 <style>
@@ -8555,5 +8711,8 @@ function loadContent(feature, officerId, targetElement) {
     }
 }
 </style>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 @endpush

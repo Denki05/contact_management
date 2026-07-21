@@ -5,6 +5,7 @@
     <title>List Market Report</title>
     <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
         body { 
             font-family: DejaVu Sans, Arial, sans-serif; 
             font-size: 9pt; 
@@ -73,6 +74,8 @@
             padding: 3px 5px;
             vertical-align: top;
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         body {
             font-family: DejaVu Sans, sans-serif;
             font-size: 8pt;
@@ -167,11 +170,15 @@
             padding: 2px 3px;
             vertical-align: top;
             text-align: left;
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             word-wrap: break-word;
         }
 
         table.customer-table th {
+<<<<<<< HEAD
 <<<<<<< HEAD
             text-align: left;
             font-weight: bold;
@@ -185,12 +192,18 @@
             font-weight: bold;
             background-color: #fafafa;
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+            border-bottom: 1px solid #000;
+            font-weight: bold;
+            background-color: #fafafa;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         }
 
         table.customer-table tr:last-child td {
             border-bottom: none;
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         .col-labels   { width: 4%;  text-align: center; }
         .col-pic       { width: 18%; }
@@ -211,6 +224,8 @@
             font-size: 9pt;
         }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         /* Kolom proporsional */
         .col-customer  { width: 38%; }
         .col-pengajuan { width: 12%; }
@@ -230,11 +245,15 @@
         }
 
         /*.page-break { page-break-after: always; }*/
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     </style>
 </head>
 <body>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <div class="header">
     <h1>Data Customer {{ strtoupper($officerName ?? '-') }} per {{ $tanggalCetak }}</h1>
@@ -251,18 +270,28 @@
 @php
     // Manual grouping sesuai hierarki
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+@php
+    // Manual grouping sesuai hierarki
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     $grouped = [];
     foreach ($data as $row) {
         $zona = $row['zona'] ?? 'ZONA LAIN';
         $prov = $row['provinsi'] ?? 'TIDAK ADA PROVINSI';
         $kota = $row['kota'] ?? 'TIDAK ADA KOTA';
 <<<<<<< HEAD
+<<<<<<< HEAD
         $grouped[$zona][$prov][$kota][] = $row;
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         // Simpan status dalam huruf kapital untuk key
         $status = strtoupper($row['status_customer'] ?? 'Unknown'); 
 
         $grouped[$zona][$prov][$kota][$status][] = $row;
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     }
 @endphp
@@ -273,6 +302,7 @@
     @foreach($provGroups as $prov => $kotaGroups)
         <div class="group-prov">{{ strtoupper($prov) }}</div>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
         @foreach($kotaGroups as $kota => $customers)
             <div class="group-kota">{{ strtoupper($kota) }}</div>
@@ -310,6 +340,8 @@
 @empty
     <p class="no-data" style="text-align:center; margin-top:50px;">Tidak ada data Customer yang ditemukan.</p>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         @foreach($kotaGroups as $kota => $statusGroups)
             <div class="group-kota">{{ strtoupper($kota) }}</div>
 
@@ -357,6 +389,9 @@
     <p class="no-data" style="text-align:center; margin-top:50px; margin-left: 0;">
         Tidak ada data Customer ditemukan.
     </p>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 @endforelse
 

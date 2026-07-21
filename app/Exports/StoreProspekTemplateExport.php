@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Exports;
@@ -33,6 +34,8 @@ class StoreProspekTemplateExport implements WithHeadings
         ];
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Exports;
@@ -66,5 +69,8 @@ class StoreProspekTemplateExport implements WithHeadings
             'informasi_tambahan'
         ];
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

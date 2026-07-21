@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Imports;
@@ -252,6 +253,8 @@ class StoreProspekImport implements ToCollection, WithHeadingRow, WithChunkReadi
     }
 }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Imports;
@@ -504,4 +507,7 @@ class StoreProspekImport implements ToCollection, WithHeadingRow, WithChunkReadi
         return $this->failedRows;
     }
 }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744

@@ -5,7 +5,10 @@ namespace App\Master;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use App\Master\StoreProspek;
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
@@ -20,7 +23,11 @@ class CustomerProspek extends Model
         'provinsi', 'kota', 'kecamatan', 'kelurahan',
         'text_provinsi', 'text_kota', 'text_kecamatan', 'text_kelurahan',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'status_request', 'situation', 'status_key', 'source', 'rating', 'additional_information', 'additional_notes', 'last_updated', 'last_updated_notes',
+=======
+        'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'situation', 'status_key', 'rating', 'additional_information', 'additional_notes'
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         'zipcode', 'free_shipping', 'zone', 'setting_income_target', 'image_npwp', 'image_ktp', 'status', 'situation', 'status_key', 'rating', 'additional_information', 'additional_notes'
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -68,6 +75,7 @@ class CustomerProspek extends Model
         3 => 'LINDY',
         4 => 'KUMALA',
 <<<<<<< HEAD
+<<<<<<< HEAD
     ];
     
     const STATUS_REQUEST = [
@@ -76,6 +84,9 @@ class CustomerProspek extends Model
         2 => 'DISETUJUI',
         3 => 'DITOLAK',
         4 => 'NONAKTIF / DIARSIP',
+=======
+        5 => 'NIA',
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         5 => 'NIA',
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -89,6 +100,7 @@ class CustomerProspek extends Model
     public function store_prospek()
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         return $this->hasMany(StoreProspek::class, 'customer_id', 'id'); 
         // pastikan foreign key di table prospek = customer_id
     }
@@ -96,10 +108,15 @@ class CustomerProspek extends Model
 
 
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         return $this->belongsTo('App\Master\StoreProspek', 'customer_id', 'id'); 
     }
 
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     public function dokumen(){
         return $this->hasMany('App\Entities\Master\Dokumen','customer_other_address_id');

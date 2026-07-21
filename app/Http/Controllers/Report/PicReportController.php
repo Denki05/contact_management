@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Http\Controllers\Report;
@@ -49,6 +50,8 @@ class PicReportController extends Controller
         }
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Http\Controllers\Report;
@@ -98,5 +101,8 @@ class PicReportController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

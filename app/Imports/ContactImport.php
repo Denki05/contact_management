@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Imports;
@@ -84,6 +85,8 @@ class ContactImport implements ToModel, WithHeadingRow
         return $this->errorMessages;
     }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Imports;
@@ -168,5 +171,8 @@ class ContactImport implements ToModel, WithHeadingRow
     {
         return $this->errorMessages;
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

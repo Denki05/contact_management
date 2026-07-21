@@ -167,6 +167,10 @@ return [
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        Barryvdh\DomPDF\ServiceProvider::class,
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         Barryvdh\DomPDF\ServiceProvider::class,
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -230,7 +234,11 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 <<<<<<< HEAD
+<<<<<<< HEAD
         'Pdf' => Barryvdh\DomPDF\Facade\Pdf::class,
+=======
+        'PDF' => Barryvdh\DomPDF\Facade::class,
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         'PDF' => Barryvdh\DomPDF\Facade::class,
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744

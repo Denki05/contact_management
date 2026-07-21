@@ -12,11 +12,20 @@
         "barryvdh/laravel-dompdf": "^2.2",
         "fideloper/proxy": "^4.4",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "guzzlehttp/guzzle": "^6.5",
         "laravel/framework": "^6.20.26",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^1.2",
         "maatwebsite/excel": "^3.1"
+=======
+        "guzzlehttp/guzzle": "^7.9",
+        "laravel/framework": "^6.20.26",
+        "laravel/tinker": "^2.5",
+        "laravel/ui": "^1.2",
+        "maatwebsite/excel": "^3.1",
+        "phpoffice/phpspreadsheet": "^1.23"
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         "guzzlehttp/guzzle": "^7.9",
         "laravel/framework": "^6.20.26",

@@ -68,6 +68,10 @@
 
 <div class="container-fluid px-3">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
     
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -135,6 +139,7 @@
             </button>
             
 <<<<<<< HEAD
+<<<<<<< HEAD
             
             <!--<button type="button" class="btn btn-info btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#updateStatusModal">-->
             <!--    <i class="fa fa-sync-alt"></i> Update Status Massal-->
@@ -151,6 +156,8 @@
             <!--    </button>-->
             <!--</form>-->
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             @if(auth::id() == 1)
             <button type="button" class="btn btn-info btn-sm ms-2" data-bs-toggle="modal" data-bs-target="#updateStatusModal">
                 <i class="fa fa-sync-alt"></i> Update Status Massal
@@ -168,6 +175,9 @@
                 </button>
             </form>
             @endif
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
@@ -228,9 +238,15 @@
                         $website = null;
                         if ($customer->type == 'prospek') {
 <<<<<<< HEAD
+<<<<<<< HEAD
                             $website = $customer->website;
                         } elseif ($customer->type == 'existing') {
                             $website = $customer->website;
+=======
+                            $website = optional($customer->store_prospek)->website;
+                        } elseif ($customer->type == 'existing') {
+                            $website = optional($customer->store_existing)->website;
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
                             $website = optional($customer->store_prospek)->website;
                         } elseif ($customer->type == 'existing') {
@@ -258,17 +274,23 @@
                 {{-- Mapping & PIC --}}
                 @if ($customer->type == 'prospek')
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <td>{{ $customer->category_name ?? '-' }}</td>
                     <td>{{ $customer->pic ?? '-' }}</td>
                 @else
                     <td>{{ $customer->category_name ?? '-' }}</td>
                     <td>{{ $customer->pic ?? '-' }}</td>
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                     <td>{{ optional(optional($customer->store_prospek)->category)->name ?? '-' }}</td>
                     <td>{{ optional($customer->store_prospek)->pic ?? '-' }}</td>
                 @else
                     <td>{{ optional(optional($customer->store_existing)->category)->name ?? '-' }}</td>
                     <td>{{ optional($customer->store_existing)->pic ?? '-' }}</td>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
                 @endif
     

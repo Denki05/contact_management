@@ -5,6 +5,7 @@
 @section('content')
 <style>
 <<<<<<< HEAD
+<<<<<<< HEAD
     .max-width-lg { max-width: 992px; }
     body {
         background-color: #1e2227;
@@ -184,6 +185,28 @@
                         AGENDA
                     </button>
                 </div>
+=======
+    .max-width-lg { max-width: 936px; }
+    body {
+        overflow-y: scroll !important;
+        background-color: #1e2227;
+    }
+</style>
+
+<div class="container max-width-lg pb-2" style="background-color:#1e2227; min-height:100vh;">
+
+    {{-- ====== TOP MENU ====== --}}
+    <div class="header-section pt-2">
+        <div class="mb-2">
+            <div class="row text-center g-2 align-items-stretch">
+
+                <div class="col-6 col-md-3 d-flex">
+                    <button id="loadAgenda" class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1
+                        d-flex flex-column justify-content-center align-items-center">
+                        AGENDA
+                    </button>
+                </div>
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
                 <div class="col-6 col-md-3 d-flex">
                     <button id="loadCustomer" class="btn btn-light text-dark fw-semibold w-100 shadow-sm py-1
@@ -208,6 +231,9 @@
                 </div>
 
             </div>
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         </div>
     </div>
@@ -230,6 +256,7 @@
 </div>
 
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">@csrf</form>
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 @include('master.tampung_prospek.modal_import_export')
@@ -354,6 +381,11 @@
 @endsection
 
 @push('scripts')
+=======
+@endsection
+
+@push('scripts')
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
@@ -366,6 +398,9 @@
     }
 </style>
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <script>
 $(document).ready(function(){
@@ -383,8 +418,11 @@ $(document).ready(function(){
     // ================== GENERAL FUNCTIONS ==================
     function loadPartial(url, data = {}) {
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Tetap tampilkan loading tapi jangan hapus tinggi kontainer
         $("#dynamicContainer").css('min-height', '568px'); 
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
         $("#dynamicContainer").html('<div class="text-center text-white p-3">Loading...</div>');
@@ -410,6 +448,7 @@ $(document).ready(function(){
 
     // ================== CUSTOMER ==================
     window.currentCustomerType = "all"; // menyimpan filter aktif
+<<<<<<< HEAD
 <<<<<<< HEAD
     window.currentCustomerPage = 1;     // menyimpan page terakhir
     window.currentCustomerSearch = "";  // BARU: menyimpan keyword pencarian terakhir
@@ -441,6 +480,8 @@ $(document).ready(function(){
                 // SAYA HAPUS dari sini karena sudah ditangani oleh script 
                 // $(document).on('click','.ci-pgn'...) yang ada di dalam partial_index.blade.php
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
     window.currentCustomerPage = 1; // menyimpan page terakhir
     
     function loadCustomerList(type = null, page = 1) {
@@ -461,6 +502,9 @@ $(document).ready(function(){
                     let page = $(this).data("page");
                     loadCustomerList(window.currentCustomerType, page);
                 });
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
             });
         });
@@ -471,7 +515,11 @@ $(document).ready(function(){
         e.preventDefault();
         let type = $(this).data("type");
 <<<<<<< HEAD
+<<<<<<< HEAD
         window.loadCustomerList(type, 1); // Tambahkan window.
+=======
+        loadCustomerList(type, 1);
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         loadCustomerList(type, 1);
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -500,6 +548,7 @@ $(document).ready(function(){
                 if (typeof initCustomerIndexEvents === 'function') initCustomerIndexEvents();
             });
     };
+<<<<<<< HEAD
 <<<<<<< HEAD
     
     window.initCreateFormEvents = function () {
@@ -597,6 +646,9 @@ $(document).ready(function(){
 =======
 
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
+
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
     // ================== CONTACT ==================
     window.loadContactList = function(page = 1, search = '') {
@@ -688,6 +740,7 @@ $(document).ready(function(){
         loadCreateContactNew();
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     // ✅ Tombol PRODUCT
     $(document).on("click", "#loadProduct", function(e){
@@ -717,6 +770,8 @@ $(document).ready(function(){
             $('#btnImportExportProspek').addClass('d-none').removeClass('d-flex');  // TAMBAHKAN INI
         }
     });
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
@@ -752,6 +807,7 @@ $(document).ready(function(){
         });
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     // ========== Active Menu Highlighter ==========
     $('.nav-button').on('click', function() {
@@ -760,6 +816,8 @@ $(document).ready(function(){
         // Tambahkan warna biru hanya pada tombol yang sedang diklik
         $(this).addClass('active-nav');
     });
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 });

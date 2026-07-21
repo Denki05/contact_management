@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Http\Controllers\Master;
@@ -359,6 +360,8 @@ class ContactController extends Controller
     }
 
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Http\Controllers\Master;
@@ -641,5 +644,8 @@ class ContactController extends Controller
 
         return redirect()->route('master.contact.find')->with('success', 'Data berhasil dihapus.');
     }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 }

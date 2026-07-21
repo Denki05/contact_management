@@ -14,7 +14,11 @@ return array(
     'show_warnings' => false,   // Throw an Exception on warnings from dompdf
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     'public_path' => null,
+=======
+    'public_path' => null,  // Override the public path if needed
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
     'public_path' => null,  // Override the public path if needed
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
@@ -83,9 +87,13 @@ return array(
          * $dompdf = new DOMPDF();  $dompdf->load_html($htmldata); $dompdf->render(); $pdfdata = $dompdf->output();
          */
 <<<<<<< HEAD
+<<<<<<< HEAD
         "chroot" => base_path('public'),
         
         'isRemoteEnabled' => true, // <-- Pastikan ini 'true' jika ada gambar dari URL, tapi baiknya disetel 'true'
+=======
+        "chroot" => realpath(base_path()),
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 =======
         "chroot" => realpath(base_path()),
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744

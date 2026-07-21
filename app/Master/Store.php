@@ -1,6 +1,7 @@
 <?php
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 namespace App\Master;
 
 use Illuminate\Database\Eloquent\Model;
@@ -87,6 +88,8 @@ class Store extends Model
     }
 }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 
 
 namespace App\Master;
@@ -259,4 +262,7 @@ class Store extends Model
 
 }
 
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744

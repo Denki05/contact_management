@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 <?php
 
 namespace App\Master;
@@ -26,6 +27,8 @@ class CustomerCategory extends Model
     }
 }
 =======
+=======
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
 <?php
 
 namespace App\Master;
@@ -52,4 +55,7 @@ class CustomerCategory extends Model
         return $this->hasMany('App\Master\StoreProspek', 'category_id')->orderBy('name');
     }
 }
+<<<<<<< HEAD
+>>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
+=======
 >>>>>>> ff72a8505dacce6c7d2e638a1881df17b008d744
